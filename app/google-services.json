@@ -1,0 +1,155 @@
+{
+  "project_info": {
+    "project_number": "339905108832",
+    "project_id": "proyecto-agenda-de-venta",
+    "storage_bucket": "proyecto-agenda-de-venta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339905108832:android:12a01728cac1053c2c9c05",
+        "android_client_info": {
+          "package_name": "com.example.agendadeventas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339905108832-gb6lhlc7gkj3s1c1l4976llmopc9d4jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeRyvkQBx8tCNODAHnOjlnNhC4i8HqO6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339905108832-gb6lhlc7gkj3s1c1l4976llmopc9d4jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339905108832:android:62c4dc2976046f9b2c9c05",
+        "android_client_info": {
+          "package_name": "com.virtualword3d.salesregister"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339905108832-gb6lhlc7gkj3s1c1l4976llmopc9d4jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeRyvkQBx8tCNODAHnOjlnNhC4i8HqO6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339905108832-gb6lhlc7gkj3s1c1l4976llmopc9d4jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339905108832:android:ce7202b42345f8022c9c05",
+        "android_client_info": {
+          "package_name": "com.virtualworld.agendadeventas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339905108832-gb6lhlc7gkj3s1c1l4976llmopc9d4jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeRyvkQBx8tCNODAHnOjlnNhC4i8HqO6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339905108832-gb6lhlc7gkj3s1c1l4976llmopc9d4jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339905108832:android:620dd8a8a1cf9f4f2c9c05",
+        "android_client_info": {
+          "package_name": "com.virtualworld.notification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339905108832-gb6lhlc7gkj3s1c1l4976llmopc9d4jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeRyvkQBx8tCNODAHnOjlnNhC4i8HqO6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339905108832-gb6lhlc7gkj3s1c1l4976llmopc9d4jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339905108832:android:b0db9bc934d376e82c9c05",
+        "android_client_info": {
+          "package_name": "com.virtualworld.tienda_muebles_plastico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339905108832-gb6lhlc7gkj3s1c1l4976llmopc9d4jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeRyvkQBx8tCNODAHnOjlnNhC4i8HqO6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339905108832-gb6lhlc7gkj3s1c1l4976llmopc9d4jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

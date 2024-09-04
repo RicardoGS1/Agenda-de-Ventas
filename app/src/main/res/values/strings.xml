@@ -1,3 +1,109 @@
 <resources>
     <string name="app_name">Agenda de Ventas</string>
+
+    //Vista Tiendas
+    <string name="label_tienda1">Store name 1</string>
+    <string name="label_tienda2">Store name 2</string>
+    <string name="label_tienda3">Store name 3</string>
+    <string name="label_tienda4">Store name 4</string>
+    <string name="label_tienda5">Store name 5</string>
+
+
+
+    //PantallaAgregar
+    <string name="titulo_agregar">Add Product</string>
+    <string name="boton_guardar_agregar">Salve</string>
+    <string name="label_nombre_producto">Product name</string>
+    <string name="label_precio_compra">Purchase price</string>
+    <string name="label_precio_venta">Sale price:</string>
+    <string name="boton_mensaje_confirmar">Confirm</string>
+    <string name="titulo_mensaje_error">Error</string>
+    <string name="text_mensaje_error">You must fill in the fields to add a product</string>
+    <string name="titulo_mensaje_agregado">Aggregate</string>
+    <string name="text_mensaje_agregado">The product has been added successfully</string>
+    <string name="boton_mensaje_seguir">Add more</string>
+    <string name="boton_mensaje_terminar">End</string>
+
+
+
+    //PANTALLA TIENDAS
+    <string name="titulo_Tiendas">Configure Stores</string>
+    <string name="info_colunas_nombre">Store name</string>
+    <string name="info_colunas_activas">Active stores</string>
+    <string name="label_nombre_de_tiendas">Store name</string>
+    <string name="boton_guardar_Tiendas">Salve</string>
+    <string name="mensaje_titulo_error_tiendas">Eror</string>
+    <string name="mensaje_error_tiendas">The store name cannot be empty</string>
+    <string name="mensaje_confirmar_tiendas">Confirm</string>
+    <string name="mensaje_guardado_tiendas">The changes have been saved correctly</string>
+
+
+    //PANTALLA VENDER
+    <string name="label_spiner_vender">Select store</string>
+    <string name="boton_guardar_vender">Add sales</string>
+    <string name="mensaje_vendido_vender">The sale has been successful</string>
+
+    //PANTALLA REJISTRO
+    <string name="label_spiner_rejistro">Select store</string>
+
+    //PANTALLA EDITAR
+    <string name="ventana_borrar">You want to delete this product</string>
+    <string name="boton_confirmar_borrar">Yes</string>
+    <string name="boton_confirmar_no_borrar">No</string>
+    <string name="boton_guardar_editar">Salve</string>
+    <string name="titulo_ventana_editar">Edit</string>
+    <string name="titulo_ventana_detalles">Details</string>
+    <string name="nombre_producto_detalles">Details</string>
+    <string name="precio_compra_detalles">Purchase price</string>
+    <string name="precio_venta_detalles">Sale price: </string>
+
+
+    //MAIN ACTYVITY
+    <string name="menu_banel">Sales record and service</string>
+    <string name="menu_resumen">Summary</string>
+    <string name="menu_agregar">Add</string>
+    <string name="menu_editar">Edit</string>
+    <string name="menu_vender">Sell</string>
+    <string name="menu_registro">Record</string>
+    <string name="menu_tiendas">Stores</string>
+    <string name="menu_exportar">Export</string>
+
+
+    //PANTALLA INICIO
+    <string name="inicio_priodo">Period</string>
+    <string name="inicio_desde">From</string>
+    <string name="inicio_hasta">Until</string>
+    <string name="inicio_unidades_vendidas">Sold Units</string>
+    <string name="inicio_ganancia">Profits</string>
+    <string name="inicio_info_tiendas">Store</string>
+    <string name="inicio_info_unidades">Units</string>
+    <string name="inicio_info_ganancia">Profits</string>
+
+    //PANTALLA RECORD
+    <string name="record_unidades">Units:</string>
+    <string name="record_precio">Price:</string>
+    <string name="record_costo">Cost:</string>
+    <string name="record_fecha">Date:</string>
+
+
+
+    //PANTALLA EXPORT
+    <string name="export_empresa">Company:</string>
+    <string name="cerrar_sacion">Close Section</string>
+    <string name="card_exportar_ventas">Export sales</string>
+    <string name="card_importar_ventas">Import Sales</string>
+    <string name="card_exportar_ventas_text">This section allows you to upload the sales record to the cloud, which can be later downloaded to any device</string>
+    <string name="card_importar_ventas_text">Here you can download the sales record from the cloud to any device for their later use</string>
+    <string name="card_exportar_ventas_boton">Export</string>
+    <string name="card_importar_ventas_boton">Import</string>
+    <string name="nota_exportar_ventas_boton">To access this option you must register</string>
+    <string name="mensaje_error">Sorry, an error occurred</string>
+    <string name="mensaje_exitoso_export">The operation has been carried out successfully</string>
+
+    <string name="export_registrarse">Registrarce</string>
+    <string name="export_correo">Mail</string>
+    <string name="export_contracena">Password</string>
+    <string name="export_iniciar_secion">Log in</string>
+    <string name="crear_cuenta">Create Account</string>
+
 </resources>
