@@ -16,8 +16,8 @@ Es una aplicación que utiliza tecnologías modernas de Android, como Jetpack Co
 
 |                                                                                                                         |                                                                                                                           |
 |-------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| ![run_track_home_ss](https://github.com/user-attachments/assets/5e6dffeb-ecb0-4020-816d-a18552cd25fa) | ![runtrack_live_tracking_ss](https://github.com/user-attachments/assets/f23f143e-f0a2-45e7-a409-3acf7407fb24)
-| ![run_track_homes_ss](https://github.com/user-attachments/assets/aeb4cff1-a9a3-4079-920c-29a8ee4734ab) | ![run_track_homess_ss](https://github.com/user-attachments/assets/7be38048-0775-4659-9b42-c27b29543dcb)
+| ![run_track_home_ss](https://github.com/user-attachments/assets/7bb865a6-56b0-4e64-ad5c-84372452bd76) | ![runtrack_live_tracking_ss](https://github.com/user-attachments/assets/272f8acb-c7f5-4cff-ade0-d41714312ce9)
+| ![run_track_homes_ss](https://github.com/user-attachments/assets/e1e9b533-98ed-4665-b750-6f73a16913f4) | ![run_track_homess_ss](https://github.com/user-attachments/assets/0134b69a-792f-473e-aafe-cacc79ef9a42)
 
 
 
