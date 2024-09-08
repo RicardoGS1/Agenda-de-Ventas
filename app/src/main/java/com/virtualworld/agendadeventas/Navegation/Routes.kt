@@ -13,14 +13,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.virtualworld.agendadeventas.R
 
 
-sealed class Routes(val route: String) {
-    object PantallaInicio: Routes("Resumen")
-    object PantallaAgregar: Routes("Agregar")
-    object PantallaEditar: Routes("Editar")
-    object PantallaVender: Routes("Vender")
-    object PantallaRegistro: Routes("Registro")
-    object PantallaTiendas: Routes("Tiendas")
-    object PantallaExportar: Routes("Exportar")
+sealed class Routess(val route: String) {
+    object PantallaInicio: Routess("Resumen")
+    object PantallaAgregar: Routess("Agregar")
+    object PantallaEditar: Routess("Editar")
+    object PantallaVender: Routess("Vender")
+    object PantallaRegistro: Routess("Registro")
+    object PantallaTiendas: Routess("Tiendas")
+    object PantallaExportar: Routess("Exportar")
 
 
 
@@ -32,56 +32,67 @@ sealed class DrawerNavDestination(val route: String, @StringRes val title: Int, 
 
 
      object Resumen : DrawerNavDestination(
-        route = Routes.PantallaInicio.route,
+        route = "Resumen",
         title =  R.string.menu_resumen,
         contentDescription = "go to screen Resumen",
         icon = Icons.Default.Home,
     )
 
-    data object Agregar : DrawerNavDestination(
-        route = Routes.PantallaAgregar.route,
+    object Agregar : DrawerNavDestination(
+        route = "Agregar",
         title =  R.string.menu_agregar,
         contentDescription = "go to screen Resumen",
         icon = Icons.Default.Add,
     )
 
-    data object Editar : DrawerNavDestination(
-        route = Routes.PantallaEditar.route,
+    object Editar : DrawerNavDestination(
+        route = "Editar",
         title =  R.string.menu_editar,
         contentDescription = "go to screen Resumen",
         icon = Icons.Default.Edit,
     )
 
-    data object Vender : DrawerNavDestination(
-        route = Routes.PantallaVender.route,
+    object Vender : DrawerNavDestination(
+        route = "Vender",
         title =  R.string.menu_vender,
         contentDescription = "go to screen Resumen",
         icon = Icons.Default.PointOfSale,
     )
 
-    data object Registro : DrawerNavDestination(
-        route = Routes.PantallaRegistro.route,
+    object Registro : DrawerNavDestination(
+        route = "Registro",
         title =  R.string.menu_registro,
         contentDescription = "go to screen Resumen",
         icon = Icons.Default.ViewAgenda,
     )
 
-    data object Tiendas : DrawerNavDestination(
-        route = Routes.PantallaTiendas.route,
+    object Tiendas : DrawerNavDestination(
+        route = "Tiendas",
         title =  R.string.menu_tiendas,
         contentDescription = "go to screen Resumen",
         icon = Icons.Default.Storefront,
     )
 
-    data object Exportar : DrawerNavDestination(
-        route = Routes.PantallaExportar.route,
+    object Exportar : DrawerNavDestination(
+        route = "Exportar",
         title =  R.string.menu_exportar,
         contentDescription = "go to screen Resumen",
         icon = Icons.Default.ImportExport,
     )
 
-
-
-
+    companion object {
+        fun getDestinations(): List<DrawerNavDestination> {
+            return listOf(
+                Resumen,
+                Agregar,
+                Editar,
+                Vender,
+                Registro,
+                Tiendas,
+                Exportar
+            )
+        }
+    }
 
 }
+

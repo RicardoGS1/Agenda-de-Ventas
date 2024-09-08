@@ -11,8 +11,8 @@ import androidx.navigation.compose.composable
 import com.virtualword3d.salesregister.Screen.Agregar.PantallaAgregar
 import com.virtualword3d.salesregister.Screen.Editar.PantallaEditar
 import com.virtualword3d.salesregister.Screen.Exportar.PantallaExportar
-import com.virtualword3d.salesregister.Screen.Inicio.PantallaInicio
-import com.virtualword3d.salesregister.Screen.Registro.PantallaRegistro
+import com.virtualworld.agendadeventas.Screen.Inicio.PantallaInicio
+import com.virtualworld.agendadeventas.Screen.Registro.PantallaRegistro
 import com.virtualword3d.salesregister.Screen.Tiendas.PantallaTiendas
 import com.virtualword3d.salesregister.Screen.Venta.PantallaVender
 import com.virtualworld.agendadeventas.Navegation.Routes

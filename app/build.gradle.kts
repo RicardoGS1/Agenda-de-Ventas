@@ -75,24 +75,24 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
 
     //NAVEGATION
-    implementation ("androidx.navigation:navigation-compose:2.7.7")
+    implementation (libs.androidx.navigation.compose)
 
     //Dagger hilt
-    implementation ("javax.annotation:javax.annotation-api:1.3.2")
-    implementation ("com.google.dagger:hilt-android:2.49")
+    implementation (libs.javax.annotation.api)
+    implementation (libs.hilt.android)
 
-    ksp ("com.google.dagger:hilt-compiler:2.47")
-    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    ksp (libs.hilt.compiler)
+    implementation (libs.androidx.hilt.navigation.compose)
 
     //ROOM
-    implementation ("androidx.room:room-runtime:2.6.1")
-    ksp ("androidx.room:room-compiler:2.6.1")
+    implementation (libs.androidx.room.runtime)
+    ksp (libs.androidx.room.compiler)
 
     //FIREBASE
-    implementation ("com.google.firebase:firebase-bom:33.1.2")
+    implementation (platform(libs.firebase.bom))
     //implementation ("com.google.firebase:firebase-analytics-ktx")
-    implementation ("com.google.firebase:firebase-auth-ktx:23.0.0")
-    implementation ("com.google.firebase:firebase-firestore-ktx:25.0.0")
+    implementation (libs.firebase.auth.ktx)
+    implementation (libs.firebase.firestore.ktx)
 
 
     //testing

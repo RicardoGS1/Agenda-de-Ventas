@@ -16,11 +16,12 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewModelInicio @Inject constructor(private val productoRepo: ProductoLocalDataSource,
-                                          private val tiendasRepo: TiendasLocalDataSource,
-                                          private val vendidoRepo: VendidoLocalDataSourse) :
-    ViewModel()
-{
+class ViewModelInicio @Inject constructor(
+    private val productoRepo: ProductoLocalDataSource,
+    private val tiendasRepo: TiendasLocalDataSource,
+    private val vendidoRepo: VendidoLocalDataSourse
+) :
+    ViewModel() {
 
 
     private val _dateDesde = MutableLiveData<String>("")
@@ -30,13 +31,11 @@ class ViewModelInicio @Inject constructor(private val productoRepo: ProductoLoca
     val dateHasta: LiveData<String> = _dateHasta
 
 
-    fun changeDateDesde(date: String)
-    {
+    fun changeDateDesde(date: String) {
         _dateDesde.value = date
     }
 
-    fun changeDateHasta(date: String)
-    {
+    fun changeDateHasta(date: String) {
         _dateHasta.value = date
     }
 
@@ -71,8 +70,7 @@ class ViewModelInicio @Inject constructor(private val productoRepo: ProductoLoca
     private val _unidadesTienda5 = MutableLiveData<Int>(0)
     val unidadesTienda5: LiveData<Int> = _unidadesTienda5
 
-    fun getTiendas()
-    {
+    fun getTiendas() {
 
         tiendasRepo.getTiendas {
 
@@ -102,15 +100,13 @@ class ViewModelInicio @Inject constructor(private val productoRepo: ProductoLoca
     val listaVendidosFecha: LiveData<List<Long>> = _listaVendidosFecha
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getUnidades()
-    {
+    fun getUnidades() {
 
         //  val dateDesdeFormat = _dateDesde.value?.get(0)
 
         // val currentDateMillis: Long = _dateDesde.value.timeInMillis
 
-        if (_dateDesde.value != "" && _dateHasta.value != "")
-        {
+        if (_dateDesde.value != "" && _dateHasta.value != "") {
 
             val fechaDesde =
                 LocalDate.parse(_dateDesde.value, DateTimeFormatter.ofPattern("d/M/yyyy"))
@@ -150,42 +146,35 @@ class ViewModelInicio @Inject constructor(private val productoRepo: ProductoLoca
                 productosVendidosFecha.map {
 
 
-                    when (it.tienda)
-                    {
+                    when (it.tienda) {
 
-                        0 ->
-                        {
+                        0 -> {
                             _unidadesTienda1.value = _unidadesTienda1.value?.plus(it.unidades)
                             Log.e("efecto", _unidadesTienda1.value.toString())
                         }
 
-                        1 ->
-                        {
+                        1 -> {
                             _unidadesTienda2.value = _unidadesTienda2.value?.plus(it.unidades)
                             Log.e("efecto", _unidadesTienda2.value.toString())
                         }
 
-                        2 ->
-                        {
+                        2 -> {
                             _unidadesTienda3.value = _unidadesTienda3.value?.plus(it.unidades)
                             Log.e("efecto", _unidadesTienda3.value.toString())
                         }
 
-                        3 ->
-                        {
+                        3 -> {
                             _unidadesTienda4.value = _unidadesTienda4.value?.plus(it.unidades)
                             Log.e("efecto", _unidadesTienda4.value.toString())
                         }
 
-                        4 ->
-                        {
+                        4 -> {
                             _unidadesTienda5.value = _unidadesTienda5.value?.plus(it.unidades)
                             Log.e("efecto", _unidadesTienda5.value.toString())
                         }
 
 
-                        else ->
-                        {
+                        else -> {
                             Log.e("efecto", "ninguna".toString())
                         }
                     }
@@ -223,11 +212,9 @@ class ViewModelInicio @Inject constructor(private val productoRepo: ProductoLoca
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getGanancia()
-    {
+    fun getGanancia() {
 
-        if (_dateDesde.value != "" && _dateHasta.value != "")
-        {
+        if (_dateDesde.value != "" && _dateHasta.value != "") {
 
             val fechaDesde =
                 LocalDate.parse(_dateDesde.value, DateTimeFormatter.ofPattern("d/M/yyyy"))
@@ -264,47 +251,43 @@ class ViewModelInicio @Inject constructor(private val productoRepo: ProductoLoca
                 productosVendidosFecha.map {
 
 
-                    when (it.tienda)
-                    {
+                    when (it.tienda) {
 
-                        0 ->
-                        {
+                        0 -> {
                             _gananciaTienda1.value =
                                 _gananciaTienda1.value?.plus((it.valor - it.compra) * it.unidades)
                             Log.e("efecto", _gananciaTienda1.value.toString())
                         }
 
-                        1 ->
-                        {
+                        1 -> {
                             _gananciaTienda2.value =
                                 _gananciaTienda2.value?.plus((it.valor - it.compra) * it.unidades)
                             Log.e("efecto", _gananciaTienda2.value.toString())
                         }
 
-                        2 ->
-                        {
+                        2 -> {
                             _gananciaTienda3.value =
                                 _gananciaTienda3.value?.plus((it.valor - it.compra) * it.unidades)
                             Log.e("efecto", _gananciaTienda3.value.toString())
                         }
 
-                        3 ->
-                        {
+                        3 -> {
                             _gananciaTienda4.value =
                                 _gananciaTienda4.value?.plus((it.valor - it.compra) * it.unidades)
-                            Log.e("efectoprueba", _gananciaTienda4.value.toString()+"   "+it.valor )
+                            Log.e(
+                                "efectoprueba",
+                                _gananciaTienda4.value.toString() + "   " + it.valor
+                            )
                         }
 
-                        4 ->
-                        {
+                        4 -> {
                             _gananciaTienda5.value =
                                 _gananciaTienda5.value?.plus((it.valor - it.compra) * it.unidades)
                             Log.e("efecto", _gananciaTienda5.value.toString())
                         }
 
 
-                        else ->
-                        {
+                        else -> {
                             Log.e("efecto", "ninguna".toString())
                         }
                     }

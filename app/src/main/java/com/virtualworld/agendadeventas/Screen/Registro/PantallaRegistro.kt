@@ -1,4 +1,4 @@
-package com.virtualword3d.salesregister.Screen.Registro
+package com.virtualworld.agendadeventas.Screen.Registro
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
@@ -9,14 +9,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExposedDropdownMenuBox
-import androidx.compose.material.ExposedDropdownMenuDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -31,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.virtualword3d.salesregister.Screen.Registro.RegistroViewModel
 import com.virtualworld.agendadeventas.R
 
 @Composable
@@ -49,7 +52,8 @@ fun PantallaRegistro() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TiendasDropdownMenu(viewMode: RegistroViewModel) {
 
@@ -59,57 +63,47 @@ fun TiendasDropdownMenu(viewMode: RegistroViewModel) {
     val nombreTienda4: String by viewMode.nombreTienda4.observeAsState(initial = "")
     val nombreTienda5: String by viewMode.nombreTienda5.observeAsState(initial = "")
 
-    val selectedType: String by viewMode.tiendaSeleccionada.observeAsState(initial = "")
     val types = listOf(nombreTienda1, nombreTienda2, nombreTienda3, nombreTienda4, nombreTienda5)
+    var selectedType by remember { mutableStateOf(types[0])}
     var expanded by remember { mutableStateOf(false) }
+
+
+    println(selectedType)
 
     ExposedDropdownMenuBox(
         expanded = expanded,
-        onExpandedChange = {
-            expanded = !expanded
-        },
-        modifier = Modifier.fillMaxWidth(),
+        onExpandedChange = { expanded = !expanded },
+        modifier = Modifier.fillMaxWidth()
     ) {
-
-
         TextField(
             readOnly = true,
             value = selectedType,
             onValueChange = { },
-            label = { Text(stringResource(R.string.label_spiner_rejistro)) },
-            trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded
-                )
-            },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            modifier = Modifier.fillMaxWidth()
+            label = { Text(stringResource(id = R.string.label_spiner_vender)) },
+            trailingIcon = { TrailingIcon(expanded = expanded) },
+            colors = TextFieldDefaults.textFieldColors(), // Cambiado a Material 3
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor() // Añadido para Material 3
         )
-
         ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = {
-                expanded = false
-            }
+            onDismissRequest = { expanded = false }
         ) {
             types.forEach { selectionOption ->
-
                 if (selectionOption != "") {
                     DropdownMenuItem(
+                        text = { Text(selectionOption) }, // Añadido text
                         onClick = {
                             viewMode.changeTienda(selectionOption)
+                            selectedType = selectionOption // Actualiza el valor seleccionado
                             expanded = false
                         }
-                    ) {
-                        Text(text = selectionOption)
-                    }
+                    )
                 }
-
             }
-
         }
     }
-
 }
 
 @Composable
@@ -143,7 +137,7 @@ fun TtemProducto(index: Int, nombres: String, unidades: Int, costoProducto: Long
     Card(
         modifier=Modifier.padding(4.dp),
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = MaterialTheme.colors.surface,
+        //backgroundColor = MaterialTheme.colors.surface,
           ) {
 
         Column() {

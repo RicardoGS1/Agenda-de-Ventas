@@ -14,21 +14,23 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.TextField
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -67,7 +69,7 @@ fun PantallaEditar() {
 
 
 //LISTA PRODUCTOS PANTALLA EDITAR+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun ListaProductosEditar(viewModel: EditarViewModel) {
 
@@ -202,7 +204,7 @@ fun ItemListaProductosEditar(index: Int, nombres: String, viewModel: EditarViewM
     Card(modifier = Modifier
         .fillMaxWidth()
         .padding(4.dp),
-        elevation = 8.dp){
+        elevation= CardDefaults.cardElevation(8.dp)){
         Column(modifier = Modifier.fillMaxWidth()) {
 
 
@@ -312,8 +314,8 @@ fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String,
             modifier = Modifier
                 .padding(16.dp),
             shape = RoundedCornerShape(8.dp),
-            backgroundColor = MaterialTheme.colors.surface,
-            elevation = 10.dp,
+           // backgroundColor = MaterialTheme.colors.surface,
+            elevation= CardDefaults.cardElevation(10.dp),
         ) {
 
     Box(){
@@ -492,8 +494,8 @@ fun VistaVentanaDetalles(viewModel: EditarViewModel, activaTienda1: Boolean, act
             Card(
                 modifier = Modifier.padding(16.dp),
                 shape = RoundedCornerShape(8.dp),
-                backgroundColor = MaterialTheme.colors.surface,
-                elevation = 10.dp,
+               // backgroundColor = MaterialTheme.colors.surface,
+                elevation= CardDefaults.cardElevation(10.dp),
                 ) {
 
                 Column() {
@@ -608,7 +610,7 @@ fun VistaVentanaBorrar(viewModel: EditarViewModel, producto_borrar: Producto) {
                 viewModel.ventanaBorrar(-1)
             }
             ) {
-                Text(text = stringResource(id = R.string.boton_confirmar_borrar), color =  MaterialTheme.colors.primaryVariant)
+                Text(text = stringResource(id = R.string.boton_confirmar_borrar), color =  MaterialTheme.colorScheme.primary)
             }
         },
         dismissButton = {
@@ -616,7 +618,7 @@ fun VistaVentanaBorrar(viewModel: EditarViewModel, producto_borrar: Producto) {
                 viewModel.ventanaBorrar(-1)
             }
             ) {
-                Text(text = stringResource(id = R.string.boton_confirmar_no_borrar), color =  MaterialTheme.colors.primaryVariant)
+                Text(text = stringResource(id = R.string.boton_confirmar_no_borrar), color =  MaterialTheme.colorScheme.primary)
             }
         },
         title = { Text(text = stringResource(id = R.string.ventana_borrar)) },

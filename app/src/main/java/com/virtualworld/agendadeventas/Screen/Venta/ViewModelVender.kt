@@ -1,4 +1,4 @@
-package com.virtualword3d.salesregister.Screen.Venta
+package com.virtualworld.agendadeventas.Screen.Venta
 
 import android.os.Build
 import android.util.Log

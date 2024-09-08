@@ -21,18 +21,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExposedDropdownMenuBox
-import androidx.compose.material.ExposedDropdownMenuDefaults
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -52,6 +54,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 import com.virtualworld.agendadeventas.R
 import com.virtualword3d.salesregister.Data.Entity.Mensajes
+import com.virtualworld.agendadeventas.Screen.Venta.ViewModelVender
 import kotlinx.coroutines.launch
 
 
@@ -83,7 +86,8 @@ fun PantallaVender(){
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TiendasDropdownMenu(viewModel: ViewModelVender) {
 
@@ -92,56 +96,44 @@ fun TiendasDropdownMenu(viewModel: ViewModelVender) {
     val nombreTienda3: String by viewModel.nombreTienda3.observeAsState(initial = "")
     val nombreTienda4: String by viewModel.nombreTienda4.observeAsState(initial = "")
     val nombreTienda5: String by viewModel.nombreTienda5.observeAsState(initial = "")
-    val selectedType: String by viewModel.tiendaSeleccionada.observeAsState(initial = "")
+   // val selectedType: String by viewModel.tiendaSeleccionada.observeAsState(initial = "")
     val types = listOf(nombreTienda1, nombreTienda2, nombreTienda3, nombreTienda4, nombreTienda5)
+    var selectedType by remember { mutableStateOf(types[0])}
     var expanded by remember { mutableStateOf(false) }
 
 
     ExposedDropdownMenuBox(
         expanded = expanded,
-        onExpandedChange = {
-            expanded = !expanded
-        },
-        modifier = Modifier.fillMaxWidth(),
+        onExpandedChange = { expanded = !expanded },
+        modifier = Modifier.fillMaxWidth()
     ) {
-
-
         TextField(
             readOnly = true,
             value = selectedType,
             onValueChange = { },
             label = { Text(stringResource(id = R.string.label_spiner_vender)) },
-            trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded
-                )
-
-            },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            modifier = Modifier.fillMaxWidth()
+            trailingIcon = { TrailingIcon(expanded = expanded) },
+            colors = TextFieldDefaults.textFieldColors(), // Cambiado a Material 3
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor() // Añadido para Material 3
         )
-
         ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = {
-                expanded = false
-            }
+            onDismissRequest = { expanded = false }
         ) {
             types.forEach { selectionOption ->
-
                 if (selectionOption != "") {
                     DropdownMenuItem(
+                        text = { Text(selectionOption) }, // Añadido text
                         onClick = {
                             viewModel.changeTienda(selectionOption)
+                            selectedType = selectionOption // Actualiza el valor seleccionado
                             expanded = false
                         }
-                    ) {
-                        Text(text = selectionOption)
-                    }
+                    )
                 }
-
             }
-
         }
     }
 }

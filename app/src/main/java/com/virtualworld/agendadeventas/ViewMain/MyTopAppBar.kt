@@ -1,7 +1,12 @@
-package com.virtualword3d.salesregister.ViewMain
-import androidx.compose.material.*
+package com.virtualworld.agendadeventas.ViewMain
+
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 
 
 import androidx.compose.runtime.Composable
@@ -17,15 +22,15 @@ fun MyTopAppBar(
 ) {
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = title) },
+        title = { Text(text = title,color=MaterialTheme.colorScheme.primaryContainer) },
         navigationIcon = {
             IconButton(onClick = { onClickDrawer() }) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu", tint = MaterialTheme.colorScheme.primaryContainer)
             }
         },
 
-        backgroundColor = MaterialTheme.colors.primary,
-        contentColor = Color.White
+        backgroundColor = MaterialTheme.colorScheme.primary,
+       // contentColor = MaterialTheme.colorScheme.primaryContainer
 
     )
 }

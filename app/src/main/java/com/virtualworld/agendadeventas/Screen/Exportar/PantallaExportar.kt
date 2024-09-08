@@ -42,7 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.virtualworld.agendadeventas.R
 
 import com.virtualword3d.salesregister.Data.Entity.Mensajes
-import com.virtualword3d.salesregister.Screen.Inicio.TituloCard
+import com.virtualworld.agendadeventas.Screen.Inicio.TituloCard
 import kotlinx.coroutines.launch
 
 

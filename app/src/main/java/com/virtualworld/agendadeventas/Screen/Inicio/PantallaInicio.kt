@@ -1,4 +1,4 @@
-package com.virtualword3d.salesregister.Screen.Inicio
+package com.virtualworld.agendadeventas.Screen.Inicio
 
 import android.app.DatePickerDialog
 import android.os.Build
@@ -17,11 +17,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,23 +41,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.virtualword3d.salesregister.Screen.Inicio.ViewModelInicio
 import com.virtualworld.agendadeventas.R
 
 import java.util.Calendar
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun PantallaInicio() {
+fun PantallaInicio(viewModel: ViewModelInicio = hiltViewModel()) {
 
-    val viewModel: ViewModelInicio = hiltViewModel()
     viewModel.getTiendas()
     viewModel.getUnidades()
     viewModel.getGanancia()
 
-    Column(Modifier
-               .fillMaxSize()
-               .background(MaterialTheme.colors.primary.copy(alpha = 0.10f)        )
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.10f))
     ) {
 
         SeleccionarPeriodos(viewModel)
@@ -73,18 +76,17 @@ fun PantallaInicio() {
 }
 
 
-
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SeleccionarPeriodos(viewModel: ViewModelInicio) {
+
 
     //CONTENEDOR PRINCIPAL
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp))
-            .background(MaterialTheme.colors.primary),
-        ) {
+            .background(MaterialTheme.colorScheme.primary),
+    ) {
 
         Column {
             //TITULO
@@ -95,7 +97,7 @@ fun SeleccionarPeriodos(viewModel: ViewModelInicio) {
                     .padding(top = 16.dp),
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.primaryContainer,
                 textAlign = TextAlign.Center
 
             )
@@ -109,6 +111,7 @@ fun SeleccionarPeriodos(viewModel: ViewModelInicio) {
         }
     }
 }
+
 
 @Composable
 fun UnidadesVendida(viewModel: ViewModelInicio) {
@@ -133,16 +136,22 @@ fun UnidadesVendida(viewModel: ViewModelInicio) {
             .padding(),
         border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
-        elevation = 8.dp
+        elevation = CardDefaults.cardElevation()
     ) {
 
         Column {
 
             //TITULO
-            TituloCard(stringResource(id = R.string.inicio_unidades_vendidas) , MaterialTheme.colors.primaryVariant)
+            TituloCard(
+                stringResource(id = R.string.inicio_unidades_vendidas),
+                MaterialTheme.colorScheme.primary
+            )
 
             //INFO
-            InfoRow(stringResource(id = R.string.inicio_info_tiendas), stringResource(id = R.string.inicio_info_unidades))
+            InfoRow(
+                stringResource(id = R.string.inicio_info_tiendas),
+                stringResource(id = R.string.inicio_info_unidades)
+            )
 
             //TIENDAS
             ItemTienda(nombreTienda1, unidadesTienda1.toString())
@@ -179,15 +188,21 @@ fun GananciaVenta(viewModel: ViewModelInicio) {
             .padding(),
         border = BorderStroke(1.dp, Color.LightGray),
         shape = RoundedCornerShape(12.dp),
-        elevation = 8.dp
+        elevation = CardDefaults.cardElevation()
     ) {
         Column {
 
             //TITULO
-            TituloCard(stringResource(id = R.string.inicio_ganancia), MaterialTheme.colors.primaryVariant)
+            TituloCard(
+                stringResource(id = R.string.inicio_ganancia),
+                MaterialTheme.colorScheme.primary
+            )
 
             //INFO
-            InfoRow(text1 =stringResource(id = R.string.inicio_info_tiendas), text2 = stringResource(id = R.string.inicio_info_ganancia))
+            InfoRow(
+                text1 = stringResource(id = R.string.inicio_info_tiendas),
+                text2 = stringResource(id = R.string.inicio_info_ganancia)
+            )
 
             ItemTienda(nombreTienda = nombreTienda1, valorTienda = gananciaTienda1.toString())
 
@@ -206,8 +221,6 @@ fun GananciaVenta(viewModel: ViewModelInicio) {
 }
 
 
-
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BotonHasta(modifier: Modifier, viewModel: ViewModelInicio) {
 
@@ -246,25 +259,22 @@ fun BotonHasta(modifier: Modifier, viewModel: ViewModelInicio) {
             .padding(end = 10.dp)
             .padding(bottom = 6.dp),
         shape = RoundedCornerShape(50),
-        border = BorderStroke(width = 1.5.dp, colorResource(R.color.purple_700)),
+        //border = BorderStroke(width = 1.5.dp, colorResource(R.color.purple_700)),
 
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
-
-
+        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimaryContainer)
 
 
-        ) {
+    ) {
         Text(
-            text = stringResource(id = R.string.inicio_hasta)+ " $dateHasta",
+            text = stringResource(id = R.string.inicio_hasta) + " $dateHasta",
             fontSize = 14.sp,
-            color = colorResource(R.color.purple_700),
+            color = MaterialTheme.colorScheme.primaryContainer,
         )
     }
 
 
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BotonDesde(modifier: Modifier, viewModel: ViewModelInicio) {
 
@@ -300,20 +310,20 @@ fun BotonDesde(modifier: Modifier, viewModel: ViewModelInicio) {
             .padding(start = 10.dp)
             .padding(bottom = 6.dp),
         shape = RoundedCornerShape(50),
-        border = BorderStroke(width = 1.5.dp, colorResource(R.color.purple_700)),
+        //border = BorderStroke(width = 1.5.dp, colorResource(R.color.purple_700)),
 
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimaryContainer)
+        // ButtonDefaults.buttonColors( Color.White)
     ) {
         Text(
-            stringResource(id = R.string.inicio_desde)+ " $dateDesde",
+            stringResource(id = R.string.inicio_desde) + " $dateDesde",
             fontSize = 14.sp,
-            color = colorResource(R.color.purple_700),
+            color = MaterialTheme.colorScheme.primaryContainer,
         )
     }
 
 
 }
-
 
 
 @Composable
@@ -337,7 +347,7 @@ fun InfoRow(text1: String, text2: String) {
 }
 
 @Composable
-fun TituloCard(titulo: String,color: Color) {
+fun TituloCard(titulo: String, color: Color) {
 
     Text(
         text = titulo, modifier = Modifier
