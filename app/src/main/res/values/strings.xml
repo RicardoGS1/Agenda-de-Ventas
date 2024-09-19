@@ -71,8 +71,8 @@
 
     //PANTALLA INICIO
     <string name="inicio_priodo">Period</string>
-    <string name="inicio_desde">From</string>
-    <string name="inicio_hasta">Until</string>
+    <string name="inicio_desde">Start</string>
+    <string name="inicio_hasta">Today</string>
     <string name="inicio_unidades_vendidas">Sold Units</string>
     <string name="inicio_ganancia">Profits</string>
     <string name="inicio_info_tiendas">Store</string>

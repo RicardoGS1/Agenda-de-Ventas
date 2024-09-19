@@ -72,8 +72,8 @@
 
     //PANTALLA INICIO
     <string name="inicio_priodo">Periodo</string>
-    <string name="inicio_desde">Desde</string>
-    <string name="inicio_hasta">Hasta</string>
+    <string name="inicio_desde">Inicio</string>
+    <string name="inicio_hasta">Hoy</string>
     <string name="inicio_unidades_vendidas">Unidades Vendidas</string>
     <string name="inicio_ganancia">Ganancia</string>
     <string name="inicio_info_tiendas">Tiendas</string>
