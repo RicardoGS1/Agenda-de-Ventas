@@ -13,9 +13,11 @@ import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 import com.virtualword3d.salesregister.Data.Entity.StoreRoom
 import com.virtualword3d.salesregister.Data.Entity.Vendido
 import com.virtualworld.agendadeventas.common.NetworkResponseState
+import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
 import com.virtualworld.agendadeventas.core.source.local.ProductoLocalDataSource
 import com.virtualworld.agendadeventas.core.source.local.TiendasLocalDataSource
 import com.virtualworld.agendadeventas.core.source.local.VendidoLocalDataSourse
+import com.virtualworld.agendadeventas.domain.UseCase.GetProductStore
 import com.virtualworld.agendadeventas.domain.UseCase.GetStoresActiveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,14 +30,19 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ViewModelVender @Inject constructor( private val getStoresActiveUseCase: GetStoresActiveUseCase, private val productoRepo: ProductoLocalDataSource, private val tiendasRepo: TiendasLocalDataSource, private val vendidoRepo: VendidoLocalDataSourse) : ViewModel() {
+class ViewModelVender @Inject constructor( private val getStoresActiveUseCase: GetStoresActiveUseCase, private val getProductStore: GetProductStore, private val productoRepo: ProductoLocalDataSource, private val tiendasRepo: TiendasLocalDataSource, private val vendidoRepo: VendidoLocalDataSourse) : ViewModel() {
 
 
-    private val _storesActiveState = MutableStateFlow(listOf(""))
-    val storesActiveState : StateFlow<List<String>> = _storesActiveState
+    private val _storesActiveState = MutableStateFlow(listOf( Pair(-1,"")))
+    val storesActiveState : StateFlow<List<Pair<Int,String>>> = _storesActiveState
 
     private val _messengerState = MutableStateFlow("")
     val messengerState : StateFlow<String> = _messengerState
+
+    private val _productForStore = MutableStateFlow(listOf (ProductStoreCore(0,"",0,0,)))
+    val productForStore : StateFlow<List<ProductStoreCore>> = _productForStore
+
+
 
     fun getStoresActive(){
 
@@ -44,11 +51,39 @@ class ViewModelVender @Inject constructor( private val getStoresActiveUseCase: G
             when(state){
                 is NetworkResponseState.Error -> _messengerState.update { state.exception.toString() }
                 is NetworkResponseState.Loading -> NetworkResponseState.Loading
-                is NetworkResponseState.Success -> {_storesActiveState.update { state.result.map { it.nameStore } }  }
+                is NetworkResponseState.Success -> {_storesActiveState.update {
+
+
+
+                    state.result.map {
+
+                        Pair( it.idStore, it.nameStore )
+
+                    }
+
+
+
+                }  }
             }
         }.launchIn(viewModelScope)
 
    }
+
+    fun getProductForStore(idStore:Int){
+
+
+        getProductStore.getProductStore(idStore).onEach {state->
+
+            when(state){
+                is NetworkResponseState.Error ->  println("")
+                is NetworkResponseState.Loading -> NetworkResponseState.Loading
+                is NetworkResponseState.Success -> {_productForStore.update { state.result }  }
+            }
+        }.launchIn(viewModelScope)
+
+
+
+    }
 
 
 

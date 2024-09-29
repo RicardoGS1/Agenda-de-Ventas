@@ -21,6 +21,8 @@ import android.os.Looper
 import android.util.Log
 
 import com.virtualword3d.salesregister.Data.Dao.ProductoDao
+import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import kotlinx.coroutines.flow.Flow
 
 
 import java.util.concurrent.ExecutorService
@@ -35,6 +37,15 @@ import javax.inject.Singleton
 //CLASE UNICA QUE SE LE INYECTA ProductoDao QUE CONTIENE LOS ACCSESOS A LA BD "productos"
 @Singleton
 class ProductoLocalDataSource @Inject constructor(private val productoDao: ProductoDao) {
+
+
+
+   fun getAllProducts(): Flow<List<ProductRoom>> {
+
+       return  productoDao.getAllProduct()
+   }
+
+
 
     private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
     private val mainThreadHandler by lazy {
@@ -80,10 +91,10 @@ class ProductoLocalDataSource @Inject constructor(private val productoDao: Produ
                 if (estadoTabla != null)
                     id = productoDao.maxId().id + 1
 
-                Log.d("Agregando producto", ProductoRoom(id, nombre, compraLong, venta1Long, venta2Long, venta3Long, venta4Long, venta5Long).toString())
+                Log.d("Agregando producto", ProductRoom(id, nombre, compraLong, venta1Long, venta2Long, venta3Long, venta4Long, venta5Long).toString())
 
                 productoDao.insertAll(
-                    ProductoRoom(
+                    ProductRoom(
                         id,
                         nombre,
                         compraLong,
@@ -103,14 +114,14 @@ class ProductoLocalDataSource @Inject constructor(private val productoDao: Produ
         return error
     }
 
-    fun updateProducto(producto: ProductoRoom) {
+    fun updateProducto(producto: ProductRoom) {
         executorService.execute {
             productoDao.update(producto)
         }
     }
 
 
-    fun getAllLogs(callback: (List<ProductoRoom>) -> Unit) {
+    fun getAllLogs(callback: (List<ProductRoom>) -> Unit) {
         executorService.execute {
             val logs = productoDao.getAll()
             mainThreadHandler.post { callback(logs) }
@@ -118,7 +129,7 @@ class ProductoLocalDataSource @Inject constructor(private val productoDao: Produ
     }
 
 
-    fun removeProducto(producto: ProductoRoom, callback: (Int) -> Unit) {
+    fun removeProducto(producto: ProductRoom, callback: (Int) -> Unit) {
         executorService.execute {
             val respuesta = productoDao.borrar(producto)
             mainThreadHandler.post { callback(respuesta) }

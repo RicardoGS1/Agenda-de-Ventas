@@ -25,15 +25,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.virtualworld.agendadeventas.R
+import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
 
 
 @Composable
-fun ListProductSellView(viewModel: ViewModelVender) {
+fun ListProductSellView(stateScreenProductStore: List<ProductStoreCore>) {
 
-    val listaNombreProducto: List<String> by viewModel.nombreProducto.observeAsState(initial = listOf())
-    val listaUnidades:List<Int> by viewModel.listaUnidades.observeAsState(initial = listOf())
 
-    Log.d("efecto", "ListaProductosVenta$listaUnidades")
+
 
     LazyColumn(
         modifier = Modifier
@@ -41,20 +40,18 @@ fun ListProductSellView(viewModel: ViewModelVender) {
             .padding(bottom = 46.dp)
     ) {
 
-        itemsIndexed(items = listaNombreProducto) { index, nombres ->
-            TtemProducto(index, nombres,viewModel )
+        itemsIndexed(items = stateScreenProductStore) { index, nombres ->
+            TtemProducto(index, nombres )
         }
     }
 }
 
 
 @Composable
-fun TtemProducto(index:Int, nombres: String, viewModel: ViewModelVender){
+fun TtemProducto(index:Int, nombres: ProductStoreCore){
 
-    val listaUnidades:List<Int> by viewModel.listaUnidades.observeAsState(initial = listOf())
-    val actualisarcompouse:Int by viewModel.actualisarcompouse.observeAsState(initial = 0)
 
-    Log.e("efecto", "TtemProducto  $listaUnidades  $actualisarcompouse")
+
 
     Card(modifier = Modifier.padding(4.dp)) {
 
@@ -67,7 +64,15 @@ fun TtemProducto(index:Int, nombres: String, viewModel: ViewModelVender){
         ) {
 
             Text(
-                text = nombres,
+                text = nombres.nombre,
+                modifier = Modifier.align(Alignment.CenterVertically),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+
+            )
+
+            Text(
+                text = nombres.venta.toString(),
                 modifier = Modifier.align(Alignment.CenterVertically),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
@@ -82,8 +87,8 @@ fun TtemProducto(index:Int, nombres: String, viewModel: ViewModelVender){
 
                 Button(
                     onClick = {
-                        viewModel.resUnidades(index)
-                        viewModel.actualisarya()
+                       // viewModel.resUnidades(index)
+                       // viewModel.actualisarya()
                     },
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.purple_500)) ,
                     modifier = Modifier
@@ -95,7 +100,7 @@ fun TtemProducto(index:Int, nombres: String, viewModel: ViewModelVender){
 
                 Text(
 
-                    text = listaUnidades[index].toString(),
+                    text = "99",
                     fontSize = 16.sp,
                     modifier = Modifier
                         .padding(8.dp)
@@ -105,8 +110,8 @@ fun TtemProducto(index:Int, nombres: String, viewModel: ViewModelVender){
 
                 Button(
                     onClick = {
-                        viewModel.addUnidades(index)
-                        viewModel.actualisarya()
+                       // viewModel.addUnidades(index)
+                       // viewModel.actualisarya()
                     },
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.purple_500)) ,
                     modifier = Modifier

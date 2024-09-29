@@ -18,6 +18,7 @@ package com.virtualword3d.salesregister.Data.Dao
 
 import androidx.room.*
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import kotlinx.coroutines.flow.Flow
 
 
 /**
@@ -35,6 +36,9 @@ interface ProductoDao {
 
     @Query("SELECT * FROM productos ORDER BY id")
     fun getAll(): List<ProductRoom>
+
+    @Query("SELECT * FROM productos ORDER BY id")
+    fun getAllProduct(): Flow<List<ProductRoom>>
 
     @Insert
     fun insertAll(vararg producto: ProductRoom)

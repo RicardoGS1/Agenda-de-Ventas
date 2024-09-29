@@ -39,12 +39,20 @@ fun PantallaVender(){
     val viewModel: ViewModelVender = hiltViewModel()
 
     val stateScreenStoresActive by viewModel.storesActiveState.collectAsState()
+    val stateScreenProductStore by viewModel.productForStore.collectAsState()
 
     var selectedIndex by remember { mutableStateOf(-1) }
 
     LaunchedEffect(key1 = true) {
         viewModel.getStoresActive()
         viewModel.getProducto()
+
+    }
+
+    LaunchedEffect(selectedIndex ) {
+        println(selectedIndex.toString())
+        if(selectedIndex!=-1)
+        viewModel.getProductForStore(stateScreenStoresActive[selectedIndex].first)
     }
 
    // MensajesAgregar(viewModel)
@@ -61,7 +69,8 @@ fun PantallaVender(){
                 onItemSelected = { index, _ -> selectedIndex = index },
             )
 
-            ListProductSellView(viewModel)
+            if(selectedIndex!=-1)
+                ListProductSellView(stateScreenProductStore)
         }
 
         Button( modifier = Modifier.align(alignment = Alignment.BottomCenter),
