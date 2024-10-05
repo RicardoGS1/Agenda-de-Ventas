@@ -18,7 +18,7 @@ class VendidoLocalDataSourse @Inject constructor(private val vendidoDao: Vendido
 
     fun getDatosVentaEntreFechas(dateStart:Long?,dateEnd:Long?): Flow<List<Vendido>> {
 
-        println(dateStart.toString()+"    "+dateEnd.toString())
+        println("Fecha de Inicio y fin (VendidoLocalDataSourse)  "+dateStart.toString()+" ->  "+dateEnd.toString())
         return vendidoDao.getDatosVentaEntreFechas(dateStart, dateEnd)
 
     }

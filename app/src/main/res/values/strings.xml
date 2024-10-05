@@ -39,9 +39,11 @@
 
 
     //PANTALLA VENDER
-    <string name="label_spiner_vender">Select store</string>
+    <string name="label_spiner_vender">Select a store</string>
     <string name="boton_guardar_vender">Add sales</string>
     <string name="mensaje_vendido_vender">The sale has been successful</string>
+    <string name="sell_item_detall_cost">Cost:&#160;</string>
+    <string name="sell_item_detall_price">Price:&#160;</string>
 
     //PANTALLA REJISTRO
     <string name="label_spiner_rejistro">Select store</string>

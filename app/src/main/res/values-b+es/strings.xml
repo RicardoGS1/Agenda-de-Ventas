@@ -39,9 +39,11 @@
 
 
     //PANTALLA VENDER
-    <string name="label_spiner_vender">Seleccionar tienda</string>
+    <string name="label_spiner_vender">Selecciona una tienda</string>
     <string name="boton_guardar_vender">Agregar Ventas</string>
     <string name="mensaje_vendido_vender">La venta se a relisado corectamente</string>
+    <string name="sell_item_detall_cost">Costo:&#160;</string>
+    <string name="sell_item_detall_price">Precio:&#160;</string>
 
     //PANTALLA REJISTRO
     <string name="label_spiner_rejistro">Seleccionar tienda</string>

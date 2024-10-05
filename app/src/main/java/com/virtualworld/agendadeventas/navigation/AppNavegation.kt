@@ -13,7 +13,7 @@ import com.virtualword3d.salesregister.Screen.Editar.PantallaEditar
 import com.virtualworld.agendadeventas.ui.Screen.Inicio.PantallaInicio
 import com.virtualworld.agendadeventas.ui.Screen.Registro.PantallaRegistro
 import com.virtualword3d.salesregister.Screen.Tiendas.PantallaTiendas
-import com.virtualword3d.salesregister.Screen.Venta.PantallaVender
+import com.virtualword3d.salesregister.Screen.Venta.SellScreen
 import com.virtualworld.agendadeventas.navigation.DrawerNavDestination
 
 //import com.virtualworld.agendadeventas.Navegation.Routes
@@ -26,7 +26,7 @@ fun AppNavegation(navController: NavHostController, paddingValues: PaddingValues
         composable(DrawerNavDestination.Resumen.route) { PantallaInicio() }
         composable(DrawerNavDestination.Agregar.route) { PantallaAgregar() }
         composable(DrawerNavDestination.Editar.route) { PantallaEditar() }
-       composable(DrawerNavDestination.Vender.route) { PantallaVender() }
+       composable(DrawerNavDestination.Vender.route) { SellScreen() }
        composable(DrawerNavDestination.Registro.route) { PantallaRegistro() }
         composable(DrawerNavDestination.Tiendas.route) { PantallaTiendas() }
        // composable(DrawerNavDestination.Resumen.route) { PantallaExportar() }

@@ -26,10 +26,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewModelInicio @Inject constructor(
     private val getResumenStore: GetResumenStore,
+) : ViewModel() {
 
-    ) : ViewModel() {
-
-    private val _inicioScreenState = MutableStateFlow(listOf(GetResumenStore.DatosVestaUI()) )
+    private val _inicioScreenState = MutableStateFlow(listOf(GetResumenStore.DatosVestaUI()))
     val inicioScreenState: StateFlow<List<GetResumenStore.DatosVestaUI>> = _inicioScreenState
 
     private val _dateStart = MutableStateFlow<Long?>(null)
@@ -54,8 +53,8 @@ class ViewModelInicio @Inject constructor(
     }
 
 
-    fun getResumeSellStoreActive(){
-        getResumenStore.getResumeSellStoreActive(_dateStart.value,_dateEnd.value).onEach {state->
+    fun getResumeSellStoreActive() {
+        getResumenStore.getResumeSellStoreActive(_dateStart.value, _dateEnd.value).onEach { state ->
 
             when (state) {
 
@@ -70,15 +69,12 @@ class ViewModelInicio @Inject constructor(
                 }
 
 
-                }
+            }
 
 
         }.launchIn(viewModelScope)
 
     }
-
-
-
 
 
 }

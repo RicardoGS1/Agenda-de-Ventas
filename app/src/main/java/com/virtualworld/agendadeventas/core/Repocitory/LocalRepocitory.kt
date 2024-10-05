@@ -35,7 +35,7 @@ class LocalRepocitory @Inject constructor(
 
 
                                 val ventasTienda =
-                                    listVendidos.filter { it.tienda.toLong() == tienda.id - 1 }
+                                    listVendidos.filter { it.tienda.toLong() == tienda.id }
 
 
                                 val compra = ventasTienda.sumOf { it.compra }
@@ -44,7 +44,7 @@ class LocalRepocitory @Inject constructor(
 
                                 val unidades = ventasTienda.sumOf { it.unidades }
 
-
+                                println("fffffff" + unidades)
 
                                 DataSellCore(
                                     compra,
@@ -53,6 +53,7 @@ class LocalRepocitory @Inject constructor(
                                     tienda.id.toInt(),
                                     tienda.nombre
                                 )
+
 
 
                             }

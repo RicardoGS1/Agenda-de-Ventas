@@ -69,8 +69,8 @@ fun PantallaInicio(viewModel: ViewModelInicio = hiltViewModel()) {
                     title = stringResource(id = R.string.inicio_ganancia),
                     colum2 = stringResource(id = R.string.inicio_info_ganancia),
                     inicioScreenState.map { it.tienda },
-                    inicioScreenState.map { it.ganancia.toString() })
-
+                    inicioScreenState.map { it.ganancia.toString() }
+                )
             }
         }
     }
