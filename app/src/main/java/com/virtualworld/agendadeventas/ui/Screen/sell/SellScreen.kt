@@ -74,8 +74,6 @@ fun SellScreenContent(
     }
 
 
-
-
     Box(modifier = Modifier.fillMaxSize()) {
 
         Column(modifier = Modifier.fillMaxWidth()) {
