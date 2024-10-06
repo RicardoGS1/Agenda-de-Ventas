@@ -1,4 +1,4 @@
-package com.virtualworld.agendadeventas.ui.Screen.Registro
+package com.virtualworld.agendadeventas.ui.Screen.record
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
@@ -13,7 +13,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -33,13 +32,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.virtualword3d.salesregister.Screen.Registro.RegistroViewModel
+import com.virtualword3d.salesregister.Screen.Registro.RecordViewModel
 import com.virtualworld.agendadeventas.R
 
 @Composable
 fun PantallaRegistro() {
 
-    val viewModel: RegistroViewModel = hiltViewModel()
+    val viewModel: RecordViewModel = hiltViewModel()
     viewModel.getTiendas()
     viewModel.allVendidos()
 
@@ -55,7 +54,7 @@ fun PantallaRegistro() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TiendasDropdownMenu(viewMode: RegistroViewModel) {
+fun TiendasDropdownMenu(viewMode: RecordViewModel) {
 
     val nombreTienda1: String by viewMode.nombreTienda1.observeAsState(initial = "")
     val nombreTienda2: String by viewMode.nombreTienda2.observeAsState(initial = "")
@@ -107,7 +106,7 @@ fun TiendasDropdownMenu(viewMode: RegistroViewModel) {
 }
 
 @Composable
-fun ListaProductosVenta(viewMode: RegistroViewModel) {
+fun ListaProductosVenta(viewMode: RecordViewModel) {
 
     val nombreProducto: List<String> by viewMode.nombreProducto.observeAsState(initial = listOf())
     val unidadesProducto: List<Int> by viewMode.unidadesProducto.observeAsState(initial = listOf())
@@ -130,7 +129,7 @@ fun ListaProductosVenta(viewMode: RegistroViewModel) {
 }
 
 @Composable
-fun TtemProducto(index: Int, nombres: String, unidades: Int, costoProducto: Long, precioProducto: Long, fechaVenta: String ,viewMode: RegistroViewModel) {
+fun TtemProducto(index: Int, nombres: String, unidades: Int, costoProducto: Long, precioProducto: Long, fechaVenta: String ,viewMode: RecordViewModel) {
 
     Log.d("efecto", "TtemProducto $index")
 

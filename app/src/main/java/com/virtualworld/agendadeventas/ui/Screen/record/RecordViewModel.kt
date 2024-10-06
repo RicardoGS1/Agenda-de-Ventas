@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class RegistroViewModel @Inject constructor(private val vendidoRepo: VendidoLocalDataSourse, private val tiendasRepo: TiendasLocalDataSource) : ViewModel() {
+class RecordViewModel @Inject constructor(private val vendidoRepo: VendidoLocalDataSourse, private val tiendasRepo: TiendasLocalDataSource) : ViewModel() {
 
     private var numTienda = 0
 
