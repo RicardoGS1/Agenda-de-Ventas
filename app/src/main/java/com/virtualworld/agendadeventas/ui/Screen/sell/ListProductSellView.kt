@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -138,7 +139,7 @@ fun TtemProducto(
                         // viewModel.resUnidades(index)
                         // viewModel.actualisarya()
                     },
-                    colors = ButtonDefaults.buttonColors(colorResource(R.color.purple_500)),
+                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
                     modifier = Modifier
                         .fillMaxHeight()
                         .padding(0.dp)
@@ -162,7 +163,7 @@ fun TtemProducto(
                         // viewModel.addUnidades(index)
                         // viewModel.actualisarya()
                     },
-                    colors = ButtonDefaults.buttonColors(colorResource(R.color.purple_500)),
+                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
                     modifier = Modifier
                         .fillMaxHeight()
                         .padding(0.dp),
