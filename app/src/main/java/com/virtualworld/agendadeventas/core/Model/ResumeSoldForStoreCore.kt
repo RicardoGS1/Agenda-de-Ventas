@@ -1,6 +1,6 @@
 package com.virtualworld.agendadeventas.core.Model
 
-data class DataSellCore(
+data class ResumeSoldForStoreCore(
     val compra : Long,
     val valor : Long,
     val unidades : Int,

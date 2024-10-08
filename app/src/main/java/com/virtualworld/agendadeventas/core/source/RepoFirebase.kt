@@ -7,7 +7,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.virtualword3d.salesregister.Data.Entity.Mensajes
-import com.virtualword3d.salesregister.Data.Entity.Vendido
+import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import javax.inject.Inject
 
 
@@ -70,9 +70,9 @@ class RepoFirebase @Inject constructor()
         mensaje(Mensajes.BIEN)
     }
 
-    fun importSales(mensaje: (Mensajes) -> Unit, listSales: (List<Vendido>) -> Unit)
+    fun importSales(mensaje: (Mensajes) -> Unit, listSales: (List<SoldRoom>) -> Unit)
     {
-        val _listSales : MutableList<Vendido> = mutableListOf()
+        val _listSales : MutableList<SoldRoom> = mutableListOf()
         mensaje(Mensajes.CARGANDO)
         val userId = Firebase.auth.currentUser?.email
 
@@ -88,7 +88,7 @@ class RepoFirebase @Inject constructor()
                             for (document in fireProductos)
                             {
 
-                                val vendido: Vendido=document.toObject(Vendido::class.java)
+                                val vendido: SoldRoom=document.toObject(SoldRoom::class.java)
                                 Log.d("", document.data.toString())
                                 _listSales.add(vendido)
                             }
@@ -106,7 +106,7 @@ class RepoFirebase @Inject constructor()
             }
     }
 
-    fun exportSales(listSales: List<Vendido>,
+    fun exportSales(listSales: List<SoldRoom>,
                     message: (Mensajes) -> Unit,
                     connection: (Boolean) -> Unit)
     {

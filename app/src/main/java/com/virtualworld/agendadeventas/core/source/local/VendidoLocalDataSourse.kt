@@ -4,8 +4,7 @@ import android.os.Handler
 import android.os.Looper
 
 import com.virtualword3d.salesregister.Data.Dao.VendidoDao
-import com.virtualword3d.salesregister.Data.Entity.Vendido
-import com.virtualworld.agendadeventas.core.Model.DataSellCore
+import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import kotlinx.coroutines.flow.Flow
 
 import java.util.concurrent.ExecutorService
@@ -16,10 +15,10 @@ import javax.inject.Singleton
 @Singleton
 class VendidoLocalDataSourse @Inject constructor(private val vendidoDao: VendidoDao) {
 
-    fun getDatosVentaEntreFechas(dateStart:Long?,dateEnd:Long?): Flow<List<Vendido>> {
+    fun getAllSoldFromTo(dateStart:Long?, dateEnd:Long?): Flow<List<SoldRoom>> {
 
         println("Fecha de Inicio y fin (VendidoLocalDataSourse)  "+dateStart.toString()+" ->  "+dateEnd.toString())
-        return vendidoDao.getDatosVentaEntreFechas(dateStart, dateEnd)
+        return vendidoDao.getAllSoldFromTo(dateStart, dateEnd)
 
     }
 
@@ -41,7 +40,7 @@ class VendidoLocalDataSourse @Inject constructor(private val vendidoDao: Vendido
 
     }
 
-    fun addProductoVendido(listaVenta: List<Vendido>) {
+    fun addProductoVendido(listaVenta: List<SoldRoom>) {
         for (i in listaVenta.indices) {
             executorService.execute {
 
@@ -67,7 +66,7 @@ class VendidoLocalDataSourse @Inject constructor(private val vendidoDao: Vendido
     }
 
 
-    fun getAllVendidos(callback: (List<Vendido>) -> Unit) {
+    fun getAllVendidos(callback: (List<SoldRoom>) -> Unit) {
 
         executorService.execute {
             val listvendidos = vendidoDao.getAll()
@@ -78,7 +77,7 @@ class VendidoLocalDataSourse @Inject constructor(private val vendidoDao: Vendido
 
     }
 
-    fun getAllVendidosPorTienda(callback: (List<Vendido>) -> Unit) {
+    fun getAllVendidosPorTienda(callback: (List<SoldRoom>) -> Unit) {
         executorService.execute {
             val listvendidos = vendidoDao.getAll()
 

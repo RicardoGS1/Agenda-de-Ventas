@@ -11,7 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.virtualword3d.salesregister.CasoUso.CasoUsoFirebase
 import com.virtualword3d.salesregister.Data.Entity.Mensajes
-import com.virtualword3d.salesregister.Data.Entity.Vendido
+import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.core.source.local.VendidoLocalDataSourse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -102,7 +102,7 @@ class ViewModelExportar @Inject constructor(private val casoUsoFirebase: CasoUso
         }
     }
 
-    private fun salveSales(listSales: List<Vendido>)
+    private fun salveSales(listSales: List<SoldRoom>)
     {
        vendidoRepo.cleanSales { response->
 
