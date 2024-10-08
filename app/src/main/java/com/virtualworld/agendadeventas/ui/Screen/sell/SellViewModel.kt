@@ -4,17 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.virtualword3d.salesregister.Data.Entity.Mensajes
 
-import com.virtualword3d.salesregister.Data.Entity.Vendido
+import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
 import com.virtualworld.agendadeventas.core.source.local.VendidoLocalDataSourse
 import com.virtualworld.agendadeventas.domain.UseCase.GetProductStore
 import com.virtualworld.agendadeventas.domain.UseCase.GetStoresActiveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -136,7 +134,7 @@ class SellViewModel @Inject constructor(
         val selectedCalendar = Instant.now().toEpochMilli()
 
 
-        val b = mutableListOf<Vendido>()
+        val b = mutableListOf<SoldRoom>()
 
         val a = _productForStore.value.map { product ->
 
@@ -144,7 +142,7 @@ class SellViewModel @Inject constructor(
                 ?.let {
 
                     b.add(
-                        Vendido(
+                        SoldRoom(
                             idprod = product.idProduct.toLong(),
                             nombre = product.nombre,
                             compra = product.compra,

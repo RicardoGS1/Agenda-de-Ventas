@@ -1,15 +1,9 @@
 package com.virtualworld.agendadeventas.domain.UseCase
 
-import com.virtualworld.agendadeventas.core.source.local.TiendasLocalDataSource
-import com.virtualworld.agendadeventas.core.source.local.VendidoLocalDataSourse
-
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.Model.DataSellCore
 import com.virtualworld.agendadeventas.core.Repocitory.LocalRepocitory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -29,7 +23,7 @@ class GetResumenStore @Inject constructor(private val repoLocal: LocalRepocitory
         dateEnd: Long?
     ): Flow<NetworkResponseState<List<DatosVestaUI>>> {
 
-        return repoLocal.getResumeSellStoreActive(dateStart, dateEnd).map { response ->
+        return repoLocal.getResumeSoldStoreActive(dateStart, dateEnd).map { response ->
 
             when (response) {
                 is NetworkResponseState.Loading -> NetworkResponseState.Loading
