@@ -471,7 +471,7 @@ fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String,
             viewModel.updateProducto()
             viewModel.ventanaEditar(-1)
         },
-           colors = ButtonDefaults.buttonColors(colorResource(R.color.purple_500))) {
+           colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)) {
         Text(text = stringResource(R.string.boton_guardar_editar))
     }
         }

@@ -164,7 +164,7 @@ fun ModificarTiendas(viewModel: ViewModelTienda) {
             modifier = Modifier
                 .align(alignment = Alignment.BottomCenter)
                 .padding(bottom = 16.dp),
-            colors = ButtonDefaults.buttonColors(colorResource(R.color.purple_500))
+            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
         ) {
             Text(text = stringResource(id = R.string.boton_guardar_Tiendas))
 

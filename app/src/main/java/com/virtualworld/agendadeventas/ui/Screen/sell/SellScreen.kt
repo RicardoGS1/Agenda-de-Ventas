@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -107,7 +108,7 @@ fun SellScreenContent(
 fun SaveButton(modifier: Modifier, onClick: () -> Unit) {
     Button(
         modifier = modifier,
-        colors = ButtonDefaults.buttonColors(colorResource(R.color.purple_500)),
+        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
         onClick = onClick
     ) {
         Text(text = stringResource(id = R.string.boton_guardar_vender))
