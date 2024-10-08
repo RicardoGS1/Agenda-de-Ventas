@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "vendidos")
-data class Vendido(
+data class SoldRoom(
     @PrimaryKey(autoGenerate = true)
     var idbd:Long=0,
     var idprod: Long=0,

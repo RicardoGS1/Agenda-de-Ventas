@@ -1,159 +1,84 @@
-package com.virtualword3d.salesregister.Screen.Registro
+package com.virtualworld.agendadeventas.ui.Screen.record
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.virtualword3d.salesregister.Data.Entity.Mensajes
 
-import com.virtualword3d.salesregister.Data.Entity.StoreRoom
-import com.virtualworld.agendadeventas.core.source.local.TiendasLocalDataSource
+import com.virtualworld.agendadeventas.common.NetworkResponseState
+import com.virtualworld.agendadeventas.core.Model.SoldForStore
 import com.virtualworld.agendadeventas.core.source.local.VendidoLocalDataSourse
+import com.virtualworld.agendadeventas.domain.UseCase.GetProductStore
+import com.virtualworld.agendadeventas.domain.UseCase.GetSoldForStoreUseCase
+import com.virtualworld.agendadeventas.domain.UseCase.GetStoresActiveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 
 @HiltViewModel
-class RecordViewModel @Inject constructor(private val vendidoRepo: VendidoLocalDataSourse, private val tiendasRepo: TiendasLocalDataSource) : ViewModel() {
+class RecordViewModel @Inject constructor(
+    private val getStoresActiveUseCase: GetStoresActiveUseCase,
+    private val getProductStore: GetProductStore,
+    private val getSoldForStoreUseCase: GetSoldForStoreUseCase,
+    private val vendidoRepo: VendidoLocalDataSourse
+) : ViewModel() {
 
-    private var numTienda = 0
-
-    private val _unidadesProducto = MutableLiveData<List<Int>>()
-    val unidadesProducto: LiveData<List<Int>> = _unidadesProducto
-
-    private val _nombreProducto = MutableLiveData<List<String>>()
-    val nombreProducto: LiveData<List<String>> = _nombreProducto
-
-    private val _costoProducto = MutableLiveData<List<Long>>()
-    val costoProducto: LiveData<List<Long>> = _costoProducto
-
-    private val _precioProducto = MutableLiveData<List<Long>>()
-    val precioProducto: LiveData<List<Long>> = _precioProducto
-
-    private val _fechaVenta = MutableLiveData<List<String>>()
-    val fechaVenta: LiveData<List<String>> = _fechaVenta
+    private val _storesActiveState = MutableStateFlow(listOf(Pair(-1, "")))
+    val storesActiveState: StateFlow<List<Pair<Int, String>>> = _storesActiveState
 
 
-    private val _tiendaSeleccionada = MutableLiveData<String>()
-    val tiendaSeleccionada: LiveData<String> = _tiendaSeleccionada
+    private val _soldForStore = MutableStateFlow(listOf(SoldForStore()))
+    val soldForStore: StateFlow<List<SoldForStore>> = _soldForStore
 
 
-    private val _nombreTienda1 = MutableLiveData<String>()
-    val nombreTienda1: LiveData<String> = _nombreTienda1
+    private val _messengerState = MutableStateFlow(Mensajes.CARGANDO)
+    val messengerState: StateFlow<Mensajes> = _messengerState
 
-    private val _nombreTienda2 = MutableLiveData<String>()
-    val nombreTienda2: LiveData<String> = _nombreTienda2
 
-    private val _nombreTienda3 = MutableLiveData<String>()
-    val nombreTienda3: LiveData<String> = _nombreTienda3
+    init {
 
-    private val _nombreTienda4 = MutableLiveData<String>()
-    val nombreTienda4: LiveData<String> = _nombreTienda4
+        getStoresActive()
+    }
 
-    private val _nombreTienda5 = MutableLiveData<String>()
-    val nombreTienda5: LiveData<String> = _nombreTienda5
+    fun getSoldForStore(idStore: Int){
+        getSoldForStoreUseCase.getSoldForStore(idStore).onEach { state->
 
-    private fun obtenerPrimeraTiends(tiendas: List<StoreRoom>) {
 
-        for (i in 0..4) {
-            if (tiendas[i].activa) {
-                changeTienda(tiendas[i].nombre)
-                break
+            when(state){
+                is NetworkResponseState.Error -> println("")
+                is NetworkResponseState.Loading -> println("")
+                is NetworkResponseState.Success -> _soldForStore.update { state.result }
             }
-        }
+        }.launchIn(viewModelScope)
+
 
     }
 
-    fun changeTienda(selectionOption: String) {
-        _tiendaSeleccionada.value = selectionOption
+    fun getStoresActive() {
 
-        when (_tiendaSeleccionada.value) {
-            _nombreTienda1.value -> {
-                numTienda = 0
-            }
+        getStoresActiveUseCase.GetTiendasActivas().onEach { state ->
 
-            _nombreTienda2.value -> {
-                numTienda = 1
-            }
+            when (state) {
+                is NetworkResponseState.Error -> _messengerState.update { Mensajes.ERROR }
+                is NetworkResponseState.Loading -> Mensajes.CARGANDO
+                is NetworkResponseState.Success -> {
 
-            _nombreTienda3.value -> {
-                numTienda = 2
-            }
+                    _storesActiveState.update {
+                        state.result.map { Pair(it.idStore, it.nameStore) }
+                    }
 
-            _nombreTienda4.value -> {
-                numTienda = 3
+                    _messengerState.update {
+                        Mensajes.NEUTRO
+                    }
+                }
             }
+        }.launchIn(viewModelScope)
 
-            _nombreTienda5.value -> {
-                numTienda = 4
-            }
-        }
-        allVendidos()
     }
 
-    fun getTiendas() {
-
-        tiendasRepo.getTiendas {
-
-            if (it[0].activa)
-                _nombreTienda1.value = it[0].nombre
-
-            if (it[1].activa)
-                _nombreTienda2.value = it[1].nombre
-
-
-            if (it[2].activa)
-                _nombreTienda3.value = it[2].nombre
-
-
-            if (it[3].activa)
-                _nombreTienda4.value = it[3].nombre
-
-
-            if (it[4].activa)
-                _nombreTienda5.value = it[4].nombre
-
-
-            obtenerPrimeraTiends(it)
-
-        }
-    }
-
-    //OBTENER TODOS LOS PRODUCTOS VENDIDOS
-    fun allVendidos() {
-        vendidoRepo.getAllVendidos{
-
-            _nombreProducto.value=it.filter {
-                it.tienda==numTienda
-            }.map {
-                it.nombre
-            }
-
-            _unidadesProducto.value=it.filter {
-                it.tienda==numTienda
-            }.map {
-                it.unidades
-            }
-
-
-            _costoProducto.value=it.filter {
-                it.tienda==numTienda
-            }.map {
-                it.compra
-            }
-
-            _precioProducto.value=it.filter {
-                it.tienda==numTienda
-            }.map {
-                it.valor
-            }
-
-            _fechaVenta.value=it.filter {
-                it.tienda==numTienda
-            }.map {
-                it.fecha.toString()
-            }
-
-
-        }
-    }
 
 }

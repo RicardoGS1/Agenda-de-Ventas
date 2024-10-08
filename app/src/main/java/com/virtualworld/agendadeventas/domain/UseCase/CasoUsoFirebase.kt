@@ -1,7 +1,7 @@
 package com.virtualword3d.salesregister.CasoUso
 
 import com.virtualword3d.salesregister.Data.Entity.Mensajes
-import com.virtualword3d.salesregister.Data.Entity.Vendido
+import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.core.source.RepoFirebase
 import javax.inject.Inject
 
@@ -24,12 +24,12 @@ class CasoUsoFirebase @Inject constructor(private val repoFirebase: RepoFirebase
     }
 
     fun importSales(mensaje: (Mensajes) -> Unit,
-                    listSales: (List<Vendido>) ->Unit)
+                    listSales: (List<SoldRoom>) ->Unit)
     {
         repoFirebase.importSales(mensaje,listSales)
     }
 
-    fun exportSales(listSales: List<Vendido>,
+    fun exportSales(listSales: List<SoldRoom>,
                     message: (Mensajes) -> Unit,
                     conexion: (Boolean) -> Unit)
     {
