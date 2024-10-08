@@ -1,6 +1,5 @@
 package com.virtualworld.agendadeventas.ui.Screen.record
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,8 +23,7 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun ListProductRecordView (stateScreenProductStore: List<SoldForStore>,) {
-
+fun ListProductRecordView(stateScreenProductStore: List<SoldForStore>) {
 
     LazyColumn(
         modifier = Modifier
@@ -33,41 +31,49 @@ fun ListProductRecordView (stateScreenProductStore: List<SoldForStore>,) {
             .padding(bottom = 46.dp)
     ) {
 
-        itemsIndexed(items = stateScreenProductStore) { index, nombres ->
+        itemsIndexed(items = stateScreenProductStore) { index, soldForStore ->
 
-
-            TtemProducto(index, nombres.nombre, nombres.unidades, nombres.compra, nombres.valor, nombres.fecha.toString(), )
+            TtemProducto(
+                soldForStore.nombre,
+                soldForStore.unidades,
+                soldForStore.compra,
+                soldForStore.valor,
+                soldForStore.fecha.toString(),
+            )
         }
     }
 }
 
 
-
 @Composable
-fun TtemProducto(index: Int, nombres: String, unidades: Int, costoProducto: Long, precioProducto: Long, fechaVenta: String ) {
-
-    Log.d("efecto", "TtemProducto $index")
+fun TtemProducto(
+    soldForStore: String,
+    unidades: Int,
+    costoProducto: Long,
+    precioProducto: Long,
+    fechaVenta: String
+) {
 
     Card(
         modifier = Modifier.padding(4.dp),
         shape = RoundedCornerShape(8.dp),
-        //backgroundColor = MaterialTheme.colors.surface,
-    ) {
+
+        ) {
 
         Column() {
 
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(4.dp),
-                text = nombres,
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                text = soldForStore,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
 
             )
 
             Text(
-                modifier = Modifier.align(alignment = Alignment.End),
+                modifier = Modifier.align(alignment = Alignment.End).padding(horizontal = 8.dp),
                 text = stringResource(id = R.string.record_unidades) + " $unidades  " + stringResource(
                     id = R.string.record_costo
                 ) + " $costoProducto  " + stringResource(id = R.string.record_precio) + " $precioProducto",
@@ -75,8 +81,10 @@ fun TtemProducto(index: Int, nombres: String, unidades: Int, costoProducto: Long
             )
 
             Text(
-                modifier = Modifier.align(alignment = Alignment.End),
-                text = stringResource(id = R.string.record_fecha) + convertMillisecondsToDate(fechaVenta),
+                modifier = Modifier.align(alignment = Alignment.End).padding(horizontal = 8.dp),
+                text = stringResource(id = R.string.record_fecha) + convertMillisecondsToDate(
+                    fechaVenta
+                ),
                 fontSize = 16.sp,
                 fontStyle = FontStyle.Italic
             )
