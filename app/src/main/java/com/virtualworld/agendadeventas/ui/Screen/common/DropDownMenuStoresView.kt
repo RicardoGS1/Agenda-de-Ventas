@@ -95,7 +95,7 @@ fun DropDownMenuStoresView(
             Button(onClick = { expanded = !expanded }, modifier = Modifier.fillMaxSize()) {
 
                 Text(
-                    text = if (selectedIndex != -1) items.get(selectedIndex).second else "Select a store",
+                    text = if (selectedIndex != -1) items.get(selectedIndex).second else stringResource(id = R.string.label_spiner_vender),
                     fontSize = 24.sp
                 )
 

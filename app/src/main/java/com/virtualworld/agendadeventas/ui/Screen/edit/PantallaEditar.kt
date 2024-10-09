@@ -350,7 +350,7 @@ fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String,
                             onValueChange = { viewModel.OnChangedNombreProducto(it) },
                             label = {
                                 Text(
-                                    text = "Nombre del Producto",
+                                    text = stringResource(id = R.string.label_nombre_producto),
 
                                     )
                             },
@@ -366,7 +366,7 @@ fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String,
                         TextField(
                             value = precioCompra,
                             onValueChange = { viewModel.OnChangedPrecioCompra(it) },
-                            label = { Text(text = "Precio de compra") },
+                            label = { Text(text = stringResource(id = R.string.label_precio_compra)) },
                             modifier = Modifier
                                 .padding(horizontal = 32.dp)
                                 .padding(vertical = 8.dp),
@@ -381,7 +381,7 @@ fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String,
                             TextField(
                                 value = precioTienda1,
                                 onValueChange = { viewModel.OnChangedPrecioTienda1(it) },
-                                label = { Text(text = "Precio de venta: $nombreTienda1") },
+                                label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda1") },
                                 modifier = Modifier
                                     .padding(horizontal = 32.dp)
                                     .padding(vertical = 8.dp),
@@ -396,7 +396,7 @@ fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String,
                             TextField(
                                 value = precioTienda2,
                                 onValueChange = { viewModel.OnChangedPrecioTienda2(it) },
-                                label = { Text(text = "Precio de venta: $nombreTienda2") },
+                                label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda2") },
                                 modifier = Modifier
 
                                     .padding(horizontal = 32.dp)
@@ -412,7 +412,7 @@ fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String,
                             TextField(
                                 value = precioTienda3,
                                 onValueChange = { viewModel.OnChangedPrecioTienda3(it) },
-                                label = { Text(text = "Precio de venta: $nombreTienda3") },
+                                label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda3") },
                                 modifier = Modifier
                                     .padding(horizontal = 32.dp)
                                     .padding(vertical = 8.dp),
@@ -427,7 +427,7 @@ fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String,
                             TextField(
                                 value = precioTienda4,
                                 onValueChange = { viewModel.OnChangedPrecioTienda4(it) },
-                                label = { Text(text = "Precio de venta: $nombreTienda4") },
+                                label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda4") },
                                 modifier = Modifier
                                     .padding(horizontal = 32.dp)
                                     .padding(vertical = 8.dp),
@@ -446,7 +446,7 @@ fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String,
                                 onValueChange = { viewModel.OnChangedPrecioTienda5(it) },
                                 label = {
                                     Text(
-                                        text = "Precio de venta: $nombreTienda5",
+                                        text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda5",
 
                                         )
                                 },
