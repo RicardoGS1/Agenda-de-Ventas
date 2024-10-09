@@ -1,20 +1,12 @@
 <resources>
     <string name="app_name">Registro de Ventas</string>
 
-    //Vista Tiendas
-    <string name="label_tienda1">Nombre de tienada 1</string>
-    <string name="label_tienda2">Nombre de tienada 2</string>
-    <string name="label_tienda3">Nombre de tienada 3</string>
-    <string name="label_tienda4">Nombre de tienada 4</string>
-    <string name="label_tienda5">Nombre de tienada 5</string>
 
-
-
-    //PantallaAgregar
-    <string name="titulo_agregar">Agregar Producto</string>
-    <string name="boton_guardar_agregar">Guardar</string>
-    <string name="label_nombre_producto">Nombre del Producto</string>
-    <string name="label_precio_compra">Precio de compra</string>
+    //PANTALLA AGREGAR
+    <string name="titulo_agregar">Agregar nuevo producto</string>
+    <string name="boton_guardar_agregar">Agregar</string>
+    <string name="label_nombre_producto">Nombre del producto</string>
+    <string name="label_precio_compra">Costo del producto</string>
     <string name="label_precio_venta">Precio de venta:</string>
     <string name="boton_mensaje_confirmar">Confirmar</string>
     <string name="titulo_mensaje_error">Error</string>
@@ -24,29 +16,6 @@
     <string name="boton_mensaje_seguir">Agregar mas</string>
     <string name="boton_mensaje_terminar">Terminar</string>
 
-
-
-    //PANTALLA TIENDAS
-    <string name="titulo_Tiendas">Configurar Tiendas</string>
-    <string name="info_colunas_nombre">Nombre de tiendas</string>
-    <string name="info_colunas_activas">Tiendas activas</string>
-    <string name="label_nombre_de_tiendas">Nombre de tiendas</string>
-    <string name="boton_guardar_Tiendas">Guardar</string>
-    <string name="mensaje_titulo_error_tiendas">Eror</string>
-    <string name="mensaje_error_tiendas">El nombre de la tienda no pueden estar vasios</string>
-    <string name="mensaje_confirmar_tiendas">Confirmar</string>
-    <string name="mensaje_guardado_tiendas">Los cambios an sido guardados correctamente</string>
-
-
-    //PANTALLA VENDER
-    <string name="label_spiner_vender">Selecciona una tienda</string>
-    <string name="boton_guardar_vender">Agregar Ventas</string>
-    <string name="mensaje_vendido_vender">La venta se a relisado corectamente</string>
-    <string name="sell_item_detall_cost">Costo:&#160;</string>
-    <string name="sell_item_detall_price">Precio:&#160;</string>
-
-    //PANTALLA REJISTRO
-    <string name="label_spiner_rejistro">Seleccionar tienda</string>
 
     //PANTALLA EDITAR
     <string name="ventana_borrar">Desea eliminar este producto</string>
@@ -58,6 +27,44 @@
     <string name="nombre_producto_detalles">Detalles</string>
     <string name="precio_compra_detalles">Precio de compra</string>
     <string name="precio_venta_detalles">Precio de venta: </string>
+
+    //PANTALLA VENDER
+    <string name="label_spiner_vender">Selecciona una tienda</string>
+    <string name="boton_guardar_vender">Agregar Ventas</string>
+    <string name="mensaje_vendido_vender">La venta se a relisado corectamente</string>
+    <string name="sell_item_detall_cost">Costo:&#160;</string>
+    <string name="sell_item_detall_price">Precio:&#160;</string>
+
+
+
+    //PANTALLA REGISTRO
+    <string name="record_unidades">Unidades:</string>
+    <string name="record_precio">Precio:</string>
+    <string name="record_costo">Costo:</string>
+    <string name="record_fecha">Fecha:</string>
+
+
+
+    //PANTALLA TIENDAS
+    <string name="titulo_Tiendas">Configurar tiendas</string>
+    <string name="info_colunas_nombre">Nombre de tiendas</string>
+    <string name="info_colunas_activas">Tiendas activas</string>
+    <string name="label_nombre_de_tiendas">Nombre de tienda</string>
+    <string name="boton_guardar_Tiendas">Guardar</string>
+    <string name="mensaje_titulo_error_tiendas">Eror</string>
+    <string name="mensaje_error_tiendas">El nombre de la tienda no pueden estar vasios</string>
+    <string name="mensaje_confirmar_tiendas">Confirmar</string>
+    <string name="mensaje_guardado_tiendas">Los cambios an sido guardados correctamente</string>
+
+
+
+    //Vista Tiendas
+    <string name="label_tienda1">Nombre de tienada 1</string>
+    <string name="label_tienda2">Nombre de tienada 2</string>
+    <string name="label_tienda3">Nombre de tienada 3</string>
+    <string name="label_tienda4">Nombre de tienada 4</string>
+    <string name="label_tienda5">Nombre de tienada 5</string>
+
 
 
 
@@ -84,11 +91,7 @@
 
 
 
-    //PANTALLA RECORD
-    <string name="record_unidades">Unidades:</string>
-    <string name="record_precio">Precio:</string>
-    <string name="record_costo">Costo:</string>
-    <string name="record_fecha">Fecha:</string>
+
 
 
     //PANTALLA EXPORT
