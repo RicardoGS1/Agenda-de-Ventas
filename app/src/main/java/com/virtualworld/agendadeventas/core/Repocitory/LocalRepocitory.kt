@@ -1,5 +1,7 @@
 package com.virtualworld.agendadeventas.core.Repocitory
 
+import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.ResumeSoldForStoreCore
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
@@ -17,6 +19,38 @@ class LocalRepocitory @Inject constructor(
     private val vendidoLocalDataSource: VendidoLocalDataSourse,
     private val productoLocalDataSource: ProductoLocalDataSource
 ) {
+
+    suspend fun insertListSales(listSoldRoom: List<SoldRoom>){
+        vendidoLocalDataSource.addProductoVendido(listSoldRoom)
+    }
+
+    fun getAllSold(): Flow<NetworkResponseState<List<SoldRoom>>> {
+
+
+
+        return flow {
+
+            emit(NetworkResponseState.Loading)
+
+            try {
+
+
+                vendidoLocalDataSource.getAllSoldFromTo(null, null).collect { listSoldRoom ->
+
+
+                    emit(NetworkResponseState.Success(listSoldRoom))
+                }
+
+
+            } catch (e: Exception) {
+                NetworkResponseState.Error(e)
+            }
+
+
+        }
+
+
+    }
 
 
     fun getAllSoldForStore(idStore: Int): Flow<NetworkResponseState<List<SoldForStore>>> {
@@ -133,6 +167,30 @@ class LocalRepocitory @Inject constructor(
         }
     }
 
+
+    fun getAllProductsRoom(): Flow<NetworkResponseState<List<ProductRoom>>> {
+
+        return flow {
+            emit(NetworkResponseState.Loading)
+
+            try {
+
+                productoLocalDataSource.getAllProducts().collect { listProductAll ->
+
+
+                    emit(NetworkResponseState.Success(listProductAll))
+
+                }
+
+            } catch (e: Exception) {
+                NetworkResponseState.Error(e)
+            }
+
+        }
+    }
+
+
+
     fun getAllProductsStore(idStore: Int): Flow<NetworkResponseState<List<ProductStoreCore>>> {
 
         return flow {
@@ -165,6 +223,20 @@ class LocalRepocitory @Inject constructor(
             }
 
         }
+    }
+
+    suspend fun deleteAllSales(){
+        vendidoLocalDataSource.cleanSales()
+    }
+
+    suspend fun deleteAllProducts() {
+        productoLocalDataSource.deletedAllProduct()
+    }
+
+    suspend fun insertListProducts(result: List<ProductRoom>) {
+
+        productoLocalDataSource.insertListProduct(result)
+
     }
 
 }

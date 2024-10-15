@@ -44,7 +44,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
     packaging {
         resources {
@@ -91,7 +91,7 @@ dependencies {
 
     //FIREBASE
     implementation (platform(libs.firebase.bom))
-    //implementation ("com.google.firebase:firebase-analytics-ktx")
+    implementation (libs.firebase.analytics.ktx)
     implementation (libs.firebase.auth.ktx)
     implementation (libs.firebase.firestore.ktx)
 

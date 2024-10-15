@@ -18,6 +18,7 @@ package com.virtualword3d.salesregister.Data.Dao
 
 import androidx.room.*
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import kotlinx.coroutines.flow.Flow
 
 
@@ -26,6 +27,10 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface ProductoDao {
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertProductRoomList(productRoomList: List<ProductRoom>)
 
 
     @Update
@@ -45,4 +50,7 @@ interface ProductoDao {
 
     @Delete
     fun borrar(producto: ProductRoom): Int
+
+    @Query("DELETE FROM productos")
+    suspend fun cleanAll():Int
 }

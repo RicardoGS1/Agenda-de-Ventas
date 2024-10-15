@@ -13,18 +13,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.virtualworld.agendadeventas.R
 
 
-sealed class Routess(val route: String) {
-    object PantallaInicio: Routess("Resumen")
-    object PantallaAgregar: Routess("Agregar")
-    object PantallaEditar: Routess("Editar")
-    object PantallaVender: Routess("Vender")
-    object PantallaRegistro: Routess("Registro")
-    object PantallaTiendas: Routess("Tiendas")
-    object PantallaExportar: Routess("Exportar")
-
-
-
-}
 
 
 sealed class DrawerNavDestination(val route: String, @StringRes val title: Int, val contentDescription:String, val icon: ImageVector,)

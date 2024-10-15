@@ -137,6 +137,8 @@ class ProductoLocalDataSource @Inject constructor(private val productoDao: Produ
     }
 
 
+
+
     fun maxId(callback: (Long) -> Unit) {
 
         executorService.execute {
@@ -148,6 +150,15 @@ class ProductoLocalDataSource @Inject constructor(private val productoDao: Produ
 
             mainThreadHandler.post { callback(logs) }
         }
+    }
+
+    suspend fun deletedAllProduct() {
+       productoDao.cleanAll()
+    }
+
+    suspend fun insertListProduct(result: List<ProductRoom>) {
+
+        productoDao.insertProductRoomList(result)
     }
 
 
