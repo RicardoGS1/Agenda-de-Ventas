@@ -10,11 +10,12 @@ import androidx.navigation.compose.composable
 
 import com.virtualword3d.salesregister.Screen.Agregar.PantallaAgregar
 import com.virtualword3d.salesregister.Screen.Editar.PantallaEditar
-import com.virtualworld.agendadeventas.ui.Screen.Inicio.PantallaInicio
-import com.virtualworld.agendadeventas.ui.Screen.record.RecordScreen
+import com.virtualworld.agendadeventas.ui.screen.Inicio.PantallaInicio
+import com.virtualworld.agendadeventas.ui.screen.record.RecordScreen
 import com.virtualword3d.salesregister.Screen.Tiendas.PantallaTiendas
-import com.virtualword3d.salesregister.Screen.Venta.SellScreen
+import com.virtualworld.agendadeventas.ui.screen.sell.SellScreen
 import com.virtualworld.agendadeventas.navigation.DrawerNavDestination
+import com.virtualworld.agendadeventas.ui.screen.export.ExportScreen
 
 //import com.virtualworld.agendadeventas.Navegation.Routes
 
@@ -29,7 +30,7 @@ fun AppNavegation(navController: NavHostController, paddingValues: PaddingValues
        composable(DrawerNavDestination.Vender.route) { SellScreen() }
        composable(DrawerNavDestination.Registro.route) { RecordScreen() }
         composable(DrawerNavDestination.Tiendas.route) { PantallaTiendas() }
-       // composable(DrawerNavDestination.Resumen.route) { PantallaExportar() }
+        composable(DrawerNavDestination.Exportar.route) { ExportScreen() }
 
     }
 }

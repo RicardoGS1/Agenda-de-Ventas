@@ -2,6 +2,7 @@ package com.virtualword3d.salesregister.Data.Dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +12,8 @@ import kotlinx.coroutines.flow.Flow
 interface VendidoDao {
 
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSoldRoomList(soldRoomList: List<SoldRoom>)
 
     @Insert
     fun addProductoVendido(vararg vendido: SoldRoom)
@@ -25,6 +28,6 @@ interface VendidoDao {
     fun getAllSoldFromTo(dateStart: Long?, dateEnd: Long?): Flow<List<SoldRoom>>
 
     @Query("DELETE FROM vendidos")
-    fun cleanAll():Int
+    suspend fun cleanAll():Int
 
 }

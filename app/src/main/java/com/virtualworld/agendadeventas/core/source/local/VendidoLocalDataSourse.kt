@@ -5,7 +5,9 @@ import android.os.Looper
 
 import com.virtualword3d.salesregister.Data.Dao.VendidoDao
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -15,37 +17,25 @@ import javax.inject.Singleton
 @Singleton
 class VendidoLocalDataSourse @Inject constructor(private val vendidoDao: VendidoDao) {
 
-    fun getAllSoldFromTo(dateStart:Long?, dateEnd:Long?): Flow<List<SoldRoom>> {
-
-        println("Fecha de Inicio y fin (VendidoLocalDataSourse)  "+dateStart.toString()+" ->  "+dateEnd.toString())
-        return vendidoDao.getAllSoldFromTo(dateStart, dateEnd)
-
-    }
+    fun getAllSoldFromTo(dateStart: Long?, dateEnd: Long?): Flow<List<SoldRoom>> =
+        vendidoDao.getAllSoldFromTo(dateStart, dateEnd)
 
 
     private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
     private val mainThreadHandler by lazy { Handler(Looper.getMainLooper()) }
 
-    fun cleanSales(callback: (Int) -> Unit) {
+   suspend fun cleanSales() {
 
+            vendidoDao.cleanAll()
 
-        executorService.execute {
-
-            val response = vendidoDao.cleanAll()
-
-            mainThreadHandler.post {
-                callback(response)
-            }
-        }
 
     }
 
-    fun addProductoVendido(listaVenta: List<SoldRoom>) {
-        for (i in listaVenta.indices) {
-            executorService.execute {
+    suspend fun addProductoVendido(listaVenta: List<SoldRoom>) {
 
-                vendidoDao.addProductoVendido(listaVenta[i])
-            }
+        withContext(Dispatchers.IO) {
+            vendidoDao.insertSoldRoomList(listaVenta)
+
         }
     }
 
