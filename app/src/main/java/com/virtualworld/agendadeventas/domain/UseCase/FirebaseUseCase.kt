@@ -1,7 +1,7 @@
 package com.virtualword3d.salesregister.CasoUso
 
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
-import com.virtualworld.agendadeventas.core.entity.ScreenUiState
+import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.source.RepoFirebase

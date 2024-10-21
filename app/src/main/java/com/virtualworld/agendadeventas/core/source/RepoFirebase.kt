@@ -1,6 +1,5 @@
 package com.virtualworld.agendadeventas.core.source
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
@@ -9,7 +8,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
-import com.virtualworld.agendadeventas.core.entity.ScreenUiState
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import kotlinx.coroutines.Dispatchers
@@ -72,12 +70,19 @@ class RepoFirebase @Inject constructor() {
                 val collectionRef = FirebaseFirestore.getInstance().collection("fire-agenda-venta")
                 val documentRef = collectionRef.document(userId)
 
-                // Borrar datos existentes
-                documentRef.get().await().let { documentSnapshot ->
-                    if (documentSnapshot.exists()) {
-                        documentSnapshot.reference.delete().await()
-                    }
+
+                val querySnapshot = documentRef.collection("soldRoomList").get().await()
+                val querySnapshot2 = documentRef.collection("productRoomList").get().await()
+
+                querySnapshot.documents.forEach { document ->
+                    document.reference.delete().await()
                 }
+
+                querySnapshot2.documents.forEach { document ->
+                    document.reference.delete().await()
+                }
+
+
 
                 val batch = FirebaseFirestore.getInstance().batch()
 
@@ -95,6 +100,7 @@ class RepoFirebase @Inject constructor() {
                     val documentRefForSoldRoom =
                         documentRef.collection("soldRoomList").document(soldRoom.idbd.toString())
                     batch.set(documentRefForSoldRoom, soldRoomData)
+
                 }
 
                 batch.commit().await()
@@ -104,8 +110,8 @@ class RepoFirebase @Inject constructor() {
                 liProductRoom.forEach { productRoom ->
                     val productRoomData = hashMapOf(
                         "id" to productRoom.id,
-                        "compra" to productRoom.nombre,
-                        "nombre" to productRoom.compra,
+                        "compra" to productRoom.compra,
+                        "nombre" to productRoom.nombre,
                         "venta1" to productRoom.venta1,
                         "venta2" to productRoom.venta2,
                         "venta3" to productRoom.venta3,
@@ -120,6 +126,10 @@ class RepoFirebase @Inject constructor() {
 
 
                 batch2.commit().await()
+
+
+
+
 
                 NetworkResponseState.Success(Unit)
             } catch (e: Exception) {
@@ -178,10 +188,16 @@ class RepoFirebase @Inject constructor() {
     suspend fun importProductRoomListFromFirestore(userId: String): NetworkResponseState<List<ProductRoom>> =
         withContext(Dispatchers.IO) {
             try {
-                val collectionRef = FirebaseFirestore.getInstance().collection("fire-agenda-venta")
-                val documentRef = collectionRef.document(userId)
+                // Obtener la colección de Firestore
+                val collectionRef = FirebaseFirestore.getInstance()
+                    .collection("fire-agenda-venta")
+                    .document(userId)
+                    .collection("productRoomList")
 
-                val liProductRoom = documentRef.collection("productRoomList").get().await().documents.map { document ->
+                // Obtener los documentos
+                val querySnapshot = collectionRef.get().await()
+
+                val liProductRoom = querySnapshot.documents.map { document ->
                     ProductRoom(
                         id = document.getLong("id") ?: 0,
                         nombre = document.getString("nombre") ?: "",
@@ -193,6 +209,8 @@ class RepoFirebase @Inject constructor() {
                         venta5 = document.getLong("venta5") ?: 0
                     )
                 }
+
+                println(liProductRoom)
 
                 NetworkResponseState.Success(liProductRoom)
             } catch (e: Exception) {

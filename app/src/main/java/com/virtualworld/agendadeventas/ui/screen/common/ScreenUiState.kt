@@ -1,4 +1,4 @@
-package com.virtualworld.agendadeventas.core.entity
+package com.virtualworld.agendadeventas.ui.screen.common
 
 enum class ScreenUiState {
     ERROR,

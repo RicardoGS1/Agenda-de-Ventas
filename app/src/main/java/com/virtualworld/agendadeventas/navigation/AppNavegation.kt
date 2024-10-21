@@ -13,7 +13,7 @@ import com.virtualword3d.salesregister.Screen.Editar.PantallaEditar
 import com.virtualworld.agendadeventas.ui.screen.Inicio.PantallaInicio
 import com.virtualworld.agendadeventas.ui.screen.record.RecordScreen
 import com.virtualword3d.salesregister.Screen.Tiendas.PantallaTiendas
-import com.virtualword3d.salesregister.Screen.Venta.SellScreen
+import com.virtualworld.agendadeventas.ui.screen.sell.SellScreen
 import com.virtualworld.agendadeventas.navigation.DrawerNavDestination
 import com.virtualworld.agendadeventas.ui.screen.export.ExportScreen
 

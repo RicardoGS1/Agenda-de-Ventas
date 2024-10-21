@@ -1,4 +1,4 @@
-package com.virtualword3d.salesregister.Screen.Venta
+package com.virtualworld.agendadeventas.ui.screen.sell
 
 import androidx.compose.foundation.layout.Box
 
@@ -24,12 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.virtualworld.agendadeventas.core.entity.ScreenUiState
+import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
-import com.virtualworld.agendadeventas.ui.screen.sell.ListProductSellView
-import com.virtualworld.agendadeventas.ui.screen.sell.SellViewModel
 import com.virtualworld.agendadeventas.ui.screen.common.DropDownMenuStoresView
+import com.virtualworld.agendadeventas.ui.screen.common.MySnackBar
 
 
 @Composable
@@ -38,14 +37,14 @@ fun SellScreen(viewModel: SellViewModel = hiltViewModel()) {
     val storesActiveState by viewModel.storesActiveState.collectAsState()
     val productForStore by viewModel.productForStore.collectAsState()
     val listChangerProductsSell by viewModel.listChangerProductsSell.collectAsState()
-    val uiMessengerState by viewModel.messengerState.collectAsState()
+    val uiMessengerState by viewModel.screenUiState.collectAsState()
 
     SellScreenContent(
         storesActiveState,
         productForStore,
         listChangerProductsSell,
         uiMessengerState,
-        onChangerMessenger = { stateUi -> viewModel.changerMessenger(stateUi) },
+        onChangerMessenger = { stateUi -> viewModel.changerUiState(stateUi) },
         onStoreSelected = { storeId -> viewModel.getProductForStore(storeId) },
         onUnitSellChanged = { changer -> viewModel.changerUnitSell(changer) },
         onSaveSellClicked = { storeId -> viewModel.SalveSell(storeId) }
@@ -65,6 +64,8 @@ fun SellScreenContent(
 ) {
 
     var selectedStoreIndex by remember { mutableStateOf(-1) }
+
+
 
     //Envia al viewModel el id de la tienda seleccionado por el usuario
     LaunchedEffect(selectedStoreIndex) {
@@ -114,34 +115,6 @@ fun SaveButton(modifier: Modifier, onClick: () -> Unit) {
     }
 }
 
-
-@Composable
-fun MySnackBar(uiMessengerState: ScreenUiState, modifier: Modifier, onChangerMessenger: (ScreenUiState) -> Unit) {
-
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    val messageBien = stringResource(id = R.string.mensaje_vendido_vender)
-    val messageError = stringResource(id = R.string.mensaje_error)
-
-    LaunchedEffect(uiMessengerState) {
-
-        if (uiMessengerState == ScreenUiState.OK || uiMessengerState == ScreenUiState.ERROR) {
-            val message = when (uiMessengerState) {
-                ScreenUiState.OK -> messageBien
-                ScreenUiState.ERROR -> messageError
-                else -> ""
-            }
-            snackbarHostState.showSnackbar(message, duration = SnackbarDuration.Short)
-            onChangerMessenger(ScreenUiState.NEUTRAL) // Restablecer el estado del mensaje
-        }
-    }
-
-    SnackbarHost(
-        hostState = snackbarHostState,
-        modifier = modifier
-    )
-
-}
 
 
 

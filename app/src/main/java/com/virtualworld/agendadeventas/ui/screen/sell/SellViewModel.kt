@@ -2,7 +2,7 @@ package com.virtualworld.agendadeventas.ui.screen.sell
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.virtualworld.agendadeventas.core.entity.ScreenUiState
+import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
@@ -32,8 +32,8 @@ class SellViewModel @Inject constructor(
     private val _storesActiveState = MutableStateFlow(listOf(Pair(-1, "")))
     val storesActiveState: StateFlow<List<Pair<Int, String>>> = _storesActiveState
 
-    private val _messengerState = MutableStateFlow(ScreenUiState.LOADING)
-    val messengerState: StateFlow<ScreenUiState> = _messengerState
+    private val _screenUiState = MutableStateFlow(ScreenUiState.LOADING)
+    val screenUiState: StateFlow<ScreenUiState> = _screenUiState
 
     private val _productForStore = MutableStateFlow(listOf(ProductStoreCore(0, "", 0, 0)))
     val productForStore: StateFlow<List<ProductStoreCore>> = _productForStore
@@ -48,8 +48,8 @@ class SellViewModel @Inject constructor(
         getStoresActive()
     }
 
-    fun changerMessenger(message: ScreenUiState){
-        _messengerState.update {
+    fun changerUiState(message: ScreenUiState){
+        _screenUiState.update {
             message
         }
     }
@@ -60,7 +60,7 @@ class SellViewModel @Inject constructor(
         getStoresActiveUseCase.GetTiendasActivas().onEach { state ->
 
             when (state) {
-                is NetworkResponseState.Error -> _messengerState.update { ScreenUiState.ERROR }
+                is NetworkResponseState.Error -> _screenUiState.update { ScreenUiState.ERROR }
                 is NetworkResponseState.Loading -> ScreenUiState.LOADING
                 is NetworkResponseState.Success -> {
 
@@ -68,7 +68,7 @@ class SellViewModel @Inject constructor(
                         state.result.map { Pair(it.idStore, it.nameStore) }
                     }
 
-                    _messengerState.update {
+                    _screenUiState.update {
                         ScreenUiState.NEUTRAL
                     }
                 }
@@ -161,7 +161,7 @@ class SellViewModel @Inject constructor(
         }
 
         vendidoRepo.addProductoVendido(b)
-        changerMessenger(ScreenUiState.OK)
+        changerUiState(ScreenUiState.OK)
         startUnitProduct()
         }
     }

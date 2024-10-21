@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 
-import com.virtualworld.agendadeventas.core.entity.ScreenUiState
+import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.core.source.local.ProductoLocalDataSource
 import com.virtualworld.agendadeventas.core.source.local.TiendasLocalDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel

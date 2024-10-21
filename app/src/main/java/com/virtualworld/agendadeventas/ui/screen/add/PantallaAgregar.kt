@@ -35,7 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.virtualworld.agendadeventas.R
 
 
-import com.virtualworld.agendadeventas.core.entity.ScreenUiState
+import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
 import kotlinx.coroutines.launch
 
