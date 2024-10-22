@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class LocalRepocitory @Inject constructor(
+class LocalRepository @Inject constructor(
     private val tiendasLocalDataSource: TiendasLocalDataSource,
     private val vendidoLocalDataSource: VendidoLocalDataSourse,
     private val productoLocalDataSource: ProductoLocalDataSource
@@ -24,31 +24,33 @@ class LocalRepocitory @Inject constructor(
         vendidoLocalDataSource.addProductoVendido(listSoldRoom)
     }
 
-    fun getAllSold(): Flow<NetworkResponseState<List<SoldRoom>>> {
 
-
+    fun getAllProductsRoom(): Flow<NetworkResponseState<List<ProductRoom>>> {
 
         return flow {
-
             emit(NetworkResponseState.Loading)
-
             try {
-
-
-                vendidoLocalDataSource.getAllSoldFromTo(null, null).collect { listSoldRoom ->
-
-
-                    emit(NetworkResponseState.Success(listSoldRoom))
+                productoLocalDataSource.getAllProducts().collect { listProductAll ->
+                    emit(NetworkResponseState.Success(listProductAll))
                 }
-
-
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
-
-
         }
+    }
 
+    fun getAllSold(): Flow<NetworkResponseState<List<SoldRoom>>> {
+
+        return flow {
+            emit(NetworkResponseState.Loading)
+            try {
+                vendidoLocalDataSource.getAllSoldFromTo(null, null).collect { listSoldRoom ->
+                    emit(NetworkResponseState.Success(listSoldRoom))
+                }
+            } catch (e: Exception) {
+                NetworkResponseState.Error(e)
+            }
+        }
 
     }
 
@@ -168,26 +170,7 @@ class LocalRepocitory @Inject constructor(
     }
 
 
-    fun getAllProductsRoom(): Flow<NetworkResponseState<List<ProductRoom>>> {
 
-        return flow {
-            emit(NetworkResponseState.Loading)
-
-            try {
-
-                productoLocalDataSource.getAllProducts().collect { listProductAll ->
-
-
-                    emit(NetworkResponseState.Success(listProductAll))
-
-                }
-
-            } catch (e: Exception) {
-                NetworkResponseState.Error(e)
-            }
-
-        }
-    }
 
 
 

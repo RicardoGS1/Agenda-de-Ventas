@@ -1,14 +1,14 @@
-package com.virtualworld.agendadeventas.domain.UseCase
+package com.virtualworld.agendadeventas.domain.usecase
 
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.Repocitory.LocalRepocitory
+import com.virtualworld.agendadeventas.core.Repocitory.LocalRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetResumenStore @Inject constructor(private val repoLocal: LocalRepocitory) {
+class GetResumenStore @Inject constructor(private val repoLocal: LocalRepository) {
 
 
     data class DatosVestaUI(

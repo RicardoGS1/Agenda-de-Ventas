@@ -1,16 +1,16 @@
-package com.virtualworld.agendadeventas.domain.UseCase
+package com.virtualworld.agendadeventas.domain.usecase
 
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
-import com.virtualworld.agendadeventas.core.Repocitory.LocalRepocitory
+import com.virtualworld.agendadeventas.core.Repocitory.LocalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetProductStore @Inject constructor(private val localRepocitory: LocalRepocitory) {
+class GetProductStore @Inject constructor(private val localRepocitory: LocalRepository) {
 
-    fun getProductStore(idStore:Int):Flow<NetworkResponseState<List<ProductStoreCore>>>{
+    fun getProductForStore(idStore:Int):Flow<NetworkResponseState<List<ProductStoreCore>>>{
 
         return localRepocitory.getAllProductsStore(idStore).map { response->
 

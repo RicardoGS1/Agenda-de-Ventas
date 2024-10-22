@@ -3,7 +3,7 @@ package com.virtualworld.agendadeventas.ui.screen.Inicio
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
-import com.virtualworld.agendadeventas.domain.UseCase.GetResumenStore
+import com.virtualworld.agendadeventas.domain.usecase.GetResumenStore
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

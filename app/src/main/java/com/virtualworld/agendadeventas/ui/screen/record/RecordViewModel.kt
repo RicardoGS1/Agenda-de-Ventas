@@ -7,9 +7,9 @@ import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.SoldForStore
 import com.virtualworld.agendadeventas.core.source.local.VendidoLocalDataSourse
-import com.virtualworld.agendadeventas.domain.UseCase.GetProductStore
-import com.virtualworld.agendadeventas.domain.UseCase.GetSoldForStoreUseCase
-import com.virtualworld.agendadeventas.domain.UseCase.GetStoresActiveUseCase
+import com.virtualworld.agendadeventas.domain.usecase.GetProductStore
+import com.virtualworld.agendadeventas.domain.usecase.GetSoldForStoreUseCase
+import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

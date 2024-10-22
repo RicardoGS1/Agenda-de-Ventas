@@ -1,17 +1,17 @@
-package com.virtualworld.agendadeventas.domain.UseCase
+package com.virtualworld.agendadeventas.domain.usecase
 
+import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.Model.SoldForStore
-import com.virtualworld.agendadeventas.core.Repocitory.LocalRepocitory
+import com.virtualworld.agendadeventas.core.Repocitory.LocalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetSoldForStoreUseCase @Inject constructor(private val localRepocitory: LocalRepocitory) {
+class GetSoldAllUseCase  @Inject constructor(private val localRepocitory: LocalRepository) {
 
-    fun getSoldForStore(idStore: Int): Flow<NetworkResponseState<List<SoldForStore>>> {
+    fun getSoldAll(): Flow<NetworkResponseState<List<SoldRoom>>> {
 
-       return localRepocitory.getAllSoldForStore(idStore).map { response ->
+        return localRepocitory.getAllSold().map { response ->
 
             when (response) {
                 is NetworkResponseState.Loading -> NetworkResponseState.Loading
@@ -27,5 +27,3 @@ class GetSoldForStoreUseCase @Inject constructor(private val localRepocitory: Lo
         }
     }
 }
-
-
