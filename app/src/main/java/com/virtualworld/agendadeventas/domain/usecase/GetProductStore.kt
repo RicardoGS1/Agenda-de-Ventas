@@ -19,9 +19,6 @@ class GetProductStore @Inject constructor(private val localRepocitory: LocalRepo
                 is NetworkResponseState.Error->NetworkResponseState.Error(response.exception)
                 is NetworkResponseState.Success-> {
 
-
-
-
                     NetworkResponseState.Success(response.result)
                 }
             }
@@ -32,27 +29,7 @@ class GetProductStore @Inject constructor(private val localRepocitory: LocalRepo
 
     }
 
-    fun getAllProductRoom():Flow<NetworkResponseState<List<ProductRoom>>>{
 
-        return localRepocitory.getAllProductsRoom().map { response->
-
-            when(response){
-                is NetworkResponseState.Loading->NetworkResponseState.Loading
-                is NetworkResponseState.Error->NetworkResponseState.Error(response.exception)
-                is NetworkResponseState.Success-> {
-
-
-
-
-                    NetworkResponseState.Success(response.result)
-                }
-            }
-
-
-
-        }
-
-    }
 
 
 }

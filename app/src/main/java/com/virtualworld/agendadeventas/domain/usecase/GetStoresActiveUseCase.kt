@@ -12,7 +12,7 @@ import javax.inject.Inject
 class GetStoresActiveUseCase @Inject constructor(private val repoLocal: LocalRepository) {
 
     fun GetTiendasActivas(): Flow<NetworkResponseState<List<StoresActiveCore>>>{
-        return repoLocal.GetTiendasActivas()
+        return repoLocal.getStoresActive()
 
 
     }

@@ -36,7 +36,7 @@ import javax.inject.Singleton
 
 //CLASE UNICA QUE SE LE INYECTA ProductoDao QUE CONTIENE LOS ACCSESOS A LA BD "productos"
 @Singleton
-class ProductoLocalDataSource @Inject constructor(private val productoDao: ProductoDao) {
+class ProductsLocalDataSource @Inject constructor(private val productoDao: ProductoDao) {
 
 
 

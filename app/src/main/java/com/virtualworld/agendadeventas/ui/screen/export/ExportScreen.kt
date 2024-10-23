@@ -67,7 +67,7 @@ fun ExportScreen() {
                     CompanyInfoSection(identification) { viewModel.closeSession() }
             }
 
-            ExportSales(identification) { viewModel.exportSales() }
+            ExportSales(identification) { viewModel.exportData() }
             ImportSales(identification) { viewModel.importSales() }
 
         }
@@ -292,59 +292,3 @@ fun ImportSales(identification: String, importSales: () -> Unit) {
     }
 }
 
-/*
-@Composable
-fun DialogoConexion(viewModel: ExportViewModel) {
-
-    val mensaje: ScreenUiState by viewModel.screenUiState.collectAsState()
-    val snackState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-    SnackbarHost(hostState = snackState)
-
-    fun iniciarSnakbar(texto: String) {
-        scope.launch {
-            snackState.showSnackbar(
-                message = texto, duration = SnackbarDuration.Short
-            )
-        }
-    }
-
-    if (mensaje != ScreenUiState.NEUTRAL) {
-
-        if (mensaje == ScreenUiState.LOADING) {
-            Dialog(onDismissRequest = { }) {
-                CircularProgressIndicator()
-            }
-        }
-
-        if (mensaje == ScreenUiState.ERROR) {
-
-            AlertDialog(onDismissRequest = {
-                viewModel.onChangerScreenState(ScreenUiState.NEUTRAL)
-            },
-                confirmButton = { },
-                dismissButton = {
-                    TextButton(onClick = {
-                        viewModel.onChangerScreenState(ScreenUiState.NEUTRAL)
-                    }) {
-                        Text(text = "ok")
-                    }
-                },
-                title = { Text(text = "Error") },
-                text = { Text(text = stringResource(id = R.string.mensaje_error)) })
-
-        }
-
-        if (mensaje == ScreenUiState.OK) {
-
-
-            iniciarSnakbar(stringResource(id = R.string.mensaje_exitoso_export))
-            viewModel.onChangerScreenState(ScreenUiState.NEUTRAL)
-
-
-        }
-    }
-}
-
-
- */

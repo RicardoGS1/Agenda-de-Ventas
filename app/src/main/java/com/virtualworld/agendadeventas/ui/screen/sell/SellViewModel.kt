@@ -7,7 +7,7 @@ import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
-import com.virtualworld.agendadeventas.core.source.local.VendidoLocalDataSourse
+import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
 import com.virtualworld.agendadeventas.domain.usecase.GetProductStore
 import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class SellViewModel @Inject constructor(
     private val getStoresActiveUseCase: GetStoresActiveUseCase,
     private val getProductStore: GetProductStore,
-    private val vendidoRepo: VendidoLocalDataSourse
+    private val vendidoRepo: SoldLocalDataSource
 ) : ViewModel() {
 
 

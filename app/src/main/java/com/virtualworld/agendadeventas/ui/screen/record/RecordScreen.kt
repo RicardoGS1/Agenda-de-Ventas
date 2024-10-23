@@ -16,7 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
-import com.virtualworld.agendadeventas.core.Model.SoldForStore
+import com.virtualworld.agendadeventas.core.Model.SoldForStoreCore
 import com.virtualworld.agendadeventas.ui.screen.common.DropDownMenuStoresView
 
 @Composable
@@ -41,7 +41,7 @@ fun RecordScreen(viewModel: RecordViewModel = hiltViewModel()) {
 fun RecordScreenContent(
     storesActiveState: List<Pair<Int, String>>,
     uiMessengerState: ScreenUiState,
-    soldForStore: List<SoldForStore>,
+    soldForStore: List<SoldForStoreCore>,
     onStoreSelected: (Int) -> Unit
 ) {
 

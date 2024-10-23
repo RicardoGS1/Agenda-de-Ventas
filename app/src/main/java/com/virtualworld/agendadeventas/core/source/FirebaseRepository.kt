@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class RepoFirebase @Inject constructor() {
+class FirebaseRepository @Inject constructor() {
 
     var totalProductos = 0
     var contadorProductosExportados = 0
@@ -59,7 +59,7 @@ class RepoFirebase @Inject constructor() {
         }
 
 
-    suspend fun exportSoldRoomListToFirestore(
+    suspend fun exportDataRoomToFirestore(
         soldRoomList: List<SoldRoom>,
         liProductRoom: List<ProductRoom>,
         userId: String

@@ -5,46 +5,41 @@ import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.ResumeSoldForStoreCore
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
-import com.virtualworld.agendadeventas.core.Model.SoldForStore
-import com.virtualworld.agendadeventas.core.source.local.TiendasLocalDataSource
-import com.virtualworld.agendadeventas.core.source.local.VendidoLocalDataSourse
+import com.virtualworld.agendadeventas.core.Model.SoldForStoreCore
+import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
+import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
 import com.virtualworld.agendadeventas.core.Model.StoresActiveCore
-import com.virtualworld.agendadeventas.core.source.local.ProductoLocalDataSource
+import com.virtualworld.agendadeventas.core.source.local.ProductsLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class LocalRepository @Inject constructor(
-    private val tiendasLocalDataSource: TiendasLocalDataSource,
-    private val vendidoLocalDataSource: VendidoLocalDataSourse,
-    private val productoLocalDataSource: ProductoLocalDataSource
+    private val storesLocalDataSource: StoresLocalDataSource,
+    private val soldLocalDataSource: SoldLocalDataSource,
+    private val productsLocalDataSource: ProductsLocalDataSource
 ) {
 
-    suspend fun insertListSales(listSoldRoom: List<SoldRoom>){
-        vendidoLocalDataSource.addProductoVendido(listSoldRoom)
-    }
 
-
-    fun getAllProductsRoom(): Flow<NetworkResponseState<List<ProductRoom>>> {
-
-        return flow {
+    //obtiene todos los productos de la base de datos
+    fun getAllProducts(): Flow<NetworkResponseState<List<ProductRoom>>> =
+        flow {
             emit(NetworkResponseState.Loading)
             try {
-                productoLocalDataSource.getAllProducts().collect { listProductAll ->
+                productsLocalDataSource.getAllProducts().collect { listProductAll ->
                     emit(NetworkResponseState.Success(listProductAll))
                 }
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
         }
-    }
 
-    fun getAllSold(): Flow<NetworkResponseState<List<SoldRoom>>> {
-
-        return flow {
+    //obtiene todas las ventas realizadas de la base de datos
+    fun getAllSold(): Flow<NetworkResponseState<List<SoldRoom>>> =
+        flow {
             emit(NetworkResponseState.Loading)
             try {
-                vendidoLocalDataSource.getAllSoldFromTo(null, null).collect { listSoldRoom ->
+                soldLocalDataSource.getAllSoldFromTo(null, null).collect { listSoldRoom ->
                     emit(NetworkResponseState.Success(listSoldRoom))
                 }
             } catch (e: Exception) {
@@ -52,27 +47,15 @@ class LocalRepository @Inject constructor(
             }
         }
 
-    }
-
-
-    fun getAllSoldForStore(idStore: Int): Flow<NetworkResponseState<List<SoldForStore>>> {
-
-        println(idStore.toString() + "localrepocitry")
-
-        return flow {
-
+    //obtiene las ventas de una tienda especificada por su id
+    fun getAllSoldForStore(idStore: Int): Flow<NetworkResponseState<List<SoldForStoreCore>>> =
+        flow {
             emit(NetworkResponseState.Loading)
-
             try {
+                soldLocalDataSource.getAllSoldFromTo(null, null).collect { listSoldRoom ->
+                    val listSoldForStore = listSoldRoom.filter { it.tienda == idStore }.map {
 
-
-                vendidoLocalDataSource.getAllSoldFromTo(null, null).collect { listSoldRoom ->
-
-                    println(listSoldRoom + "localrepocitry")
-
-                   val listSoldForStore = listSoldRoom.filter { it.tienda == idStore }.map {
-
-                        SoldForStore(
+                        SoldForStoreCore(
                             idbd = it.idbd,
                             idprod = it.idprod,
                             nombre = it.nombre,
@@ -80,21 +63,15 @@ class LocalRepository @Inject constructor(
                             valor = it.valor,
                             unidades = it.unidades,
                             fecha = it.fecha,
-                            )
+                        )
                     }
                     emit(NetworkResponseState.Success(listSoldForStore))
                 }
-
-
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
-
-
         }
 
-
-    }
 
     //obtener los datos sumados de venta de todas las tiendas activas
     fun getResumeSoldStoreActive(
@@ -104,10 +81,10 @@ class LocalRepository @Inject constructor(
         return flow {
             emit(NetworkResponseState.Loading)
             try {
-                vendidoLocalDataSource.getAllSoldFromTo(dateStart, dateEnd)
+                soldLocalDataSource.getAllSoldFromTo(dateStart, dateEnd)
                     .collect { listVendidos ->
 
-                        tiendasLocalDataSource.getAllStores().collect { listTiendas ->
+                        storesLocalDataSource.getAllStores().collect { listTiendas ->
 
                             val resumen = listTiendas.filter { it.activa }.map { tienda ->
 
@@ -145,43 +122,33 @@ class LocalRepository @Inject constructor(
         }
     }
 
-    fun GetTiendasActivas(): Flow<NetworkResponseState<List<StoresActiveCore>>> {
-
-
-        return flow {
+    //ogtiene las tiendas activas
+    fun getStoresActive(): Flow<NetworkResponseState<List<StoresActiveCore>>> =
+        flow {
             emit(NetworkResponseState.Loading)
             try {
-                tiendasLocalDataSource.getAllStores().collect { listStore ->
+                storesLocalDataSource.getAllStores().collect { listStore ->
 
                     val listStoresActive = listStore.filter { it.activa }.map { store ->
 
                         StoresActiveCore(store.id.toInt(), store.nombre)
                     }
                     emit(NetworkResponseState.Success(listStoresActive))
-
                 }
-
-
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
 
         }
-    }
 
-
-
-
-
-
+    //obtiene los productos por tienda especificada por id de tienda
     fun getAllProductsStore(idStore: Int): Flow<NetworkResponseState<List<ProductStoreCore>>> {
-
         return flow {
             emit(NetworkResponseState.Loading)
 
             try {
 
-                productoLocalDataSource.getAllProducts().collect { listProductAll ->
+                productsLocalDataSource.getAllProducts().collect { listProductAll ->
 
                     val listProductStore = listProductAll.map {
 
@@ -208,18 +175,20 @@ class LocalRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteAllSales(){
-        vendidoLocalDataSource.cleanSales()
+    suspend fun insertListSales(listSoldRoom: List<SoldRoom>) {
+        soldLocalDataSource.addProductoVendido(listSoldRoom)
+    }
+
+    suspend fun deleteAllSales() {
+        soldLocalDataSource.cleanSales()
     }
 
     suspend fun deleteAllProducts() {
-        productoLocalDataSource.deletedAllProduct()
+        productsLocalDataSource.deletedAllProduct()
     }
 
     suspend fun insertListProducts(result: List<ProductRoom>) {
-
-        productoLocalDataSource.insertListProduct(result)
-
+        productsLocalDataSource.insertListProduct(result)
     }
 
 }

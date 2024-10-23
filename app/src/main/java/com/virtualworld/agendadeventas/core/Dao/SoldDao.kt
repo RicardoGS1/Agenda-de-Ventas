@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 @Dao
-interface VendidoDao {
+interface SoldDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
