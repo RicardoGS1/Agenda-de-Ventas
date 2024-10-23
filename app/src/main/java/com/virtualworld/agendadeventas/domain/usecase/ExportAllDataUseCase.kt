@@ -1,7 +1,7 @@
 package com.virtualworld.agendadeventas.domain.usecase
 
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.Repocitory.LocalRepository
+import com.virtualworld.agendadeventas.core.repository.LocalRepository
 import com.virtualworld.agendadeventas.core.source.FirebaseRepository
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import kotlinx.coroutines.flow.first

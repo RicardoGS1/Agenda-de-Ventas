@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewModelInicio @Inject constructor(
+class ViewModelResume @Inject constructor(
     private val getResumeStoresUseCase: GetResumeStoresUseCase,
 ) : ViewModel() {
 

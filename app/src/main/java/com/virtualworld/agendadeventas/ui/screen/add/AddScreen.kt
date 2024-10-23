@@ -1,11 +1,14 @@
-package com.virtualword3d.salesregister.Screen.Agregar
+package com.virtualworld.agendadeventas.ui.screen.add
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -26,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -42,9 +46,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun PantallaAgregar() {
-    Log.d("efecto","PantallaAgregar")
+    Log.d("efecto", "PantallaAgregar")
 
-    val viewModel: ViewModelAgregar = hiltViewModel()
+    val viewModel: AddViewModel = hiltViewModel()
     viewModel.getTiendas()
     AgregarProductos(viewModel)
     MensajesAgregar(viewModel)
@@ -53,8 +57,8 @@ fun PantallaAgregar() {
 
 
 @Composable
-fun AgregarProductos(viewModel: ViewModelAgregar) {
-    Log.d("efecto","AgregarProductos")
+fun AgregarProductos(viewModel: AddViewModel) {
+    Log.d("efecto", "AgregarProductos")
 
 
     val nombreProducto: String by viewModel.nombreProducto.observeAsState(initial = "")
@@ -79,92 +83,59 @@ fun AgregarProductos(viewModel: ViewModelAgregar) {
 
 
     Box() {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
 
+        Column {
             //TITULO
-            item {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp))
+                    .background(MaterialTheme.colorScheme.primary)
+            ) {
+
                 Text(
                     text = stringResource(id = R.string.titulo_agregar),
                     fontSize = 24.sp,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp, bottom = 16.dp),
+                        .padding(top = 16.dp, bottom = 16.dp),
                     textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onPrimary
                     //fontWeight = FontWeight.Bold,
                     //color = MaterialTheme.colors.onSurface,
 
 
                 )
+
             }
 
-            //NOMBRE PRODUCTO
-            item {
-                TextField(
-                    value = nombreProducto,
-                    onValueChange = { viewModel.OnChangedNombreProducto(it) },
-                    label = { Text(text = stringResource(id = R.string.label_nombre_producto)) },
-                    modifier = Modifier
-                        .padding(horizontal = 32.dp)
-                        .padding(vertical = 8.dp),
-                    singleLine = true
-                )
-            }
 
-            //PRECIO COMPRA
-            item {
-                TextField(
-                    value = precioCompra,
-                    onValueChange = { viewModel.OnChangedPrecioCompra(it) },
-                    label = { Text(text = stringResource(id = R.string.label_precio_compra)) },
-                    modifier = Modifier
-                        .padding(horizontal = 32.dp)
-                        .padding(vertical = 8.dp),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-                )
-            }
 
-            //TIENDA1
-            if (activaTienda1) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize().padding(vertical = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                //NOMBRE PRODUCTO
                 item {
                     TextField(
-                        value = precioTienda1,
-                        onValueChange = { viewModel.OnChangedPrecioTienda1(it) },
-                        label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda1") },
+                        value = nombreProducto,
+                        onValueChange = { viewModel.OnChangedNombreProducto(it) },
+                        label = { Text(text = stringResource(id = R.string.label_nombre_producto)) },
                         modifier = Modifier
                             .padding(horizontal = 32.dp)
                             .padding(vertical = 8.dp),
-                        singleLine = true, keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                        singleLine = true
                     )
                 }
-            }
 
-            if (activaTienda2) {
+                //PRECIO COMPRA
                 item {
                     TextField(
-                        value = precioTienda2,
-                        onValueChange = { viewModel.OnChangedPrecioTienda2(it) },
-                        label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda2") },
-                        modifier = Modifier
-
-                            .padding(horizontal = 32.dp)
-                            .padding(vertical = 8.dp),
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-                    )
-                }
-            }
-
-            if (activaTienda3) {
-                item {
-                    TextField(
-                        value = precioTienda3,
-                        onValueChange = { viewModel.OnChangedPrecioTienda3(it) },
-                        label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda3") },
+                        value = precioCompra,
+                        onValueChange = { viewModel.OnChangedPrecioCompra(it) },
+                        label = { Text(text = stringResource(id = R.string.label_precio_compra)) },
                         modifier = Modifier
                             .padding(horizontal = 32.dp)
                             .padding(vertical = 8.dp),
@@ -172,39 +143,85 @@ fun AgregarProductos(viewModel: ViewModelAgregar) {
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                     )
                 }
-            }
 
-            if (activaTienda4) {
-                item {
-                    TextField(
-                        value = precioTienda4,
-                        onValueChange = { viewModel.OnChangedPrecioTienda4(it) },
-                        label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda4") },
-                        modifier = Modifier
-                            .padding(horizontal = 32.dp)
-                            .padding(vertical = 8.dp),
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-                    )
-                }
-            }
-
-            if (activaTienda5) {
-                item {
-                    TextField(
-                        value = precioTienda5,
-                        onValueChange = { viewModel.OnChangedPrecioTienda5(it) },
-                        label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda5") },
-                        modifier = Modifier
-                            .padding(horizontal = 32.dp)
-                            .padding(vertical = 8.dp),
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                //TIENDA1
+                if (activaTienda1) {
+                    item {
+                        TextField(
+                            value = precioTienda1,
+                            onValueChange = { viewModel.OnChangedPrecioTienda1(it) },
+                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda1") },
+                            modifier = Modifier
+                                .padding(horizontal = 32.dp)
+                                .padding(vertical = 8.dp),
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                         )
+                    }
+                }
+
+                if (activaTienda2) {
+                    item {
+                        TextField(
+                            value = precioTienda2,
+                            onValueChange = { viewModel.OnChangedPrecioTienda2(it) },
+                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda2") },
+                            modifier = Modifier
+
+                                .padding(horizontal = 32.dp)
+                                .padding(vertical = 8.dp),
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                        )
+                    }
+                }
+
+                if (activaTienda3) {
+                    item {
+                        TextField(
+                            value = precioTienda3,
+                            onValueChange = { viewModel.OnChangedPrecioTienda3(it) },
+                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda3") },
+                            modifier = Modifier
+                                .padding(horizontal = 32.dp)
+                                .padding(vertical = 8.dp),
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                        )
+                    }
+                }
+
+                if (activaTienda4) {
+                    item {
+                        TextField(
+                            value = precioTienda4,
+                            onValueChange = { viewModel.OnChangedPrecioTienda4(it) },
+                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda4") },
+                            modifier = Modifier
+                                .padding(horizontal = 32.dp)
+                                .padding(vertical = 8.dp),
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                        )
+                    }
+                }
+
+                if (activaTienda5) {
+                    item {
+                        TextField(
+                            value = precioTienda5,
+                            onValueChange = { viewModel.OnChangedPrecioTienda5(it) },
+                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda5") },
+                            modifier = Modifier
+                                .padding(horizontal = 32.dp)
+                                .padding(vertical = 8.dp),
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        )
+                    }
                 }
             }
         }
-
 
         Button(
             onClick = { viewModel.setProducto() },
@@ -214,17 +231,20 @@ fun AgregarProductos(viewModel: ViewModelAgregar) {
             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
 
 
-        ) {
-            Text(text = stringResource(id = R.string.boton_guardar_agregar), color = MaterialTheme.colorScheme.primaryContainer)
+            ) {
+            Text(
+                text = stringResource(id = R.string.boton_guardar_agregar),
+                color = MaterialTheme.colorScheme.primaryContainer
+            )
         }
     }
+
 }
 
 
-
 @Composable
-fun MensajesAgregar(viewModel: ViewModelAgregar) {
-    Log.d("efecto","MensajesAgregar")
+fun MensajesAgregar(viewModel: AddViewModel) {
+    Log.d("efecto", "MensajesAgregar")
 
     val respuestaError: ScreenUiState by viewModel.respuestaError.observeAsState(ScreenUiState.NEUTRAL)
     val snackState = remember { SnackbarHostState() }
@@ -247,7 +267,10 @@ fun MensajesAgregar(viewModel: ViewModelAgregar) {
             onDismissRequest = { viewModel.controlMensaje(ScreenUiState.NEUTRAL) },
             confirmButton = {
                 TextButton(onClick = { viewModel.controlMensaje(ScreenUiState.NEUTRAL) }) {
-                    Text(text = stringResource(id = R.string.boton_mensaje_confirmar), color = MaterialTheme.colorScheme.primary)
+                    Text(
+                        text = stringResource(id = R.string.boton_mensaje_confirmar),
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
             },
             title = { Text(text = stringResource(id = R.string.titulo_mensaje_error)) },
@@ -262,7 +285,7 @@ fun MensajesAgregar(viewModel: ViewModelAgregar) {
         viewModel.controlMensaje(ScreenUiState.NEUTRAL)
     }
 
-    }
+}
 
 
 

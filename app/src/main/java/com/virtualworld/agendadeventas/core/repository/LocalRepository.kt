@@ -1,4 +1,4 @@
-package com.virtualworld.agendadeventas.core.Repocitory
+package com.virtualworld.agendadeventas.core.repository
 
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom

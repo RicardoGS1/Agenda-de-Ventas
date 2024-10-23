@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
-import com.virtualword3d.salesregister.Screen.Agregar.PantallaAgregar
+import com.virtualworld.agendadeventas.ui.screen.add.PantallaAgregar
 import com.virtualword3d.salesregister.Screen.Editar.PantallaEditar
 import com.virtualworld.agendadeventas.ui.screen.resume.ResumeScreen
 import com.virtualworld.agendadeventas.ui.screen.record.RecordScreen

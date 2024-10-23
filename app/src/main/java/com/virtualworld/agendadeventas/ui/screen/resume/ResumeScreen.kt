@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,12 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.virtualworld.agendadeventas.R
-import com.virtualworld.agendadeventas.ui.screen.common.MySnackBar
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
 
 @Composable
-fun ResumeScreen(viewModel: ViewModelInicio = hiltViewModel()) {
+fun ResumeScreen(viewModel: ViewModelResume = hiltViewModel()) {
 
     val resumeScreenState by viewModel.resumeDataState.collectAsState()
     val screenUiState: ScreenUiState by viewModel.screenUiState.collectAsState()
@@ -80,7 +78,7 @@ fun ResumeScreen(viewModel: ViewModelInicio = hiltViewModel()) {
 
 
 @Composable
-fun SeleccionarPeriodos(viewModel: ViewModelInicio) {
+fun SeleccionarPeriodos(viewModel: ViewModelResume) {
 
 
     val dateEnd: Long? by viewModel.dateEnd.collectAsState(null)
