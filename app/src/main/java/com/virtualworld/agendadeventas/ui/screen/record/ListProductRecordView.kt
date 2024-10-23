@@ -17,13 +17,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.virtualworld.agendadeventas.R
-import com.virtualworld.agendadeventas.core.Model.SoldForStore
+import com.virtualworld.agendadeventas.core.Model.SoldForStoreCore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
-fun ListProductRecordView(stateScreenProductStore: List<SoldForStore>) {
+fun ListProductRecordView(stateScreenProductStore: List<SoldForStoreCore>) {
 
     LazyColumn(
         modifier = Modifier

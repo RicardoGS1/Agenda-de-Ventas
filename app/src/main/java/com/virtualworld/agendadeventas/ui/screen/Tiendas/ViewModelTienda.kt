@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
-import com.virtualworld.agendadeventas.core.source.local.TiendasLocalDataSource
+import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewModelTienda @Inject constructor(private val tiendasRepo: TiendasLocalDataSource) : ViewModel()
+class ViewModelTienda @Inject constructor(private val tiendasRepo: StoresLocalDataSource) : ViewModel()
 {
 
     //VARIABLES DE NOMBRE TIENDAS

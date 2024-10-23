@@ -2,7 +2,7 @@ package com.virtualword3d.salesregister.ID
 
 import android.content.Context
 import androidx.room.Room
-import com.virtualword3d.salesregister.Data.Dao.VendidoDao
+import com.virtualword3d.salesregister.Data.Dao.SoldDao
 import com.virtualword3d.salesregister.Data.DataBases.VendidoDataBase
 import dagger.Module
 import dagger.Provides
@@ -27,7 +27,7 @@ object VendidoDatabaseModule {
     }
 
     @Provides
-    fun provideVendidoDao(database: VendidoDataBase): VendidoDao
+    fun provideVendidoDao(database: VendidoDataBase): SoldDao
     {
         return database.VendidoDao()
     }

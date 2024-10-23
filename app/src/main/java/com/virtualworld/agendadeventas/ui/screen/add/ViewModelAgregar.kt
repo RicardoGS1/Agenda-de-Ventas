@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel
 
 
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
-import com.virtualworld.agendadeventas.core.source.local.ProductoLocalDataSource
-import com.virtualworld.agendadeventas.core.source.local.TiendasLocalDataSource
+import com.virtualworld.agendadeventas.core.source.local.ProductsLocalDataSource
+import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 
 @HiltViewModel
-class ViewModelAgregar  @Inject constructor(private val productoRepo: ProductoLocalDataSource, private val tiendasRepo: TiendasLocalDataSource) : ViewModel()
+class ViewModelAgregar  @Inject constructor(private val productoRepo: ProductsLocalDataSource, private val tiendasRepo: StoresLocalDataSource) : ViewModel()
 {
     private val _respuestaError= MutableLiveData<ScreenUiState>(ScreenUiState.NEUTRAL)
     val respuestaError : LiveData<ScreenUiState> = _respuestaError

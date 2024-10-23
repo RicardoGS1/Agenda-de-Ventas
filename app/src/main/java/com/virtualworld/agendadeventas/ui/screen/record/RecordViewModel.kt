@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.Model.SoldForStore
-import com.virtualworld.agendadeventas.core.source.local.VendidoLocalDataSourse
-import com.virtualworld.agendadeventas.domain.UseCase.GetProductStore
-import com.virtualworld.agendadeventas.domain.UseCase.GetSoldForStoreUseCase
-import com.virtualworld.agendadeventas.domain.UseCase.GetStoresActiveUseCase
+import com.virtualworld.agendadeventas.core.Model.SoldForStoreCore
+import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
+import com.virtualworld.agendadeventas.domain.usecase.GetProductStore
+import com.virtualworld.agendadeventas.domain.usecase.GetSoldForStoreUseCase
+import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,15 +24,15 @@ class RecordViewModel @Inject constructor(
     private val getStoresActiveUseCase: GetStoresActiveUseCase,
     private val getProductStore: GetProductStore,
     private val getSoldForStoreUseCase: GetSoldForStoreUseCase,
-    private val vendidoRepo: VendidoLocalDataSourse
+    private val vendidoRepo: SoldLocalDataSource
 ) : ViewModel() {
 
     private val _storesActiveState = MutableStateFlow(listOf(Pair(-1, "")))
     val storesActiveState: StateFlow<List<Pair<Int, String>>> = _storesActiveState
 
 
-    private val _soldForStore = MutableStateFlow(listOf(SoldForStore()))
-    val soldForStore: StateFlow<List<SoldForStore>> = _soldForStore
+    private val _soldForStore = MutableStateFlow(listOf(SoldForStoreCore()))
+    val soldForStore: StateFlow<List<SoldForStoreCore>> = _soldForStore
 
 
     private val _messengerState = MutableStateFlow(ScreenUiState.LOADING)

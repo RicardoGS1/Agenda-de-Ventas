@@ -2,7 +2,6 @@ package com.virtualworld.agendadeventas.core.source.local
 
 import android.os.Handler
 import android.os.Looper
-import com.virtualword3d.salesregister.Data.Dao.ProductoDao
 import com.virtualword3d.salesregister.Data.Dao.TiendaDao
 
 import com.virtualword3d.salesregister.Data.Entity.StoreRoom
@@ -13,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TiendasLocalDataSource @Inject constructor(private val tiendaDao: TiendaDao) {
+class StoresLocalDataSource @Inject constructor(private val tiendaDao: TiendaDao) {
 
 
     fun getAllStores(): Flow<List<StoreRoom>>  {

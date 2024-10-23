@@ -8,30 +8,21 @@ import com.google.firebase.auth.auth
 import com.virtualword3d.salesregister.CasoUso.FirebaseUseCase
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.domain.UseCase.DeleteAllProductUseCase
-import com.virtualworld.agendadeventas.domain.UseCase.DeleteAllSalesUseCase
-import com.virtualworld.agendadeventas.domain.UseCase.GetProductStore
-import com.virtualworld.agendadeventas.domain.UseCase.GetSoldAllUseCase
-import com.virtualworld.agendadeventas.domain.UseCase.InsertListSalesUseCase
-import com.virtualworld.agendadeventas.domain.UseCase.SetListProductUseCase
+import com.virtualworld.agendadeventas.domain.usecase.ExportAllDataUseCase
+import com.virtualworld.agendadeventas.domain.usecase.ImportAllDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ExportViewModel @Inject constructor(
-    private val getSoldAllUseCase: GetSoldAllUseCase,
+    private val exportAllDataUseCase: ExportAllDataUseCase,
+    private val importAllDataUseCase: ImportAllDataUseCase,
     private val firebaseUseCase: FirebaseUseCase,
-    private val deleteAllSalesUseCase: DeleteAllSalesUseCase,
-    private val insertListSalesUseCase: InsertListSalesUseCase,
-    private val getProductStore: GetProductStore,
-    private val deleteAllProductUseCase: DeleteAllProductUseCase,
-    private val inserListProductUseCase: SetListProductUseCase
+
 ) : ViewModel() {
 
     private val _identification = MutableStateFlow("")
@@ -99,87 +90,23 @@ class ExportViewModel @Inject constructor(
     }
 
 
-    fun exportSales() {
-
-
+    fun exportData() {
         viewModelScope.launch {
-
             changerUiState(ScreenUiState.LOADING)
-
-            val soldRoomList = getSoldAllUseCase.getSoldAll().filter {
-                it is NetworkResponseState.Success
-            }.first()
-
-            val listProduct = getProductStore.getAllProductRoom().filter {
-                it is NetworkResponseState.Success
-            }.first()
-
-            if (soldRoomList is NetworkResponseState.Success && listProduct is NetworkResponseState.Success) {
-
-                when (val result = firebaseUseCase.exportSoldRoomListToFirestore(
-                    soldRoomList.result,
-                    listProduct.result,
-                    _identification.value
-                )) {
-                    is NetworkResponseState.Loading -> {
-                        changerUiState(ScreenUiState.LOADING)
-                    }
-
-                    is NetworkResponseState.Success -> {
-
-                        changerUiState(ScreenUiState.OK)
-
-                    }
-
-                    is NetworkResponseState.Error -> {
-                        changerUiState(ScreenUiState.ERROR)
-                        println("Error: ${result.exception.message}")
-                    }
-                }
-
-            }
-
-
+            val response = exportAllDataUseCase(_identification.value)
+            changerUiState(response)
         }
-
     }
 
     fun importSales() {
         viewModelScope.launch {
 
             changerUiState(ScreenUiState.LOADING)
+            val response = importAllDataUseCase(_identification.value)
+            changerUiState(response)
 
 
-            val productRoomList =
-                firebaseUseCase.importProductRoomListFromFirestore(_identification.value)
-
-            val soldRoomList =
-                firebaseUseCase.importSoldRoomListFromFirestore(_identification.value)
-
-
-
-
-            if (soldRoomList is NetworkResponseState.Success && productRoomList is NetworkResponseState.Success) {
-
-                println("eliminando bd")
-                deleteAllSalesUseCase.deleteAllSalesUseCase()
-                insertListSalesUseCase.insertListSales(soldRoomList.result)
-
-                deleteAllProductUseCase.deleteAllProductUseCase()
-                inserListProductUseCase.insertListProduct(productRoomList.result)
-
-                changerUiState(ScreenUiState.OK)
-
-
-            }
-
-            if (soldRoomList is NetworkResponseState.Error || productRoomList is NetworkResponseState.Error){
-                changerUiState(ScreenUiState.ERROR)
-            }
-
-
-        }
-
+    }
     }
 
 }
