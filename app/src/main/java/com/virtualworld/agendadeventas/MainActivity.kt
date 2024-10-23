@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
-import com.virtualworld.agendadeventas.ui.screen.MainScreen.MainScreen
+import com.virtualworld.agendadeventas.ui.screen.main.MainScreen
 import com.virtualworld.agendadeventas.ui.theme.AgendaDeVentasTheme
 import dagger.hilt.android.AndroidEntryPoint
 

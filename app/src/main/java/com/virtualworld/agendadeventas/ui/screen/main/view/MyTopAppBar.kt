@@ -1,4 +1,4 @@
-package com.virtualworld.agendadeventas.ui.screen.MainScreen.ViewMain
+package com.virtualworld.agendadeventas.ui.screen.main.view
 
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons

@@ -1,4 +1,4 @@
-package com.virtualworld.agendadeventas.ui.screen.Inicio
+package com.virtualworld.agendadeventas.ui.screen.resume
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 
@@ -28,43 +29,51 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.virtualworld.agendadeventas.R
+import com.virtualworld.agendadeventas.ui.screen.common.MySnackBar
+import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
 
 @Composable
-fun PantallaInicio(viewModel: ViewModelInicio = hiltViewModel()) {
+fun ResumeScreen(viewModel: ViewModelInicio = hiltViewModel()) {
 
-    val inicioScreenState by viewModel.inicioScreenState.collectAsState()
+    val resumeScreenState by viewModel.resumeDataState.collectAsState()
+    val screenUiState: ScreenUiState by viewModel.screenUiState.collectAsState()
 
 
-    LaunchedEffect(key1 = true) {
-        viewModel.getResumeSellStoreActive()
-    }
 
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.10f))
-    ) {
-        SeleccionarPeriodos(viewModel)
+    Box(modifier = Modifier.fillMaxSize()) {
 
-        LazyColumn() {
+        if (screenUiState != ScreenUiState.LOADING) {
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.10f))
+            ) {
+                SeleccionarPeriodos(viewModel)
 
-            item {
-                CardResumeStores(
-                    title = stringResource(id = R.string.inicio_unidades_vendidas),
-                    colum2 = stringResource(id = R.string.inicio_info_unidades),
-                    inicioScreenState.map { it.tienda },
-                    inicioScreenState.map { it.unidades.toString() })
+                LazyColumn() {
+
+                    item {
+                        CardResumeStores(
+                            title = stringResource(id = R.string.inicio_unidades_vendidas),
+                            colum2 = stringResource(id = R.string.inicio_info_unidades),
+                            resumeScreenState.map { it.store },
+                            resumeScreenState.map { it.units.toString() })
+                    }
+
+                    item {
+                        CardResumeStores(
+                            title = stringResource(id = R.string.inicio_ganancia),
+                            colum2 = stringResource(id = R.string.inicio_info_ganancia),
+                            resumeScreenState.map { it.store },
+                            resumeScreenState.map { it.profit.toString() }
+                        )
+                    }
+                }
             }
+        } else {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 
-            item {
-                CardResumeStores(
-                    title = stringResource(id = R.string.inicio_ganancia),
-                    colum2 = stringResource(id = R.string.inicio_info_ganancia),
-                    inicioScreenState.map { it.tienda },
-                    inicioScreenState.map { it.ganancia.toString() }
-                )
-            }
         }
     }
 }

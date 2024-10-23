@@ -86,16 +86,16 @@ class LocalRepository @Inject constructor(
 
                         storesLocalDataSource.getAllStores().collect { listTiendas ->
 
-                            val resumen = listTiendas.filter { it.activa }.map { tienda ->
+                            val resume = listTiendas.filter { it.activa }.map { tienda ->
 
 
                                 val ventasTienda =
                                     listVendidos.filter { it.tienda.toLong() == tienda.id }
 
 
-                                val compra = ventasTienda.sumOf { it.compra }
+                                val compra = ventasTienda.sumOf { it.compra * it.unidades}
 
-                                val valor = ventasTienda.sumOf { it.valor }
+                                val valor = ventasTienda.sumOf { it.valor * it.unidades }
 
                                 val unidades = ventasTienda.sumOf { it.unidades }
 
@@ -111,7 +111,7 @@ class LocalRepository @Inject constructor(
 
                             }
 
-                            emit(NetworkResponseState.Success(resumen))
+                            emit(NetworkResponseState.Success(resume))
 
                         }
 

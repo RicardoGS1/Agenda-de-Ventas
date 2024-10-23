@@ -94,8 +94,8 @@
     <string name="cerrar_sacion">Close Section</string>
     <string name="card_exportar_ventas">Export sales</string>
     <string name="card_importar_ventas">Import Sales</string>
-    <string name="card_exportar_ventas_text">This section allows you to upload the sales record to the cloud, which can be later downloaded to any device</string>
-    <string name="card_importar_ventas_text">Here you can download the sales record from the cloud to any device for their later use</string>
+    <string name="card_exportar_ventas_text">This option allows you to save the database in the cloud so that you can later download it from another device.</string>
+    <string name="card_importar_ventas_text">This option will download the database from the cloud and replace the current application data with remote data.</string>
     <string name="card_exportar_ventas_boton">Export</string>
     <string name="card_importar_ventas_boton">Import</string>
     <string name="nota_exportar_ventas_boton">To access this option you must register</string>

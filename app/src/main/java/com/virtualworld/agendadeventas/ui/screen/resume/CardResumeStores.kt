@@ -1,4 +1,4 @@
-package com.virtualworld.agendadeventas.ui.screen.Inicio
+package com.virtualworld.agendadeventas.ui.screen.resume
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement

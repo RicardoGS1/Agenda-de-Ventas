@@ -62,7 +62,7 @@ fun ExportScreen() {
             ) {
 
                 if (identification == "" || identification == "null")
-                    LogInUpClose(authenticateUser)
+                    LogInUp(authenticateUser)
                 else
                     CompanyInfoSection(identification) { viewModel.closeSession() }
             }
@@ -81,71 +81,6 @@ fun ExportScreen() {
     }
 }
 
-@Composable
-fun LogInUpClose(
-    authenticateUser: (nameUser: String, password: String, isNewUser: Boolean) -> Unit,
-) {
-
-    val userName = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
-
-
-    Column() {
-
-        Text(
-            text = stringResource(id = R.string.export_registrarse),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(top = 16.dp),
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
-            color = MaterialTheme.colorScheme.onPrimary,
-        )
-
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .clip(RoundedCornerShape(16.dp)),
-            value = userName.value,
-            onValueChange = { userName.value = it },
-            label = {
-                Text(text = stringResource(id = R.string.export_correo))
-            })
-
-
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .clip(RoundedCornerShape(16.dp)),
-            value = password.value,
-            onValueChange = { password.value = it },
-            label = {
-                Text(stringResource(id = R.string.export_contracena))
-            })
-
-        TextButton(modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = { authenticateUser(userName.value, password.value, false) }) {
-            Text(
-                text = stringResource(id = R.string.export_iniciar_secion),
-                color = MaterialTheme.colorScheme.onPrimary
-            )
-        }
-
-        TextButton(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = { authenticateUser(userName.value, password.value, true) },
-        ) {
-            Text(
-                text = stringResource(id = R.string.crear_cuenta),
-                color = MaterialTheme.colorScheme.onPrimary
-            )
-        }
-
-    }
-}
 
 
 @Composable
@@ -169,6 +104,7 @@ private fun CompanyInfoSection(identification: String, closeSession: () -> Unit)
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             fontSize = 20.sp,
+            color = MaterialTheme.colorScheme.onPrimary
 
             )
 
