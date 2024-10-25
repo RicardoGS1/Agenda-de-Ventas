@@ -1,4 +1,4 @@
-package com.virtualworld.agendadeventas.ui.screen.Inicio
+package com.virtualworld.agendadeventas.ui.screen.resume
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker

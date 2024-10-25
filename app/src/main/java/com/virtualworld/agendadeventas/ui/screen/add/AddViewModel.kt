@@ -1,4 +1,4 @@
-package com.virtualword3d.salesregister.Screen.Agregar
+package com.virtualworld.agendadeventas.ui.screen.add
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ViewModelAgregar  @Inject constructor(private val productoRepo: ProductsLocalDataSource, private val tiendasRepo: StoresLocalDataSource) : ViewModel()
+class AddViewModel  @Inject constructor(private val productoRepo: ProductsLocalDataSource, private val tiendasRepo: StoresLocalDataSource) : ViewModel()
 {
     private val _respuestaError= MutableLiveData<ScreenUiState>(ScreenUiState.NEUTRAL)
     val respuestaError : LiveData<ScreenUiState> = _respuestaError

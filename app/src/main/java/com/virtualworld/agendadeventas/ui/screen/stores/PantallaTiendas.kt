@@ -1,7 +1,9 @@
 package com.virtualword3d.salesregister.Screen.Tiendas
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 
 
 import androidx.compose.foundation.layout.Row
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -29,6 +32,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 
@@ -68,96 +72,122 @@ fun ModificarTiendas(viewModel: ViewModelTienda) {
 
     //VISTA PRINCIPAL
     Box() {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
 
+        Column {
             //TITULO
-            item {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp))
+                    .background(MaterialTheme.colorScheme.primary)
+            ) {
+
+                Column {
+
+
                 Text(
                     text = stringResource(id = R.string.titulo_Tiendas),
                     fontSize = 24.sp,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp, bottom = 16.dp),
+                        .padding(top = 16.dp, bottom = 8.dp),
                     textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onPrimary
                     //fontWeight = FontWeight.Bold,
-                   // color = MaterialTheme.colors.onSurface
+                    //color = MaterialTheme.colors.onSurface,
+
+
                 )
+
+
+                    Box(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+
+
+                        Text(
+                            text = stringResource(id = R.string.info_colunas_nombre),
+                            modifier = Modifier.padding(start = 16.dp),
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
+                        Text(
+                            text = stringResource(id = R.string.info_colunas_activas),
+                            textAlign = TextAlign.End,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier
+                                .align(alignment = Alignment.CenterEnd)
+                                .padding(end = 12.dp)
+
+                        )
+                    }
+
+                }
+
             }
 
-            //INFO COLUMNA
-            item {
-                Box(modifier = Modifier.fillMaxWidth()) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
 
 
-                    Text(
-                        text = stringResource(id = R.string.info_colunas_nombre),
-                        modifier = Modifier.padding(start = 8.dp),
-                    )
-                    Text(
-                        text = stringResource(id = R.string.info_colunas_activas),
-                        textAlign = TextAlign.End,
-                        modifier = Modifier
-                            .align(alignment = Alignment.CenterEnd)
-                            .padding(end = 8.dp)
+                //TIENDA1
+                item {
+                    FildTienda(
+                        nombreTienda1,
+                        shwitTienda1,
+                        { viewModel.OnChangedTienda1(it) },
+                        { viewModel.OnChangedShwitTienda1(it) },
+                        " 1"
                     )
                 }
-            }
 
-            //TIENDA1
-            item {
-                FildTienda(
-                    nombreTienda1,
-                    shwitTienda1,
-                    { viewModel.OnChangedTienda1(it) },
-                    { viewModel.OnChangedShwitTienda1(it) },
-                " 1")
-            }
+                //TIENDA2
+                item {
+                    FildTienda(
+                        nombreTienda2,
+                        shwitTienda2,
+                        { viewModel.OnChangedTienda2(it) },
+                        { viewModel.OnChangedShwitTienda2(it) },
+                        " 2"
+                    )
+                }
 
-            //TIENDA2
-            item {
-                FildTienda(nombreTienda2,
-                           shwitTienda2,
-                           { viewModel.OnChangedTienda2(it) },
-                           { viewModel.OnChangedShwitTienda2(it) },
-                           " 2"
-                )
-            }
+                //TIENDA3
+                item {
+                    FildTienda(
+                        nombreTienda3,
+                        shwitTienda3,
+                        { viewModel.OnChangedTienda3(it) },
+                        { viewModel.OnChangedShwitTienda3(it) },
+                        " 3"
+                    )
+                }
 
-            //TIENDA3
-            item {
-                FildTienda(nombreTienda3,
-                           shwitTienda3,
-                           { viewModel.OnChangedTienda3(it) },
-                           { viewModel.OnChangedShwitTienda3(it) },
-                           " 3"
-                )
-            }
+                //TIENDA4
+                item {
+                    FildTienda(
+                        nombreTienda4,
+                        shwitTienda4,
+                        { viewModel.OnChangedTienda4(it) },
+                        { viewModel.OnChangedShwitTienda4(it) },
+                        " 4"
+                    )
+                }
 
-            //TIENDA4
-            item {
-                FildTienda(nombreTienda4,
-                           shwitTienda4,
-                           { viewModel.OnChangedTienda4(it) },
-                           { viewModel.OnChangedShwitTienda4(it) },
-                           " 4"
-                )
-            }
+                //TIENDA5
+                item {
+                    FildTienda(
+                        nombreTienda5,
+                        shwitTienda5,
+                        { viewModel.OnChangedTienda5(it) },
+                        { viewModel.OnChangedShwitTienda5(it) },
+                        " 5"
+                    )
+                }
 
-            //TIENDA5
-            item {
-                FildTienda(nombreTienda5,
-                           shwitTienda5,
-                           { viewModel.OnChangedTienda5(it) },
-                           { viewModel.OnChangedShwitTienda5(it) },
-                           " 5"
-                )
             }
-
         }
-
         Button(
             onClick = { viewModel.setTiendas() },
             modifier = Modifier

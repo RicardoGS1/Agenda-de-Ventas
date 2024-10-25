@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,7 +25,7 @@ import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
 import com.virtualworld.agendadeventas.ui.screen.common.DropDownMenuStoresView
-import com.virtualworld.agendadeventas.ui.screen.common.MySnackBar
+import com.virtualworld.agendadeventas.ui.screen.common.ScreenUIStateViwe
 
 
 @Composable
@@ -96,7 +93,7 @@ fun SellScreenContent(
             onClick = { onSaveSellClicked(storesActiveState[selectedStoreIndex].first) }
         )
 
-        MySnackBar(
+        ScreenUIStateViwe(
             uiMessengerState,
             modifier = Modifier.align(Alignment.BottomCenter),
             onChangerMessenger=onChangerMessenger

@@ -96,12 +96,12 @@
 
     //PANTALLA EXPORT
     <string name="export_empresa">Empresa</string>
-    <string name="cerrar_sacion">Cerrar Secion</string>
+    <string name="cerrar_sacion">Cerrar Sesión</string>
     <string name="card_exportar_ventas">Exportar Ventas</string>
     <string name="card_importar_ventas">Importar Ventas</string>
 
-    <string name="card_exportar_ventas_text">Esta seccion te permite subir a la nube el regitro de venta, el cual, posteriormente, puede ser descargado desde cualquier dispositivo</string>
-    <string name="card_importar_ventas_text">Desde aqui puedes descargar el registro de venta desde la nube a cualquier dispositivo, para su posterior uso</string>
+    <string name="card_exportar_ventas_text">Esta opción te permite guardar la base de datos en la nube para posteriormente puedas descargarlo desde otro dispositivo.</string>
+    <string name="card_importar_ventas_text">Esta opción descargara la base de datos desde la nube y remplazara los datos actuales de la aplicación por los remotos..</string>
 
     <string name="card_exportar_ventas_boton">Exportar</string>
     <string name="card_importar_ventas_boton">Importar</string>
@@ -110,7 +110,7 @@
 
     <string name="mensaje_error">Lo sentimos a ocurrido un error</string>
 
-    <string name="mensaje_exitoso_export">La operacion se a realisdo con exito</string>
+    <string name="mensaje_exitoso_export">La operación se a realisdo con exito</string>
 
     <string name="export_registrarse">Registrarse</string>
     <string name="export_correo">Correo</string>

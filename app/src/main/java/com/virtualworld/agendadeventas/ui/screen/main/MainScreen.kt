@@ -1,4 +1,4 @@
-package com.virtualworld.agendadeventas.ui.screen.MainScreen
+package com.virtualworld.agendadeventas.ui.screen.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,7 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.virtualword3d.salesregister.Navegation.AppNavegation
 import com.virtualword3d.salesregister.Navegation.navigateToBottomNavDestination
 import com.virtualworld.agendadeventas.navigation.DrawerNavDestination
-import com.virtualworld.agendadeventas.ui.screen.MainScreen.ViewMain.MyTopAppBar
+import com.virtualworld.agendadeventas.ui.screen.main.view.MyTopAppBar
 import kotlinx.coroutines.launch
 
 @Composable
