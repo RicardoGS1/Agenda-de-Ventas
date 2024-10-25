@@ -1,20 +1,11 @@
 <resources>
     <string name="app_name">Agenda de Ventas</string>
 
-    //Vista Tiendas
-    <string name="label_tienda1">Store name 1</string>
-    <string name="label_tienda2">Store name 2</string>
-    <string name="label_tienda3">Store name 3</string>
-    <string name="label_tienda4">Store name 4</string>
-    <string name="label_tienda5">Store name 5</string>
-
-
-
-    //PantallaAgregar
-    <string name="titulo_agregar">Add Product</string>
-    <string name="boton_guardar_agregar">Salve</string>
+    //SCREEN ADD
+    <string name="titulo_agregar">Add new product</string>
+    <string name="boton_guardar_agregar">Add</string>
     <string name="label_nombre_producto">Product name</string>
-    <string name="label_precio_compra">Purchase price</string>
+    <string name="label_precio_compra">Cost of the product</string>
     <string name="label_precio_venta">Sale price:</string>
     <string name="boton_mensaje_confirmar">Confirm</string>
     <string name="titulo_mensaje_error">Error</string>
@@ -25,30 +16,7 @@
     <string name="boton_mensaje_terminar">End</string>
 
 
-
-    //PANTALLA TIENDAS
-    <string name="titulo_Tiendas">Configure Stores</string>
-    <string name="info_colunas_nombre">Store name</string>
-    <string name="info_colunas_activas">Active stores</string>
-    <string name="label_nombre_de_tiendas">Store name</string>
-    <string name="boton_guardar_Tiendas">Salve</string>
-    <string name="mensaje_titulo_error_tiendas">Eror</string>
-    <string name="mensaje_error_tiendas">The store name cannot be empty</string>
-    <string name="mensaje_confirmar_tiendas">Confirm</string>
-    <string name="mensaje_guardado_tiendas">The changes have been saved correctly</string>
-
-
-    //PANTALLA VENDER
-    <string name="label_spiner_vender">Select a store</string>
-    <string name="boton_guardar_vender">Add sales</string>
-    <string name="mensaje_vendido_vender">The sale has been successful</string>
-    <string name="sell_item_detall_cost">Cost:&#160;</string>
-    <string name="sell_item_detall_price">Price:&#160;</string>
-
-    //PANTALLA REJISTRO
-    <string name="label_spiner_rejistro">Select store</string>
-
-    //PANTALLA EDITAR
+    //SCREEN EDIT
     <string name="ventana_borrar">You want to delete this product</string>
     <string name="boton_confirmar_borrar">Yes</string>
     <string name="boton_confirmar_no_borrar">No</string>
@@ -58,6 +26,42 @@
     <string name="nombre_producto_detalles">Details</string>
     <string name="precio_compra_detalles">Purchase price</string>
     <string name="precio_venta_detalles">Sale price: </string>
+
+
+    //SCREEN SELL
+    <string name="label_spiner_vender">Select a store</string>
+    <string name="boton_guardar_vender">Add sales</string>
+    <string name="mensaje_vendido_vender">The sale has been successful</string>
+    <string name="sell_item_detall_cost">Cost:&#160;</string>
+    <string name="sell_item_detall_price">Price:&#160;</string>
+
+    //SCREEN RECORD
+    <string name="record_unidades">Units:</string>
+    <string name="record_precio">Price:</string>
+    <string name="record_costo">Cost:</string>
+    <string name="record_fecha">Date:</string>
+
+    //SCREEN STORE
+    <string name="titulo_Tiendas">Setting stores</string>
+    <string name="info_colunas_nombre">Name stores</string>
+    <string name="info_colunas_activas">Active stores</string>
+    <string name="label_nombre_de_tiendas">Name store</string>
+    <string name="boton_guardar_Tiendas">Salve</string>
+    <string name="mensaje_titulo_error_tiendas">Eror</string>
+    <string name="mensaje_error_tiendas">The store name cannot be empty</string>
+    <string name="mensaje_confirmar_tiendas">Confirm</string>
+    <string name="mensaje_guardado_tiendas">The changes have been saved correctly</string>
+
+
+
+
+    //Vista Tiendas
+    <string name="label_tienda1">Store name 1</string>
+    <string name="label_tienda2">Store name 2</string>
+    <string name="label_tienda3">Store name 3</string>
+    <string name="label_tienda4">Store name 4</string>
+    <string name="label_tienda5">Store name 5</string>
+
 
 
     //MAIN ACTYVITY
@@ -81,11 +85,7 @@
     <string name="inicio_info_unidades">Units</string>
     <string name="inicio_info_ganancia">Profits</string>
 
-    //PANTALLA RECORD
-    <string name="record_unidades">Units:</string>
-    <string name="record_precio">Price:</string>
-    <string name="record_costo">Cost:</string>
-    <string name="record_fecha">Date:</string>
+
 
 
 
@@ -94,8 +94,8 @@
     <string name="cerrar_sacion">Close Section</string>
     <string name="card_exportar_ventas">Export sales</string>
     <string name="card_importar_ventas">Import Sales</string>
-    <string name="card_exportar_ventas_text">This section allows you to upload the sales record to the cloud, which can be later downloaded to any device</string>
-    <string name="card_importar_ventas_text">Here you can download the sales record from the cloud to any device for their later use</string>
+    <string name="card_exportar_ventas_text">This option allows you to save the database in the cloud so that you can later download it from another device.</string>
+    <string name="card_importar_ventas_text">This option will download the database from the cloud and replace the current application data with remote data.</string>
     <string name="card_exportar_ventas_boton">Export</string>
     <string name="card_importar_ventas_boton">Import</string>
     <string name="nota_exportar_ventas_boton">To access this option you must register</string>

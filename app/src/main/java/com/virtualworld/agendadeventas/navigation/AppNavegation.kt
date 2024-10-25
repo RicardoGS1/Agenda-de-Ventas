@@ -8,13 +8,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
-import com.virtualword3d.salesregister.Screen.Agregar.PantallaAgregar
+import com.virtualworld.agendadeventas.ui.screen.add.PantallaAgregar
 import com.virtualword3d.salesregister.Screen.Editar.PantallaEditar
-import com.virtualworld.agendadeventas.ui.Screen.Inicio.PantallaInicio
-import com.virtualworld.agendadeventas.ui.Screen.record.RecordScreen
+import com.virtualworld.agendadeventas.ui.screen.resume.ResumeScreen
+import com.virtualworld.agendadeventas.ui.screen.record.RecordScreen
 import com.virtualword3d.salesregister.Screen.Tiendas.PantallaTiendas
-import com.virtualword3d.salesregister.Screen.Venta.SellScreen
+import com.virtualworld.agendadeventas.ui.screen.sell.SellScreen
 import com.virtualworld.agendadeventas.navigation.DrawerNavDestination
+import com.virtualworld.agendadeventas.ui.screen.export.ExportScreen
 
 //import com.virtualworld.agendadeventas.Navegation.Routes
 
@@ -23,13 +24,13 @@ import com.virtualworld.agendadeventas.navigation.DrawerNavDestination
 fun AppNavegation(navController: NavHostController, paddingValues: PaddingValues = PaddingValues()){
 
     NavHost(navController = navController, startDestination = DrawerNavDestination.Resumen.route){
-        composable(DrawerNavDestination.Resumen.route) { PantallaInicio() }
+        composable(DrawerNavDestination.Resumen.route) { ResumeScreen() }
         composable(DrawerNavDestination.Agregar.route) { PantallaAgregar() }
         composable(DrawerNavDestination.Editar.route) { PantallaEditar() }
        composable(DrawerNavDestination.Vender.route) { SellScreen() }
        composable(DrawerNavDestination.Registro.route) { RecordScreen() }
         composable(DrawerNavDestination.Tiendas.route) { PantallaTiendas() }
-       // composable(DrawerNavDestination.Resumen.route) { PantallaExportar() }
+        composable(DrawerNavDestination.Exportar.route) { ExportScreen() }
 
     }
 }
