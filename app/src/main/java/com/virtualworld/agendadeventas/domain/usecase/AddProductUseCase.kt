@@ -5,7 +5,6 @@ import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.repository.LocalRepository
 import com.virtualworld.agendadeventas.ui.screen.add.ProductUiState
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AddProductUseCase @Inject constructor(private val localRepository: LocalRepository)  {

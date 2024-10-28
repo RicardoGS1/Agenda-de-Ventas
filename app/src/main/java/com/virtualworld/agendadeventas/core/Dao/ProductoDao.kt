@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.virtualword3d.salesregister.Data.Dao
+package com.virtualworld.agendadeventas.core.Dao
 
 import androidx.room.*
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
-import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import kotlinx.coroutines.flow.Flow
 
 

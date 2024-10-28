@@ -19,7 +19,7 @@ package com.virtualworld.agendadeventas.core.source.local
 import android.os.Handler
 import android.os.Looper
 
-import com.virtualword3d.salesregister.Data.Dao.ProductoDao
+import com.virtualworld.agendadeventas.core.Dao.ProductoDao
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import kotlinx.coroutines.flow.Flow
@@ -88,18 +88,7 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
     }
 
 
-    fun maxId(callback: (Long) -> Unit) {
 
-        executorService.execute {
-            val estadoTabla = productoDao.maxId()
-            var logs: Long = 0
-
-            if (estadoTabla != null)
-                logs = productoDao.maxId().id
-
-            mainThreadHandler.post { callback(logs) }
-        }
-    }
 
     suspend fun deletedAllProduct() {
         productoDao.cleanAll()

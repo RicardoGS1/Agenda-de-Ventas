@@ -19,7 +19,6 @@ import com.virtualworld.agendadeventas.ui.screen.export.ExportScreen
 
 //import com.virtualworld.agendadeventas.Navegation.Routes
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavegation(navController: NavHostController, paddingValues: PaddingValues = PaddingValues()){
 
