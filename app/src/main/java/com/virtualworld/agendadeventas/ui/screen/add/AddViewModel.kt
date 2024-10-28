@@ -1,192 +1,117 @@
 package com.virtualworld.agendadeventas.ui.screen.add
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.virtualworld.agendadeventas.common.NetworkResponseState
 
 
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
-import com.virtualworld.agendadeventas.core.source.local.ProductsLocalDataSource
-import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
+import com.virtualworld.agendadeventas.domain.usecase.AddProductUseCase
+import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
-class AddViewModel  @Inject constructor(private val productoRepo: ProductsLocalDataSource, private val tiendasRepo: StoresLocalDataSource) : ViewModel()
-{
-    private val _respuestaError= MutableLiveData<ScreenUiState>(ScreenUiState.NEUTRAL)
-    val respuestaError : LiveData<ScreenUiState> = _respuestaError
+class AddViewModel @Inject constructor(
+    private val getStoresActiveUseCase: GetStoresActiveUseCase,
+    private val addProductUseCase: AddProductUseCase,
+) : ViewModel() {
 
-    private val _nombreProducto= MutableLiveData<String>("")
-    val nombreProducto : LiveData<String> = _nombreProducto
+    private val _storesActiveState = MutableStateFlow<List<Pair<Int, String>>>(emptyList())
+    val storesActiveState: StateFlow<List<Pair<Int, String>>> = _storesActiveState
 
-    private val _precioCompra= MutableLiveData<String>("")
-    val precioCompra : LiveData<String> = _precioCompra
+    private val _screenUiState = MutableStateFlow(ScreenUiState.LOADING)
+    val screenUiState: StateFlow<ScreenUiState> = _screenUiState
 
+    private val _productUiState = MutableStateFlow(ProductUiState())
+    val productUiState: StateFlow<ProductUiState> = _productUiState
 
-    private val _PrecioTienda1= MutableLiveData<String>("")
-    val precioTienda1 : LiveData<String> = _PrecioTienda1
-
-    private val _PrecioTienda2= MutableLiveData<String>("")
-    val precioTienda2 : LiveData<String> = _PrecioTienda2
-
-    private val _PrecioTienda3= MutableLiveData<String>("")
-    val precioTienda3 : LiveData<String> = _PrecioTienda3
-
-    private val _PrecioTienda4= MutableLiveData<String>("")
-    val precioTienda4 : LiveData<String> = _PrecioTienda4
-
-    private val _PrecioTienda5= MutableLiveData<String>("")
-    val precioTienda5 : LiveData<String> = _PrecioTienda5
-
-    private val _ActivaTienda1= MutableLiveData<Boolean>()
-    val activaTienda1 : LiveData<Boolean> = _ActivaTienda1
-
-    private val _ActivaTienda2= MutableLiveData<Boolean>()
-    val activaTienda2 : LiveData<Boolean> = _ActivaTienda2
-
-    private val _ActivaTienda3= MutableLiveData<Boolean>()
-    val activaTienda3 : LiveData<Boolean> = _ActivaTienda3
-
-    private val _ActivaTienda4= MutableLiveData<Boolean>()
-    val activaTienda4 : LiveData<Boolean> = _ActivaTienda4
-
-    private val _ActivaTienda5= MutableLiveData<Boolean>()
-    val activaTienda5 : LiveData<Boolean> = _ActivaTienda5
-
-    private val _nombreTienda1= MutableLiveData<String>()
-    val nombreTienda1 : LiveData<String> = _nombreTienda1
-
-    private val _nombreTienda2= MutableLiveData<String>()
-    val nombreTienda2 : LiveData<String> = _nombreTienda2
-
-    private val _nombreTienda3= MutableLiveData<String>()
-    val nombreTienda3 : LiveData<String> = _nombreTienda3
-
-    private val _nombreTienda4= MutableLiveData<String>()
-    val nombreTienda4 : LiveData<String> = _nombreTienda4
-
-    private val _nombreTienda5= MutableLiveData<String>()
-    val nombreTienda5 : LiveData<String> = _nombreTienda5
-
-
-
-
-    fun OnChangedNombreProducto(nomProducto: String) {
-        _nombreProducto.value = nomProducto
+    init {
+        getStoresActive()
     }
 
-    fun OnChangedPrecioCompra(preProducto: String) {
-        _precioCompra.value = ValidarNumeroDecimal(preProducto)
+    private fun getStoresActive() {
+        viewModelScope.launch {
+            getStoresActiveUseCase.GetTiendasActivas().collect { state ->
+
+                when (state) {
+                    is NetworkResponseState.Error -> _screenUiState.update { ScreenUiState.ERROR }
+                    is NetworkResponseState.Loading -> ScreenUiState.LOADING
+                    is NetworkResponseState.Success -> {
+
+                        _storesActiveState.update {
+                            state.result.map { Pair(it.idStore, it.nameStore) }
+                        }
+
+                        _screenUiState.update {
+                            ScreenUiState.NEUTRAL
+                        }
+                    }
+                }
+            }
+
+        }
     }
 
-    fun OnChangedPrecioTienda1(preTienda1: String) {
-        _PrecioTienda1.value = ValidarNumeroDecimal(preTienda1)
+    fun changerUiState(message: ScreenUiState) {
+        _screenUiState.update {
+            message
+        }
     }
 
-    fun OnChangedPrecioTienda2(preTienda2: String) {
-        _PrecioTienda2.value = ValidarNumeroDecimal(preTienda2)
+    fun updateStoreValue(storeId: Int, value: String) {
+        _productUiState.update { currentState ->
+            currentState.copy(
+                storeValues = currentState.storeValues + (storeId to checkDecimalNumber(value))
+            )
+        }
     }
 
-    fun OnChangedPrecioTienda3(preTienda3: String) {
-        _PrecioTienda3.value = ValidarNumeroDecimal(preTienda3)
+    fun updateProductName(name: String) {
+        _productUiState.update { it.copy(productName = name) }
     }
 
-    fun OnChangedPrecioTienda4(preTienda4: String) {
-        _PrecioTienda4.value = ValidarNumeroDecimal(preTienda4)
-
+    fun updateProductCost(cost: String) {
+        _productUiState.update { it.copy(productCost = checkDecimalNumber(cost)) }
     }
 
-    fun OnChangedPrecioTienda5(preTienda5: String) {
-
-        _PrecioTienda5.value = ValidarNumeroDecimal(preTienda5)
+    private fun restartProductUI() {
+        _productUiState.update { ProductUiState() }
     }
 
 
+    fun setProduct() {
 
-    fun reiniciarValores(){
-        OnChangedNombreProducto("")
-        OnChangedPrecioCompra("")
-        OnChangedPrecioTienda1("")
-        OnChangedPrecioTienda2("")
-        OnChangedPrecioTienda3("")
-        OnChangedPrecioTienda4("")
-        OnChangedPrecioTienda5("")
+        viewModelScope.launch {
+            changerUiState(ScreenUiState.LOADING)
+
+            if (_productUiState.value.productName != "" && _productUiState.value.productCost != "") {
+
+                val result = addProductUseCase(_productUiState.value)
+                changerUiState(result)
+                restartProductUI()
+
+            } else {
+                changerUiState(ScreenUiState.ERROR)
+
+            }
+        }
     }
 
-    fun ValidarNumeroDecimal(preTienda:String) : String {
 
-        val filteredChars = preTienda.filterIndexed {
-                index, c -> c in "0123456789" ||   (c == '.' && preTienda.indexOf('.') == index)
+    private fun checkDecimalNumber(numStore: String): String {
+
+        val filteredChars = numStore.filterIndexed { index, c ->
+            c in "0123456789" || (c == '.' && numStore.indexOf('.') == index)
         }
 
         return filteredChars
     }
 
-    fun setProducto() {
-
-        val error =productoRepo.addProducto(_nombreProducto.value!!, _precioCompra.value!!, _PrecioTienda1.value!!, _PrecioTienda2.value!!, _PrecioTienda3.value!!, _PrecioTienda4.value!!, _PrecioTienda5.value!!)
-
-        if(error==0)
-            controlMensaje(ScreenUiState.OK)
-        else
-            controlMensaje(ScreenUiState.ERROR)
-
-    }
-
-    fun getTiendas(){
-        tiendasRepo.getTiendas {
-
-
-            if(!it[0].activa){
-                _ActivaTienda1.value=false
-                _PrecioTienda1.value=0.toString()
-
-            }else
-                _nombreTienda1.value=it[0].nombre
-
-            if(!it[1].activa){
-                _ActivaTienda2.value=false
-                _PrecioTienda2.value=0.toString()
-
-            }else
-                _nombreTienda2.value=it[1].nombre
-
-
-            if(!it[2].activa){
-                _ActivaTienda3.value=false
-                _PrecioTienda3.value=0.toString()
-
-            }else
-                _nombreTienda3.value=it[2].nombre
-
-
-            if(!it[3].activa){
-                _ActivaTienda4.value=false
-                _PrecioTienda4.value=0.toString()
-
-            }else
-                _nombreTienda4.value=it[3].nombre
-
-
-            if(!it[4].activa){
-                _ActivaTienda5.value=false
-                _PrecioTienda5.value=0.toString()
-
-            }else
-                _nombreTienda5.value=it[4].nombre
-
-
-
-        }
-    }
-
-    fun controlMensaje(mensaje: ScreenUiState){
-
-        _respuestaError.value=mensaje
-
-
-    }
 
 }

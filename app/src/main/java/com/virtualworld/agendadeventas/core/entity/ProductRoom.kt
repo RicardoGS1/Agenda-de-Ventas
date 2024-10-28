@@ -24,8 +24,8 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "productos")
 data class ProductRoom(
-    @PrimaryKey
-    var id: Long=0,
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0,
     val nombre: String,
     val compra: Long,
     val venta1: Long,

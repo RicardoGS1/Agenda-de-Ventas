@@ -45,8 +45,8 @@ interface ProductoDao {
     @Query("SELECT * FROM productos ORDER BY id")
     fun getAllProduct(): Flow<List<ProductRoom>>
 
-    @Insert
-    fun insertAll(vararg producto: ProductRoom)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(producto: ProductRoom)
 
     @Delete
     fun borrar(producto: ProductRoom): Int

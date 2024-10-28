@@ -55,7 +55,7 @@ class SellViewModel @Inject constructor(
     }
 
 
-    fun getStoresActive() {
+    private fun getStoresActive() {
 
         getStoresActiveUseCase.GetTiendasActivas().onEach { state ->
 
@@ -130,7 +130,7 @@ class SellViewModel @Inject constructor(
 
     }
 
-    fun SalveSell(selectedIndex: Int) {
+    fun salveSell(selectedIndex: Int) {
 
         viewModelScope.launch {
 

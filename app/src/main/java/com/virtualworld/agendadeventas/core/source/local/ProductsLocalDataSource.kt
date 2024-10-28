@@ -18,10 +18,10 @@ package com.virtualworld.agendadeventas.core.source.local
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 
 import com.virtualword3d.salesregister.Data.Dao.ProductoDao
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import com.virtualworld.agendadeventas.common.NetworkResponseState
 import kotlinx.coroutines.flow.Flow
 
 
@@ -34,17 +34,14 @@ import javax.inject.Singleton
  * Data manager class that handles data manipulation between the database and the UI.
  */
 
-//CLASE UNICA QUE SE LE INYECTA ProductoDao QUE CONTIENE LOS ACCSESOS A LA BD "productos"
 @Singleton
 class ProductsLocalDataSource @Inject constructor(private val productoDao: ProductoDao) {
 
 
+    fun getAllProducts(): Flow<List<ProductRoom>> {
 
-   fun getAllProducts(): Flow<List<ProductRoom>> {
-
-       return  productoDao.getAllProduct()
-   }
-
+        return productoDao.getAllProduct()
+    }
 
 
     private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
@@ -53,65 +50,19 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
     }
 
 
-    //AGREGA PRODUCTO A BD CON LOS VALORES PASADOS POR CUALQUIER CLASE QUE LO CONTENGA
-    fun addProducto(nombre: String, compra: String, venta1: String, venta2: String, venta3: String, venta4: String, venta5: String ):Int {
 
-        var error:Int=1
+    suspend fun addProduct(productRoom: ProductRoom): NetworkResponseState<Unit> {
 
-        var compraLong: Long = 0
-        var venta1Long: Long = 0
-        var venta2Long: Long = 0
-        var venta3Long: Long = 0
-        var venta4Long: Long = 0
-        var venta5Long: Long = 0
+        return try {
+
+            productoDao.insertAll(productRoom)
 
 
-        if (nombre != "" && compra != "") {
-            compraLong = compra.toLong()
-
-            if (venta1 != "")
-                venta1Long = venta1.toLong()
-
-            if (venta2 != "")
-                venta2Long = venta2.toLong()
-
-            if (venta3 != "")
-                venta3Long = venta3.toLong()
-
-            if (venta4 != "")
-                venta4Long = venta4.toLong()
-
-            if (venta5 != "")
-                venta5Long = venta5.toLong()
-
-            executorService.execute {
-                val estadoTabla = productoDao.maxId()
-                var id: Long = 0
-
-                if (estadoTabla != null)
-                    id = productoDao.maxId().id + 1
-
-                Log.d("Agregando producto", ProductRoom(id, nombre, compraLong, venta1Long, venta2Long, venta3Long, venta4Long, venta5Long).toString())
-
-                productoDao.insertAll(
-                    ProductRoom(
-                        id,
-                        nombre,
-                        compraLong,
-                        venta1Long,
-                        venta2Long,
-                        venta3Long,
-                        venta4Long,
-                        venta5Long
-                    )
-                )
-
-            }
-            error=0
-
+            NetworkResponseState.Success(Unit)
+        }catch(e:Exception){
+            NetworkResponseState.Error(e)
         }
 
-        return error
     }
 
     fun updateProducto(producto: ProductRoom) {
@@ -137,8 +88,6 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
     }
 
 
-
-
     fun maxId(callback: (Long) -> Unit) {
 
         executorService.execute {
@@ -153,7 +102,7 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
     }
 
     suspend fun deletedAllProduct() {
-       productoDao.cleanAll()
+        productoDao.cleanAll()
     }
 
     suspend fun insertListProduct(result: List<ProductRoom>) {
