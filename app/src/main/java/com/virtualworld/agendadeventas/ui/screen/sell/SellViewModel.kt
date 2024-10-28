@@ -55,7 +55,7 @@ class SellViewModel @Inject constructor(
     }
 
 
-    fun getStoresActive() {
+    private fun getStoresActive() {
 
         getStoresActiveUseCase.GetTiendasActivas().onEach { state ->
 
@@ -130,7 +130,7 @@ class SellViewModel @Inject constructor(
 
     }
 
-    fun SalveSell(selectedIndex: Int) {
+    fun salveSell(selectedIndex: Int) {
 
         viewModelScope.launch {
 
@@ -139,7 +139,7 @@ class SellViewModel @Inject constructor(
 
         val b = mutableListOf<SoldRoom>()
 
-        val a = _productForStore.value.map { product ->
+         _productForStore.value.map { product ->
 
             _listChangerProductsSell.value.find { pair -> pair.first == product.idProduct && pair.second != 0 }
                 ?.let {

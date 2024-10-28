@@ -93,7 +93,7 @@ class LocalRepository @Inject constructor(
                                     listVendidos.filter { it.tienda.toLong() == tienda.id }
 
 
-                                val compra = ventasTienda.sumOf { it.compra * it.unidades}
+                                val compra = ventasTienda.sumOf { it.compra * it.unidades }
 
                                 val valor = ventasTienda.sumOf { it.valor * it.unidades }
 
@@ -189,6 +189,10 @@ class LocalRepository @Inject constructor(
 
     suspend fun insertListProducts(result: List<ProductRoom>) {
         productsLocalDataSource.insertListProduct(result)
+    }
+
+    suspend fun addProduct(productRoom: ProductRoom): NetworkResponseState<Unit> {
+        return productsLocalDataSource.addProduct(productRoom)
     }
 
 }

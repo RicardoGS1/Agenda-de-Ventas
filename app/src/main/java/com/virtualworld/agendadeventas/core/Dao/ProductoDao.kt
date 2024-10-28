@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.virtualword3d.salesregister.Data.Dao
+package com.virtualworld.agendadeventas.core.Dao
 
 import androidx.room.*
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
-import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import kotlinx.coroutines.flow.Flow
 
 
@@ -45,8 +44,8 @@ interface ProductoDao {
     @Query("SELECT * FROM productos ORDER BY id")
     fun getAllProduct(): Flow<List<ProductRoom>>
 
-    @Insert
-    fun insertAll(vararg producto: ProductRoom)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(producto: ProductRoom)
 
     @Delete
     fun borrar(producto: ProductRoom): Int

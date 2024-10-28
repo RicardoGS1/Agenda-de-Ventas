@@ -44,7 +44,7 @@ fun SellScreen(viewModel: SellViewModel = hiltViewModel()) {
         onChangerMessenger = { stateUi -> viewModel.changerUiState(stateUi) },
         onStoreSelected = { storeId -> viewModel.getProductForStore(storeId) },
         onUnitSellChanged = { changer -> viewModel.changerUnitSell(changer) },
-        onSaveSellClicked = { storeId -> viewModel.SalveSell(storeId) }
+        onSaveSellClicked = { storeId -> viewModel.salveSell(storeId) }
     )
 }
 

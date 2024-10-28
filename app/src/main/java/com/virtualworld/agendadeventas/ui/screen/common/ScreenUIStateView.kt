@@ -73,6 +73,7 @@ fun ScreenUIStateViwe(
         if (uiMessengerState == ScreenUiState.OK) {
 
             iniciarSnakbar(stringResource(id = R.string.mensaje_exitoso_export))
+            onChangerMessenger(ScreenUiState.NEUTRAL)
 
         }
     }
