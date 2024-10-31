@@ -160,7 +160,7 @@ class SellViewModel @Inject constructor(
 
         }
 
-        vendidoRepo.addProductoVendido(b)
+        vendidoRepo.addProductsSold(b)
         changerUiState(ScreenUiState.OK)
         startUnitProduct()
         }

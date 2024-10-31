@@ -1,5 +1,6 @@
 package com.virtualworld.agendadeventas.core.source
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
@@ -10,6 +11,8 @@ import com.google.firebase.ktx.Firebase
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
+import com.virtualworld.agendadeventas.id.IoDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.tasks.await
@@ -17,11 +20,11 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class FirebaseRepository @Inject constructor() {
-
-    var totalProductos = 0
-    var contadorProductosExportados = 0
-    val userId = Firebase.auth.currentUser?.email
+class FirebaseRepository @Inject constructor(
+    private val firebaseAuth: FirebaseAuth,
+    private val firebaseFirestore: FirebaseFirestore,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+) {
 
 
     suspend fun authenticateUser(
@@ -30,12 +33,12 @@ class FirebaseRepository @Inject constructor() {
         isNewUser: Boolean
     ): NetworkResponseState<String> =
 
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             try {
                 if (isNewUser) {
-                    Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+                    firebaseAuth.createUserWithEmailAndPassword(email, password).await()
                 } else {
-                    Firebase.auth.signInWithEmailAndPassword(email, password).await()
+                    firebaseAuth.signInWithEmailAndPassword(email, password).await()
                 }
                 NetworkResponseState.Success(email)
             } catch (e: FirebaseAuthInvalidCredentialsException) {
@@ -49,9 +52,9 @@ class FirebaseRepository @Inject constructor() {
 
 
     suspend fun closeSecion(): NetworkResponseState<String> =
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             try {
-                Firebase.auth.signOut()
+                firebaseAuth.signOut()
                 NetworkResponseState.Success("")
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
@@ -65,9 +68,9 @@ class FirebaseRepository @Inject constructor() {
         userId: String
     ): NetworkResponseState<Unit> =
 
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             try {
-                val collectionRef = FirebaseFirestore.getInstance().collection("fire-agenda-venta")
+                val collectionRef = firebaseFirestore.collection("fire-agenda-venta")
                 val documentRef = collectionRef.document(userId)
 
 
@@ -83,8 +86,7 @@ class FirebaseRepository @Inject constructor() {
                 }
 
 
-
-                val batch = FirebaseFirestore.getInstance().batch()
+                val batch = firebaseFirestore.batch()
 
                 soldRoomList.forEach { soldRoom ->
                     val soldRoomData = hashMapOf(
@@ -105,7 +107,7 @@ class FirebaseRepository @Inject constructor() {
 
                 batch.commit().await()
 
-                val batch2 = FirebaseFirestore.getInstance().batch()
+                val batch2 = firebaseFirestore.batch()
 
                 liProductRoom.forEach { productRoom ->
                     val productRoomData = hashMapOf(
@@ -119,7 +121,8 @@ class FirebaseRepository @Inject constructor() {
                         "venta5" to productRoom.venta5
                     )
                     val documentRefForSoldRoom =
-                        documentRef.collection("productRoomList").document(productRoom.id.toString())
+                        documentRef.collection("productRoomList")
+                            .document(productRoom.id.toString())
                     batch2.set(documentRefForSoldRoom, productRoomData)
                 }
 
@@ -137,59 +140,13 @@ class FirebaseRepository @Inject constructor() {
             }
         }
 
-    suspend fun importSoldAndProductRoomListsFromFirestore(userId: String): NetworkResponseState<Pair<List<SoldRoom>, List<ProductRoom>>> =
-        withContext(Dispatchers.IO) {
-            try {
-                val collectionRef = FirebaseFirestore.getInstance().collection("fire-agenda-venta")
-                val documentRef = collectionRef.document(userId)
 
-                // Obtener soldRoomList
-                val soldRoomListDeferred = async {
-                    documentRef.collection("soldRoomList").get().await().documents.map { document ->
-                        SoldRoom(
-                            idbd = document.getLong("idbd") ?: 0,
-                            idprod = document.getLong("idprod") ?: 0,
-                            nombre = document.getString("nombre") ?:"",
-                            compra = document.getLong("compra") ?: 0,
-                            valor = document.getLong("valor") ?: 0,
-                            tienda = document.getLong("tienda")?.toInt() ?: 0,
-                            unidades = document.getLong("unidades")?.toInt() ?: 0,
-                            fecha = document.getLong("fecha") ?: 0
-                        )
-                    }
-                }
-
-                // Obtener liProductRoom
-                val liProductRoomDeferred = async {
-                    documentRef.collection("productRoomList").get().await().documents.map { document ->
-                        ProductRoom(
-                            id = document.getLong("id") ?: 0,
-                            nombre = document.getString("nombre") ?: "",
-                            compra = document.getLong("compra") ?: 0,
-                            venta1 = document.getLong("venta1") ?: 0,
-                            venta2 = document.getLong("venta2") ?: 0,
-                            venta3 = document.getLong("venta3") ?: 0,
-                            venta4 = document.getLong("venta4") ?: 0,
-                            venta5 = document.getLong("venta5") ?: 0
-                        )}
-                }
-
-                // Esperar a que ambas listas se obtengan
-                val soldRoomList = soldRoomListDeferred.await()
-                val liProductRoom = liProductRoomDeferred.await()
-
-                // Retornar ambas listas en un Pair
-                NetworkResponseState.Success(Pair(soldRoomList, liProductRoom))
-            } catch (e: Exception) {
-                NetworkResponseState.Error(e)
-            }
-        }
 
     suspend fun importProductRoomListFromFirestore(userId: String): NetworkResponseState<List<ProductRoom>> =
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             try {
                 // Obtener la colección de Firestore
-                val collectionRef = FirebaseFirestore.getInstance()
+                val collectionRef = firebaseFirestore
                     .collection("fire-agenda-venta")
                     .document(userId)
                     .collection("productRoomList")
@@ -221,11 +178,11 @@ class FirebaseRepository @Inject constructor() {
 
     suspend fun importSoldRoomListFromFirestore(userId: String): NetworkResponseState<List<SoldRoom>> =
 
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
 
             try {
                 // Obtener la colección de Firestore
-                val collectionRef = FirebaseFirestore.getInstance()
+                val collectionRef = firebaseFirestore
                     .collection("fire-agenda-venta")
                     .document(userId)
                     .collection("soldRoomList")
@@ -254,7 +211,7 @@ class FirebaseRepository @Inject constructor() {
                 // vendidoDao.insertSoldRoomList(soldRoomList)
 
 
-println(soldRoomList)
+                println(soldRoomList)
                 NetworkResponseState.Success(soldRoomList)
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
@@ -262,123 +219,7 @@ println(soldRoomList)
         }
 
 
-
-
 }
-
-
-/*
-
-fun exportSales(listSales: List<SoldRoom>) {
-
-   // message(Mensajes.CARGANDO)
-    totalProductos = listSales.size
-    contadorProductosExportados = 0
-
-
-
-    listSales.map {
-        formatExport(
-            connection,
-            message,
-            it.idbd,
-            it.idprod,
-            it.nombre,
-            it.compra,
-            it.valor,
-            it.tienda,
-            it.unidades,
-            it.fecha
-        )
-    }
-
-
-}
-
-private fun formatExport(
-    conexion: (Boolean) -> Unit,
-    message: (Mensajes) -> Unit,
-    idbd: Long,
-    idprod: Long,
-    nombre: String,
-    compra: Long,
-    valor: Long,
-    tienda: Int,
-    unidades: Int,
-    fecha: Long
-) {
-
-
-    val productoExportar = mutableMapOf<String, Any>()
-
-    productoExportar["idbd"] = idbd
-    productoExportar["idprod"] = idprod
-    productoExportar["nombre"] = nombre
-    productoExportar["compra"] = compra
-    productoExportar["valor"] = valor
-    productoExportar["tienda"] = tienda
-    productoExportar["unidades"] = unidades
-    productoExportar["fecha"] = fecha
-
-
-    FirebaseFirestore.getInstance().collection("fire-agenda-venta").document("$userId")
-        .collection("Productos").document(productoExportar["idbd"].toString())
-        .set(productoExportar).addOnCompleteListener {
-
-
-            if (it.isSuccessful) {
-                conexion(true)
-                contadorProductosExportados++
-                Log.e("efecto", contadorProductosExportados.toString())
-                if (contadorProductosExportados == totalProductos) {
-                    message(Mensajes.BIEN)
-                }
-            } else {
-                message(Mensajes.ERROR)
-                Log.e("efecto", "incompleto")
-                FirebaseFirestore.getInstance().terminate()
-            }
-
-        }
-
-
-}
-
-//----------------------------------------------------------------------------------------------
-
-
-fun importSales(mensaje: (Mensajes) -> Unit, listSales: (List<SoldRoom>) -> Unit) {
-    val _listSales: MutableList<SoldRoom> = mutableListOf()
-    mensaje(Mensajes.CARGANDO)
-    val userId = Firebase.auth.currentUser?.email
-
-    FirebaseFirestore.getInstance().collection("fire-agenda-venta").document("$userId")
-        .collection("Productos").get().addOnCompleteListener { taksProductos ->
-
-            if (!taksProductos.result.metadata.isFromCache) {
-                if (taksProductos.isSuccessful) {
-                    taksProductos.addOnSuccessListener { fireProductos ->
-
-                        for (document in fireProductos) {
-
-                            val vendido: SoldRoom = document.toObject(SoldRoom::class.java)
-                            Log.d("", document.data.toString())
-                            _listSales.add(vendido)
-                        }
-                        listSales(_listSales)
-                        mensaje(Mensajes.BIEN)
-                    }
-                } else {
-                    mensaje(Mensajes.ERROR)
-                }
-            } else {
-                mensaje(Mensajes.ERROR)
-            }
-        }
-}
-
-
- */
 
 
 

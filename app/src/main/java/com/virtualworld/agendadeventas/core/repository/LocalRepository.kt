@@ -11,14 +11,19 @@ import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
 import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
 import com.virtualworld.agendadeventas.core.Model.StoresActiveCore
 import com.virtualworld.agendadeventas.core.source.local.ProductsLocalDataSource
+import com.virtualworld.agendadeventas.id.IoDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class LocalRepository @Inject constructor(
     private val storesLocalDataSource: StoresLocalDataSource,
     private val soldLocalDataSource: SoldLocalDataSource,
-    private val productsLocalDataSource: ProductsLocalDataSource
+    private val productsLocalDataSource: ProductsLocalDataSource,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
 
 
@@ -33,7 +38,7 @@ class LocalRepository @Inject constructor(
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
-        }
+        }.flowOn(ioDispatcher)
 
     //obtiene todas las ventas realizadas de la base de datos
     fun getAllSold(): Flow<NetworkResponseState<List<SoldRoom>>> =
@@ -46,7 +51,7 @@ class LocalRepository @Inject constructor(
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
-        }
+        }.flowOn(ioDispatcher)
 
     //obtiene las ventas de una tienda especificada por su id
     fun getAllSoldForStore(idStore: Int): Flow<NetworkResponseState<List<SoldForStoreCore>>> =
@@ -71,7 +76,7 @@ class LocalRepository @Inject constructor(
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
-        }
+        }.flowOn(ioDispatcher)
 
 
     //obtener los datos sumados de venta de todas las tiendas activas
@@ -120,7 +125,7 @@ class LocalRepository @Inject constructor(
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
-        }
+        }.flowOn(ioDispatcher)
     }
 
     //ogtiene las tiendas activas
@@ -140,7 +145,7 @@ class LocalRepository @Inject constructor(
                 NetworkResponseState.Error(e)
             }
 
-        }
+        }.flowOn(ioDispatcher)
 
     //ogtiene las tiendas
     fun getAllStores(): Flow<NetworkResponseState<List<StoreRoom>>> =
@@ -154,7 +159,7 @@ class LocalRepository @Inject constructor(
                 NetworkResponseState.Error(e)
             }
 
-        }
+        }.flowOn(ioDispatcher)
 
     suspend fun updateStores(storeRoom: List<StoreRoom>) {
         storesLocalDataSource.updateStores(storeRoom)
@@ -191,11 +196,11 @@ class LocalRepository @Inject constructor(
                 NetworkResponseState.Error(e)
             }
 
-        }
+        }.flowOn(ioDispatcher)
     }
 
     suspend fun insertListSales(listSoldRoom: List<SoldRoom>) {
-        soldLocalDataSource.addProductoVendido(listSoldRoom)
+        soldLocalDataSource.addProductsSold(listSoldRoom)
     }
 
     suspend fun deleteAllSales() {
