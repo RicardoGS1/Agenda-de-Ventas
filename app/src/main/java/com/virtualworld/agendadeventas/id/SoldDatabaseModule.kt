@@ -1,9 +1,9 @@
-package com.virtualword3d.salesregister.ID
+package com.virtualworld.agendadeventas.id
 
 import android.content.Context
 import androidx.room.Room
 import com.virtualword3d.salesregister.Data.Dao.SoldDao
-import com.virtualword3d.salesregister.Data.DataBases.VendidoDataBase
+import com.virtualworld.agendadeventas.core.DataBases.VendidoDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object VendidoDatabaseModule {
+object SoldDatabaseModule {
 
     @Provides
     @Singleton

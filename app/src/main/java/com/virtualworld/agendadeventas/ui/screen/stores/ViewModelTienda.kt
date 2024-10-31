@@ -1,132 +1,119 @@
-package com.virtualword3d.salesregister.Screen.Tiendas
+package com.virtualworld.agendadeventas.ui.screen.stores
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.virtualword3d.salesregister.Data.Entity.StoreRoom
+import com.virtualworld.agendadeventas.common.NetworkResponseState
+import com.virtualworld.agendadeventas.domain.usecase.GetAllStoreUseCase
+import com.virtualworld.agendadeventas.domain.usecase.UpdateStoresUseCase
 
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
-import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewModelTienda @Inject constructor(private val tiendasRepo: StoresLocalDataSource) : ViewModel()
-{
+class ViewModelTienda @Inject constructor(
+    private val getAllStoreUseCase: GetAllStoreUseCase,
+    private val updateStoresUseCase: UpdateStoresUseCase
+) :
+    ViewModel() {
 
-    //VARIABLES DE NOMBRE TIENDAS
-    private val _respuestaError= MutableLiveData<ScreenUiState>(ScreenUiState.NEUTRAL)
-    val respuestaError : LiveData<ScreenUiState> = _respuestaError
+    private val _storesAllState = MutableStateFlow<List<StoreRoom>>(emptyList())
+    val storesAllState: StateFlow<List<StoreRoom>> = _storesAllState
 
-    private val _nombreTienda1 = MutableLiveData<String>()
-    val nombreTienda1: LiveData<String> = _nombreTienda1
+    private val _screenUiState = MutableStateFlow(ScreenUiState.NEUTRAL)
+    val screenUiState: StateFlow<ScreenUiState> = _screenUiState
 
-    private val _nombreTienda2 = MutableLiveData<String>()
-    val nombreTienda2: LiveData<String> = _nombreTienda2
-
-    private val _nombreTienda3 = MutableLiveData<String>()
-    val nombreTienda3: LiveData<String> = _nombreTienda3
-
-    private val _nombreTienda4 = MutableLiveData<String>()
-    val nombreTienda4: LiveData<String> = _nombreTienda4
-
-    private val _nombreTienda5 = MutableLiveData<String>()
-    val nombreTienda5: LiveData<String> = _nombreTienda5
-
-
-    //VARIABLES DE SHWIT
-    private val _shwitTienda1 = MutableLiveData<Boolean>()
-    val shwitTienda1: LiveData<Boolean> = _shwitTienda1
-
-    private val _shwitTienda2 = MutableLiveData<Boolean>()
-    val shwitTienda2: LiveData<Boolean> = _shwitTienda2
-
-    private val _shwitTienda3 = MutableLiveData<Boolean>()
-    val shwitTienda3: LiveData<Boolean> = _shwitTienda3
-
-    private val _shwitTienda4 = MutableLiveData<Boolean>()
-    val shwitTienda4: LiveData<Boolean> = _shwitTienda4
-
-    private val _shwitTienda5 = MutableLiveData<Boolean>()
-    val shwitTienda5: LiveData<Boolean> = _shwitTienda5
-
-
-    fun OnChangedTienda1(nombreTienda: String) {
-        _nombreTienda1.value = nombreTienda
+    init {
+        getAllStores()
     }
 
-    fun OnChangedTienda2(nombreTienda: String) {
-        _nombreTienda2.value = nombreTienda
-    }
+    fun changerUiState(message: ScreenUiState) {
+        _screenUiState.update {
 
-    fun OnChangedTienda3(nombreTienda: String) {
-        _nombreTienda3.value = nombreTienda
-
-    }
-
-    fun OnChangedTienda4(nombreTienda: String) {
-        _nombreTienda4.value = nombreTienda
-
-    }
-
-    fun OnChangedTienda5(nombreTienda: String) {
-        _nombreTienda5.value = nombreTienda
-    }
-
-    fun OnChangedShwitTienda1(shwitTienda: Boolean) {
-        _shwitTienda1.value = shwitTienda
-    }
-
-    fun OnChangedShwitTienda2(shwitTienda: Boolean) {
-        _shwitTienda2.value = shwitTienda
-    }
-
-    fun OnChangedShwitTienda3(shwitTienda: Boolean) {
-        _shwitTienda3.value = shwitTienda
-    }
-
-    fun OnChangedShwitTienda4(shwitTienda: Boolean) {
-        _shwitTienda4.value = shwitTienda
-    }
-
-    fun OnChangedShwitTienda5(shwitTienda: Boolean) {
-        _shwitTienda5.value = shwitTienda
-    }
-
-
-    fun getTiendas() {
-        tiendasRepo.getTiendas() {
-            OnChangedTienda1(it[0].nombre)
-            OnChangedShwitTienda1(it[0].activa)
-            OnChangedTienda2(it[1].nombre)
-            OnChangedShwitTienda2(it[1].activa)
-            OnChangedTienda3(it[2].nombre)
-            OnChangedShwitTienda3(it[2].activa)
-            OnChangedTienda4(it[3].nombre)
-            OnChangedShwitTienda4(it[3].activa)
-            OnChangedTienda5(it[4].nombre)
-            OnChangedShwitTienda5(it[4].activa)
+            message
         }
     }
 
-    fun setTiendas() {
+    private fun getAllStores() {
 
-        if (_nombreTienda1.value != "" && _nombreTienda2.value != "" && _nombreTienda3.value != "" && _nombreTienda4.value != "" && _nombreTienda5.value != "") {
-            tiendasRepo.updateTiendas(1, _nombreTienda1.value!!, _shwitTienda1.value!!)
-            tiendasRepo.updateTiendas(2, _nombreTienda2.value!!, _shwitTienda2.value!!)
-            tiendasRepo.updateTiendas(3, _nombreTienda3.value!!, _shwitTienda3.value!!)
-            tiendasRepo.updateTiendas(4, _nombreTienda4.value!!, _shwitTienda4.value!!)
-            tiendasRepo.updateTiendas(5, _nombreTienda5.value!!, _shwitTienda5.value!!)
-            controlMensaje(ScreenUiState.OK)
-        } else {
-            controlMensaje(ScreenUiState.ERROR)
+        viewModelScope.launch {
+
+            getAllStoreUseCase.getAllStores().collect { state ->
+
+                when (state) {
+                    is NetworkResponseState.Error -> _screenUiState.update { ScreenUiState.ERROR }
+                    is NetworkResponseState.Loading -> ScreenUiState.LOADING
+                    is NetworkResponseState.Success -> {
+
+
+                        _storesAllState.update {
+                            state.result
+                        }
+
+                        //para evitar que se sobreponga a otra actualizacion en proceso
+                        if(_screenUiState.value!=ScreenUiState.OK)
+                            changerUiState(ScreenUiState.NEUTRAL)
+
+
+                    }
+                }
+            }
+
         }
     }
 
-    fun controlMensaje(mensaje: ScreenUiState){
+    fun onChangeNameStore(nameStore: String, idStore: Int) {
 
-        _respuestaError.value=mensaje
+        _storesAllState.update { listStoreRoom ->
 
+            listStoreRoom.map {
 
+                if (it.id.toInt() == idStore) {
+                    StoreRoom(it.id, nameStore, it.activa)
+                } else {
+                    it
+                }
+
+            }
+
+        }
     }
 
+    fun onChangeActiveStore(active: Boolean, idStore: Int) {
+
+        _storesAllState.update { listStoreRoom ->
+
+            listStoreRoom.map {
+
+                if (it.id.toInt() == idStore) {
+                    StoreRoom(it.id, it.nombre, active)
+                } else {
+                    it
+                }
+
+            }
+
+        }
+    }
+
+
+    fun updateStore() {
+        viewModelScope.launch {
+            changerUiState(ScreenUiState.LOADING)
+            updateStoresUseCase(_storesAllState.value)
+
+            changerUiState(ScreenUiState.OK)
+        }
+
+    }
 }
+
+
+
+

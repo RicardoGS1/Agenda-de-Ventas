@@ -37,7 +37,7 @@ class AddViewModel @Inject constructor(
 
     private fun getStoresActive() {
         viewModelScope.launch {
-            getStoresActiveUseCase.GetTiendasActivas().collect { state ->
+            getStoresActiveUseCase.getStoresActive().collect { state ->
 
                 when (state) {
                     is NetworkResponseState.Error -> _screenUiState.update { ScreenUiState.ERROR }

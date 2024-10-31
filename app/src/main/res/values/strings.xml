@@ -54,16 +54,6 @@
 
 
 
-
-    //Vista Tiendas
-    <string name="label_tienda1">Store name 1</string>
-    <string name="label_tienda2">Store name 2</string>
-    <string name="label_tienda3">Store name 3</string>
-    <string name="label_tienda4">Store name 4</string>
-    <string name="label_tienda5">Store name 5</string>
-
-
-
     //MAIN ACTYVITY
     <string name="menu_banel">Sales record and service</string>
     <string name="menu_resumen">Summary</string>

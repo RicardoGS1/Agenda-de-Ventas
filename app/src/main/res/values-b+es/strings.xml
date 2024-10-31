@@ -58,16 +58,6 @@
 
 
 
-    //Vista Tiendas
-    <string name="label_tienda1">Nombre de tienada 1</string>
-    <string name="label_tienda2">Nombre de tienada 2</string>
-    <string name="label_tienda3">Nombre de tienada 3</string>
-    <string name="label_tienda4">Nombre de tienada 4</string>
-    <string name="label_tienda5">Nombre de tienada 5</string>
-
-
-
-
     //MAIN ACTYVITY
     <string name="menu_banel">Registro de ventas y servicios</string>
     <string name="menu_resumen">Resumen</string>

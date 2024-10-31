@@ -1,4 +1,4 @@
-package com.virtualword3d.salesregister.Data.DataBases
+package com.virtualworld.agendadeventas.core.DataBases
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

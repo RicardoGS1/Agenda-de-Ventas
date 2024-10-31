@@ -2,6 +2,7 @@ package com.virtualworld.agendadeventas.core.repository
 
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
+import com.virtualword3d.salesregister.Data.Entity.StoreRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.ResumeSoldForStoreCore
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
@@ -141,6 +142,24 @@ class LocalRepository @Inject constructor(
 
         }
 
+    //ogtiene las tiendas
+    fun getAllStores(): Flow<NetworkResponseState<List<StoreRoom>>> =
+        flow {
+            emit(NetworkResponseState.Loading)
+            try {
+                storesLocalDataSource.getAllStores().collect { listStore ->
+                    emit(NetworkResponseState.Success(listStore))
+                }
+            } catch (e: Exception) {
+                NetworkResponseState.Error(e)
+            }
+
+        }
+
+    suspend fun updateStores(storeRoom: List<StoreRoom>) {
+        storesLocalDataSource.updateStores(storeRoom)
+    }
+
     //obtiene los productos por tienda especificada por id de tienda
     fun getAllProductsStore(idStore: Int): Flow<NetworkResponseState<List<ProductStoreCore>>> {
         return flow {
@@ -194,5 +213,7 @@ class LocalRepository @Inject constructor(
     suspend fun addProduct(productRoom: ProductRoom): NetworkResponseState<Unit> {
         return productsLocalDataSource.addProduct(productRoom)
     }
+
+
 
 }
