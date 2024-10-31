@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.virtualworld.agendadeventas.R
-import com.virtualworld.agendadeventas.ui.screen.common.ScreenUIStateViwe
+import com.virtualworld.agendadeventas.ui.screen.common.ManagerScreenStateView
 
 
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
@@ -172,7 +172,7 @@ fun ContentAddProduct(
             )
         }
 
-        ScreenUIStateViwe(
+        ManagerScreenStateView(
             uiMessengerState = screenUiState,
             modifier = Modifier.align(Alignment.BottomCenter),
             onChangerScreenUiState

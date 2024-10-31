@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 
 import com.virtualworld.agendadeventas.domain.usecase.GetResumeStoresUseCase
 import com.virtualworld.agendadeventas.common.NetworkResponseState
+import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewModelResume @Inject constructor(
     private val getResumeStoresUseCase: GetResumeStoresUseCase,
+    private val getStoresActiveUseCase: GetStoresActiveUseCase
 ) : ViewModel() {
 
     private val _screenUiState = MutableStateFlow(ScreenUiState.LOADING)

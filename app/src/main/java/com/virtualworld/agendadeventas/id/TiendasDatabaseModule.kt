@@ -1,9 +1,9 @@
-package com.virtualword3d.salesregister.ID
+package com.virtualworld.agendadeventas.id
 
 import android.content.Context
 import androidx.room.Room
-import com.virtualword3d.salesregister.Data.Dao.TiendaDao
-import com.virtualword3d.salesregister.Data.DataBases.TiendasDatabase
+import com.virtualworld.agendadeventas.core.Dao.StoreDao
+import com.virtualworld.agendadeventas.core.DataBases.TiendasDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,11 +24,13 @@ object TiendasDatabaseModule {
             TiendasDatabase::class.java,
             "loggingggggjxgg.db"
         ).build()
+
+
     }
 
 
     @Provides
-    fun provideTiendasDao(database: TiendasDatabase): TiendaDao
+    fun provideTiendasDao(database: TiendasDatabase): StoreDao
     {
         return database.tiendaDao()
     }

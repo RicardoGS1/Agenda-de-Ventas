@@ -1,4 +1,4 @@
-package com.virtualword3d.salesregister.ID
+package com.virtualworld.agendadeventas.id
 
 import android.content.Context
 import androidx.room.Room

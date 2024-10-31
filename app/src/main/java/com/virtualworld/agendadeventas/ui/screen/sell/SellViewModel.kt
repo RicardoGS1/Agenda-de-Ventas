@@ -57,7 +57,7 @@ class SellViewModel @Inject constructor(
 
     private fun getStoresActive() {
 
-        getStoresActiveUseCase.GetTiendasActivas().onEach { state ->
+        getStoresActiveUseCase.getStoresActive().onEach { state ->
 
             when (state) {
                 is NetworkResponseState.Error -> _screenUiState.update { ScreenUiState.ERROR }

@@ -38,6 +38,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(changeColorBarNotification: (Color) -> Unit) {
 
+
+
     val navController = rememberNavController()
 
     val colorBarNotification = MaterialTheme.colorScheme.primary

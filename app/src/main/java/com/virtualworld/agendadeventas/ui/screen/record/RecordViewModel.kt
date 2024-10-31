@@ -60,7 +60,7 @@ class RecordViewModel @Inject constructor(
 
     fun getStoresActive() {
 
-        getStoresActiveUseCase.GetTiendasActivas().onEach { state ->
+        getStoresActiveUseCase.getStoresActive().onEach { state ->
 
             when (state) {
                 is NetworkResponseState.Error -> _messengerState.update { ScreenUiState.ERROR }

@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun ScreenUIStateViwe(
+fun ManagerScreenStateView(
     uiMessengerState: ScreenUiState,
     modifier: Modifier,
     onChangerMessenger: (ScreenUiState) -> Unit
