@@ -5,9 +5,7 @@ import android.os.Looper
 
 import com.virtualword3d.salesregister.Data.Dao.SoldDao
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -31,53 +29,14 @@ class SoldLocalDataSource @Inject constructor(private val soldDao: SoldDao) {
 
     }
 
-    suspend fun addProductoVendido(listaVenta: List<SoldRoom>) {
+    suspend fun addProductsSold(listaVenta: List<SoldRoom>) {
 
-        withContext(Dispatchers.IO) {
+//        withContext(Dispatchers.IO) {
             soldDao.insertSoldRoomList(listaVenta)
 
-        }
+//        }
     }
 
-
-    fun maxId(callback: (Long) -> Unit) {
-
-        executorService.execute {
-            val logs = soldDao.maxId()
-            val maxidbd: Long
-
-            if (logs != null) maxidbd = logs.idbd
-            else maxidbd = 0
-
-            mainThreadHandler.post {
-                callback(maxidbd)
-            }
-        }
-    }
-
-
-    fun getAllVendidos(callback: (List<SoldRoom>) -> Unit) {
-
-        executorService.execute {
-            val listvendidos = soldDao.getAll()
-
-
-            mainThreadHandler.post { callback(listvendidos) }
-        }
-
-    }
-
-    fun getAllVendidosPorTienda(callback: (List<SoldRoom>) -> Unit) {
-        executorService.execute {
-            val listvendidos = soldDao.getAll()
-
-
-
-            mainThreadHandler.post { callback(listvendidos) }
-        }
-
-
-    }
 
 
 }
