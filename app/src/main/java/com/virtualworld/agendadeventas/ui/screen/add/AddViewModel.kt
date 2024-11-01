@@ -9,6 +9,7 @@ import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.domain.usecase.AddProductUseCase
 import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -47,6 +48,7 @@ class AddViewModel @Inject constructor(
                         _storesActiveState.update {
                             state.result.map { Pair(it.idStore, it.nameStore) }
                         }
+
 
                         _screenUiState.update {
                             ScreenUiState.NEUTRAL

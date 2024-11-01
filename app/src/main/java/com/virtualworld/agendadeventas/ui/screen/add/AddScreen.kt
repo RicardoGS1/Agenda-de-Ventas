@@ -99,51 +99,33 @@ fun ContentAddProduct(
                 )
             }
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(vertical = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                //NOMBRE PRODUCTO
-                item {
-                    TextField(
-                        value = productUiState.productName,
-                        onValueChange = { updateProductName(it) },
-                        label = { Text(text = stringResource(id = R.string.label_nombre_producto)) },
-                        modifier = Modifier
-                            .padding(horizontal = 32.dp)
-                            .padding(vertical = 8.dp),
-                        singleLine = true
-                    )
-                }
+            if (screenUiState != ScreenUiState.LOADING) {
 
-                //PRECIO COMPRA
-                item {
-                    TextField(
-                        value = productUiState.productCost,
-                        onValueChange = { updateProductCost(it) },
-                        label = { Text(text = stringResource(id = R.string.label_precio_compra)) },
-                        modifier = Modifier
-                            .padding(horizontal = 32.dp)
-                            .padding(vertical = 8.dp),
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-                    )
-                }
-
-                //STORES
-                storesActiveState.forEach { store ->
-                    val storeValue = productUiState.storeValues[store.first] ?: ""
-
-
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(vertical = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    //NOMBRE PRODUCTO
                     item {
                         TextField(
-                            value = storeValue,
-                            onValueChange = { newValue ->
-                                updateStoreValue(store.first, newValue)
-                            },
-                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " ${store.second}") },
+                            value = productUiState.productName,
+                            onValueChange = { updateProductName(it) },
+                            label = { Text(text = stringResource(id = R.string.label_nombre_producto)) },
+                            modifier = Modifier
+                                .padding(horizontal = 32.dp)
+                                .padding(vertical = 8.dp),
+                            singleLine = true
+                        )
+                    }
+
+                    //PRECIO COMPRA
+                    item {
+                        TextField(
+                            value = productUiState.productCost,
+                            onValueChange = { updateProductCost(it) },
+                            label = { Text(text = stringResource(id = R.string.label_precio_compra)) },
                             modifier = Modifier
                                 .padding(horizontal = 32.dp)
                                 .padding(vertical = 8.dp),
@@ -151,9 +133,29 @@ fun ContentAddProduct(
                             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                         )
                     }
+
+                    //STORES
+                    storesActiveState.forEach { store ->
+                        val storeValue = productUiState.storeValues[store.first] ?: ""
+
+
+                        item {
+                            TextField(
+                                value = storeValue,
+                                onValueChange = { newValue ->
+                                    updateStoreValue(store.first, newValue)
+                                },
+                                label = { Text(text = stringResource(id = R.string.label_precio_venta) + " ${store.second}") },
+                                modifier = Modifier
+                                    .padding(horizontal = 32.dp)
+                                    .padding(vertical = 8.dp),
+                                singleLine = true,
+                                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                            )
+                        }
+                    }
+
                 }
-
-
             }
         }
 
