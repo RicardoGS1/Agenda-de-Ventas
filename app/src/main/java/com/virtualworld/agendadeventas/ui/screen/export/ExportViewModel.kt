@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
-import com.virtualword3d.salesregister.CasoUso.FirebaseUseCase
+import com.virtualworld.agendadeventas.domain.usecase.AuthenticateUserUseCase
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.domain.usecase.ExportAllDataUseCase
@@ -21,9 +21,9 @@ import javax.inject.Inject
 class ExportViewModel @Inject constructor(
     private val exportAllDataUseCase: ExportAllDataUseCase,
     private val importAllDataUseCase: ImportAllDataUseCase,
-    private val firebaseUseCase: FirebaseUseCase,
+    private val authenticateUserUseCase: AuthenticateUserUseCase,
 
-) : ViewModel() {
+    ) : ViewModel() {
 
     private val _identification = MutableStateFlow("")
     val identification: StateFlow<String> = _identification
@@ -47,7 +47,7 @@ class ExportViewModel @Inject constructor(
     fun authenticateUser(email: String, password: String, isNewUser: Boolean) {
 
         viewModelScope.launch {
-            when (val result = firebaseUseCase.authenticateUser(email, password, isNewUser)) {
+            when (val result = authenticateUserUseCase.authenticateUser(email, password, isNewUser)) {
                 is NetworkResponseState.Loading -> {
                     changerUiState(ScreenUiState.LOADING)
                 }
@@ -68,7 +68,7 @@ class ExportViewModel @Inject constructor(
 
     fun closeSession() {
         viewModelScope.launch {
-            when (val result = firebaseUseCase.closeSecion()) {
+            when (val result = authenticateUserUseCase.closeSecion()) {
 
                 is NetworkResponseState.Loading -> {
 

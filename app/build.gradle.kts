@@ -51,6 +51,8 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+
 }
 
 dependencies {
@@ -81,6 +83,11 @@ dependencies {
     implementation (libs.javax.annotation.api)
     implementation (libs.hilt.android)
 
+
+
+
+
+
     ksp (libs.hilt.compiler)
     implementation (libs.androidx.hilt.navigation.compose)
 
@@ -97,7 +104,14 @@ dependencies {
 
 
     //testing
+    testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit)
+    testImplementation (libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    androidTestImplementation (libs.hilt.android.testing)
+    kspAndroidTest (libs.hilt.android.compiler)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
