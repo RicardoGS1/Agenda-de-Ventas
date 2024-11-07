@@ -1,22 +1,15 @@
 package com.virtualworld.agendadeventas.domain.usecase
 
-import app.cash.turbine.test
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
 import com.virtualworld.agendadeventas.core.repository.LocalRepository
-import com.virtualworld.agendadeventas.ui.screen.add.ProductUiState
+import com.virtualworld.agendadeventas.ui.screen.common.ProductUiState
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi

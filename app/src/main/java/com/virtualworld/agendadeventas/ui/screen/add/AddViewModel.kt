@@ -8,8 +8,8 @@ import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.domain.usecase.AddProductUseCase
 import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
+import com.virtualworld.agendadeventas.ui.screen.common.ProductUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -106,14 +106,16 @@ class AddViewModel @Inject constructor(
     }
 
 
-    private fun checkDecimalNumber(numStore: String): String {
 
-        val filteredChars = numStore.filterIndexed { index, c ->
-            c in "0123456789" || (c == '.' && numStore.indexOf('.') == index)
-        }
 
-        return filteredChars
+
+}
+
+fun checkDecimalNumber(numStore: String): String {
+
+    val filteredChars = numStore.filterIndexed { index, c ->
+        c in "0123456789" || (c == '.' && numStore.indexOf('.') == index)
     }
 
-
+    return filteredChars
 }

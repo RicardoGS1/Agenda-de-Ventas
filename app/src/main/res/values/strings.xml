@@ -26,6 +26,7 @@
     <string name="nombre_producto_detalles">Details</string>
     <string name="precio_compra_detalles">Purchase price</string>
     <string name="precio_venta_detalles">Sale price: </string>
+    <string name="editar_costo">Cost: </string>
 
 
     //SCREEN SELL

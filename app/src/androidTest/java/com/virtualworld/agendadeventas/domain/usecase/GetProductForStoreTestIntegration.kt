@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
-class GetProductStoreTestIntegration {
+class GetProductForStoreTestIntegration {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)

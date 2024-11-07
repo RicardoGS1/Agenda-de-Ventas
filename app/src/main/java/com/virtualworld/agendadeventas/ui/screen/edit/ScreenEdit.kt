@@ -1,8 +1,6 @@
-package com.virtualword3d.salesregister.Screen.Editar
+package com.virtualworld.agendadeventas.ui.screen.edit
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 
@@ -11,67 +9,168 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-
-
-import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 import com.virtualworld.agendadeventas.R
 
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun PantallaEditar() {
+import com.virtualworld.agendadeventas.domain.Model.ProductWithStoresActive
+import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
-    val viewModel: EditarViewModel = hiltViewModel()
-    viewModel.getProducto()
-    viewModel.getTiendas()
-    ListaProductosEditar(viewModel)
-    VentanaDetalles(viewModel)
-    VentanaEliminar(viewModel)
-    VentanaEditar(viewModel)
+
+@Composable
+fun ScreenEdit() {
+
+    val viewModel: EditViewModel = hiltViewModel()
+
+    val screenUiState by viewModel.screenUiState.collectAsState()
+    val productsState by viewModel.productsState.collectAsState()
+
+    val productSelectState by viewModel.productSelectState.collectAsState()//puede ser local
+
+    val changeProductSelect = { product: ProductWithStoresActive ->
+        viewModel.changeProductSelect(product)
+    }
+
+    val setProduct = { product: ProductWithStoresActive ->
+        viewModel.setProduct()
+    }
+
+
+    val windowEditView = rememberSaveable { (mutableStateOf(false)) }
+
+    val changeWindowEditView = {
+        windowEditView.value = !windowEditView.value
+    }
+
+    val updateProductName = { name: String -> viewModel.updateProductName(name) }
+    val updateProductCost = { cost: String -> viewModel.updateProductCost(cost) }
+    val updateStoreValue = { storeId: String, value: String ->
+        viewModel.updateStoreValue(
+            storeId,
+            value
+        )
+    }
+
+    Box() {
+
+        if (!windowEditView.value) {
+
+            if (screenUiState != ScreenUiState.LOADING) {
+                ListProducts(
+                    changeWindowEditView,
+                    productsState,
+                    changeProductSelect,
+                )
+            }
+        } else {
+            WindowsEditView(
+                changeWindowEditView,
+                productSelectState,
+                updateProductName,
+                updateProductCost,
+                updateStoreValue,
+                setProduct
+            )
+        }
+    }
 
 }
+}
+
+@Composable
+fun ListProducts(
+    changeWindowEditView: () -> Unit,
+    productsState: List<ProductWithStoresActive>,
+    changeProductSelect: (ProductWithStoresActive) -> Unit,
+) {
+
+
+    LazyColumn {
+        productsState.forEach { product ->
+
+            item {
+                ItemProduct(product, changeWindowEditView, changeProductSelect)
+            }
+
+        }
+
+    }
+}
+
+
+@Composable
+fun ItemProduct(
+    product: ProductWithStoresActive,
+    changeWindowEditView: () -> Unit,
+    changeProductSelect: (ProductWithStoresActive) -> Unit
+) {
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .clickable {
+                changeWindowEditView()
+                changeProductSelect(product)
+            },
+        elevation = CardDefaults.cardElevation(8.dp)
+
+    ) {
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+                    .padding(bottom = 4.dp),
+                text = product.productName,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+
+            Row() {
+
+                Text(text = stringResource(id = R.string.editar_costo) + " " + product.productCost)
+
+                product.storesValues.forEach {
+                    Text(
+                        text = it.nameStore + ": " + it.value,
+                        Modifier.padding(horizontal = 10.dp)
+                    )
+                }
+
+
+            }
+
+        }
+    }
+}
+
+
+/*
 
 
 
 //LISTA PRODUCTOS PANTALLA EDITAR+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 @Composable
-fun ListaProductosEditar(viewModel: EditarViewModel) {
+fun ListaProductosEditar(viewModel: EditViewModel) {
 
     val nombreProducto: List<String> by viewModel.nombreProducto.observeAsState(initial = listOf())
 
@@ -90,7 +189,7 @@ fun ListaProductosEditar(viewModel: EditarViewModel) {
 
 //VENTANAS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 @Composable
-fun VentanaEditar(viewModel: EditarViewModel) {
+fun VentanaEditar(viewModel: EditViewModel) {
 
     val nombreProductoEditar: String by viewModel.nombreProductoEditar.observeAsState(initial = "")
     val precioCompra: String by viewModel.precioCompra.observeAsState(initial = "")
@@ -130,7 +229,7 @@ fun VentanaEditar(viewModel: EditarViewModel) {
 
 
 @Composable
-fun VentanaDetalles(viewModel: EditarViewModel) {
+fun VentanaDetalles(viewModel: EditViewModel) {
 
     val ventana_detalles_enable: Boolean by viewModel.ventana_detalles_enable.observeAsState(initial = false)
     val activaTienda1: Boolean by viewModel.activaTienda1.observeAsState(initial = true)
@@ -168,7 +267,7 @@ fun VentanaDetalles(viewModel: EditarViewModel) {
 
 
 @Composable
-fun VentanaEliminar(viewModel: EditarViewModel) {
+fun VentanaEliminar(viewModel: EditViewModel) {
 
     val ventana_borrar_enable: Boolean by viewModel.ventana_borrar_enable.observeAsState(initial = false)
     val producto_borrar: ProductRoom by viewModel.producto_borrar.observeAsState(
@@ -198,75 +297,7 @@ fun VentanaEliminar(viewModel: EditarViewModel) {
 
 
 //ITEMS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-@Composable
-fun ItemListaProductosEditar(index: Int, nombres: String, viewModel: EditarViewModel) {
 
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .padding(4.dp),
-        elevation= CardDefaults.cardElevation(8.dp)){
-        Column(modifier = Modifier.fillMaxWidth()) {
-
-
-
-                Row(
-                    modifier = Modifier.align(Alignment.End),
-
-                    ) {
-
-
-                    IconButton(
-                        onClick = { viewModel.ventanaDetalles(index) },
-                        modifier = Modifier.padding(horizontal = 2.dp)
-                    ) {
-                        Icon(
-                            Icons.Filled.Visibility,
-                            contentDescription = "Cambiar color",                            
-
-                            )
-                    }
-
-                    IconButton(
-                        onClick = { viewModel.ventanaEditar(index) },
-                        modifier = Modifier.padding(horizontal = 2.dp)
-                    ) {
-                        Icon(
-                            Icons.Filled.Edit,
-                            contentDescription = "Cambiar color",
-
-                            )
-                    }
-
-
-                    IconButton(
-                        onClick = { viewModel.ventanaBorrar(index) },
-                        modifier = Modifier.padding(horizontal = 2.dp)
-                    ) {
-
-                        Icon(
-                            Icons.Filled.Delete,
-                            contentDescription = "Cambiar color",
-
-                            )
-                    }
-
-
-                }
-
-            Text(
-                modifier= Modifier
-                    .padding(horizontal = 10.dp)
-                    .padding(bottom = 4.dp),
-                text = nombres,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
-
-        }
-    }
-
-}
 
 
 @Composable
@@ -306,7 +337,7 @@ fun ItemsVentanaDetalles(categoria: String, producto_detalle: String) {
 //VISTAS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 @Composable
-fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String, precioCompra: String, precioTienda1: String, precioTienda2: String, precioTienda3: String, precioTienda4: String, precioTienda5: String, activaTienda1: Boolean, activaTienda2: Boolean, activaTienda3: Boolean, activaTienda4: Boolean, activaTienda5: Boolean, nombreTienda1: String, nombreTienda2: String, nombreTienda3: String, nombreTienda4: String, nombreTienda5: String) {
+fun VistaVentanaEditar(viewModel: EditViewModel, nombreProductoEditar: String, precioCompra: String, precioTienda1: String, precioTienda2: String, precioTienda3: String, precioTienda4: String, precioTienda5: String, activaTienda1: Boolean, activaTienda2: Boolean, activaTienda3: Boolean, activaTienda4: Boolean, activaTienda5: Boolean, nombreTienda1: String, nombreTienda2: String, nombreTienda3: String, nombreTienda4: String, nombreTienda5: String) {
 
     Dialog(onDismissRequest = { viewModel.ventanaEditar(-1) }){
 
@@ -484,7 +515,7 @@ fun VistaVentanaEditar(viewModel: EditarViewModel, nombreProductoEditar: String,
 
 
 @Composable
-fun VistaVentanaDetalles(viewModel: EditarViewModel, activaTienda1: Boolean, activaTienda2: Boolean, activaTienda3: Boolean, activaTienda4: Boolean, activaTienda5: Boolean, producto_detalles: ProductRoom, nombreTienda1: String, nombreTienda2: String, nombreTienda3: String, nombreTienda4: String, nombreTienda5: String) {
+fun VistaVentanaDetalles(viewModel: EditViewModel, activaTienda1: Boolean, activaTienda2: Boolean, activaTienda3: Boolean, activaTienda4: Boolean, activaTienda5: Boolean, producto_detalles: ProductRoom, nombreTienda1: String, nombreTienda2: String, nombreTienda3: String, nombreTienda4: String, nombreTienda5: String) {
 
 
     Dialog(onDismissRequest = { viewModel.ventanaDetalles(-1) }) {
@@ -598,7 +629,7 @@ fun VistaVentanaDetalles(viewModel: EditarViewModel, activaTienda1: Boolean, act
 
 
 @Composable
-fun VistaVentanaBorrar(viewModel: EditarViewModel, producto_borrar: ProductRoom) {
+fun VistaVentanaBorrar(viewModel: EditViewModel, producto_borrar: ProductRoom) {
 
 
     AlertDialog(
@@ -626,3 +657,5 @@ fun VistaVentanaBorrar(viewModel: EditarViewModel, producto_borrar: ProductRoom)
     )
 
 }
+
+ */

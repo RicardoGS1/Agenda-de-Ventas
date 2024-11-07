@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.ui.screen.common.ManagerScreenStateView
+import com.virtualworld.agendadeventas.ui.screen.common.ProductUiState
 
 
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState

@@ -3,7 +3,7 @@ package com.virtualworld.agendadeventas.domain.usecase
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.repository.LocalRepository
-import com.virtualworld.agendadeventas.ui.screen.add.ProductUiState
+import com.virtualworld.agendadeventas.ui.screen.common.ProductUiState
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import javax.inject.Inject
 
@@ -28,6 +28,12 @@ class AddProductUseCase @Inject constructor(private val localRepository: LocalRe
             is NetworkResponseState.Loading -> ScreenUiState.LOADING
             is NetworkResponseState.Success -> ScreenUiState.OK
         }
+    }
+
+    suspend fun updateProduct(productUiState: ProductRoom){
+
+        localRepository.addProduct(productUiState)
+
 
 
     }
