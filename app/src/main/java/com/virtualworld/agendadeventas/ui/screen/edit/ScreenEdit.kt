@@ -1,13 +1,17 @@
 package com.virtualworld.agendadeventas.ui.screen.edit
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 
 import androidx.compose.material3.Card
@@ -18,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +34,7 @@ import com.virtualworld.agendadeventas.R
 
 
 import com.virtualworld.agendadeventas.domain.Model.ProductWithStoresActive
+import com.virtualworld.agendadeventas.ui.screen.common.ManagerScreenStateView
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
 
@@ -39,6 +45,8 @@ fun ScreenEdit() {
 
     val screenUiState by viewModel.screenUiState.collectAsState()
     val productsState by viewModel.productsState.collectAsState()
+
+    val changeScreenUiState = { stateUi: ScreenUiState -> viewModel.changerUiState(stateUi) }
 
     val productSelectState by viewModel.productSelectState.collectAsState()//puede ser local
 
@@ -68,6 +76,7 @@ fun ScreenEdit() {
 
     Box() {
 
+
         if (!windowEditView.value) {
 
             if (screenUiState != ScreenUiState.LOADING) {
@@ -78,19 +87,27 @@ fun ScreenEdit() {
                 )
             }
         } else {
-            WindowsEditView(
-                changeWindowEditView,
-                productSelectState,
-                updateProductName,
-                updateProductCost,
-                updateStoreValue,
-                setProduct
-            )
+            if (screenUiState != ScreenUiState.LOADING) {
+                WindowsEditView(
+                    changeWindowEditView,
+                    productSelectState,
+                    updateProductName,
+                    updateProductCost,
+                    updateStoreValue,
+                    setProduct
+                )
+            }
         }
+
+        ManagerScreenStateView(
+            uiMessengerState = screenUiState,
+            modifier = Modifier.align(Alignment.BottomCenter),
+            changeScreenUiState
+        )
     }
 
 }
-}
+
 
 @Composable
 fun ListProducts(
@@ -113,6 +130,7 @@ fun ListProducts(
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ItemProduct(
     product: ProductWithStoresActive,
@@ -123,20 +141,18 @@ fun ItemProduct(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp)
+            .padding(2.dp)
             .clickable {
                 changeWindowEditView()
                 changeProductSelect(product)
-            },
-        elevation = CardDefaults.cardElevation(8.dp)
-
+            }
     ) {
 
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.wrapContentSize().padding(4.dp)) {
 
             Text(
                 modifier = Modifier
-                    .padding(horizontal = 10.dp)
+                    .padding(horizontal = 12.dp)
                     .padding(bottom = 4.dp),
                 text = product.productName,
                 fontSize = 20.sp,
@@ -144,20 +160,18 @@ fun ItemProduct(
                 textAlign = TextAlign.Center
             )
 
-            Row() {
-
+            FlowRow(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(horizontal = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(32.dp) // Agrega espacio entre elementos
+            ) {
                 Text(text = stringResource(id = R.string.editar_costo) + " " + product.productCost)
 
                 product.storesValues.forEach {
-                    Text(
-                        text = it.nameStore + ": " + it.value,
-                        Modifier.padding(horizontal = 10.dp)
-                    )
+                    Text(text = it.nameStore + ": " + it.value)
                 }
-
-
             }
-
         }
     }
 }

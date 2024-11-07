@@ -53,7 +53,8 @@ class EditViewModel @Inject constructor(
                             state.result
                         }
 
-                        _screenUiState.update { ScreenUiState.NEUTRAL }
+                        if (_screenUiState.value != ScreenUiState.OK)
+                            _screenUiState.update { ScreenUiState.NEUTRAL }
 
 
                     }
@@ -64,6 +65,12 @@ class EditViewModel @Inject constructor(
         }
     }
 
+    fun changerUiState(message: ScreenUiState) {
+        println(message)
+        _screenUiState.update {
+            message
+        }
+    }
 
     fun changeProductSelect(product: ProductWithStoresActive) {
 
@@ -108,24 +115,30 @@ class EditViewModel @Inject constructor(
                 }
 
                 val productRoom = ProductRoom(
-                    id =  _productSelectState.value.idProduct.toLong(),
-                    nombre =  _productSelectState.value.productName,
+                    id = _productSelectState.value.idProduct.toLong(),
+                    nombre = _productSelectState.value.productName,
                     compra = _productSelectState.value.productCost.toLong(),
-                    venta1 = listMap[1]?.toLong()?:0,
-                    venta2 = listMap[2]?.toLong()?:0,
-                    venta3 = listMap[3]?.toLong()?:0,
-                    venta4 = listMap[4]?.toLong()?:0,
-                    venta5 = listMap[5]?.toLong()?:0
+                    venta1 = listMap[1]?.toLong() ?: 0,
+                    venta2 = listMap[2]?.toLong() ?: 0,
+                    venta3 = listMap[3]?.toLong() ?: 0,
+                    venta4 = listMap[4]?.toLong() ?: 0,
+                    venta5 = listMap[5]?.toLong() ?: 0
                 )
 
 
-
                 val result = addProductUseCase.updateProduct(productRoom)
-                // changerUiState(result)
+
+                val state = when (result) {
+                    is NetworkResponseState.Error -> ScreenUiState.ERROR
+                    is NetworkResponseState.Loading -> ScreenUiState.LOADING
+                    is NetworkResponseState.Success -> ScreenUiState.OK
+                }
+
+                changerUiState(state)
                 // restartProductUI()
 
             } else {
-                //  changerUiState(ScreenUiState.ERROR)
+                changerUiState(ScreenUiState.ERROR)
 
             }
         }

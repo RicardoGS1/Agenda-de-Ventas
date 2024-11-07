@@ -113,7 +113,8 @@ fun WindowsEditView(
             }
 
             Button(
-                onClick = { setProduct(productSelectState) },
+                onClick = { setProduct(productSelectState)
+                    changeWindowEditView() },
                 Modifier.align(Alignment.BottomEnd).padding(8.dp)
             ) {
                 Text(text = "Salve")

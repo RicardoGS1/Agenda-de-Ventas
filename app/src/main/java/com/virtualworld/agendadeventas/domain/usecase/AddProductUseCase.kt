@@ -30,10 +30,15 @@ class AddProductUseCase @Inject constructor(private val localRepository: LocalRe
         }
     }
 
-    suspend fun updateProduct(productUiState: ProductRoom){
+    suspend fun updateProduct(productUiState: ProductRoom): NetworkResponseState<Unit> {
 
-        localRepository.addProduct(productUiState)
+        val response = localRepository.addProduct(productUiState)
 
+        return when(response){
+            is NetworkResponseState.Error -> NetworkResponseState.Error(response.exception)
+            is NetworkResponseState.Loading -> NetworkResponseState.Loading
+            is NetworkResponseState.Success -> NetworkResponseState.Success(response.result)
+        }
 
 
     }

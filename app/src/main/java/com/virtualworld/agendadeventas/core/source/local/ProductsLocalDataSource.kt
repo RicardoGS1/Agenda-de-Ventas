@@ -65,19 +65,7 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
 
     }
 
-    fun updateProducto(producto: ProductRoom) {
-        executorService.execute {
-            productoDao.update(producto)
-        }
-    }
 
-
-    fun getAllLogs(callback: (List<ProductRoom>) -> Unit) {
-        executorService.execute {
-            val logs = productoDao.getAll()
-            mainThreadHandler.post { callback(logs) }
-        }
-    }
 
 
     fun removeProducto(producto: ProductRoom, callback: (Int) -> Unit) {
