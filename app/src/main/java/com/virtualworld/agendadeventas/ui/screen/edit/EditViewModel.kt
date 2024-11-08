@@ -8,6 +8,7 @@ import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.domain.Model.ProductWithStoresActive
 import com.virtualworld.agendadeventas.domain.Model.StoresValues
 import com.virtualworld.agendadeventas.domain.usecase.AddProductUseCase
+import com.virtualworld.agendadeventas.domain.usecase.DeleteProductUseCase
 import com.virtualworld.agendadeventas.domain.usecase.GetProductForStore
 import com.virtualworld.agendadeventas.ui.screen.add.checkDecimalNumber
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class EditViewModel @Inject constructor(
     private val getProductForStore: GetProductForStore,
-    private val addProductUseCase: AddProductUseCase
+    private val addProductUseCase: AddProductUseCase,
+    private val deleteProductUseCase: DeleteProductUseCase
 ) : ViewModel() {
 
 
@@ -142,6 +144,12 @@ class EditViewModel @Inject constructor(
 
             }
         }
+    }
+
+    fun deleteProduct(product: ProductWithStoresActive) {
+      viewModelScope.launch {
+          deleteProductUseCase(product.idProduct.toInt())
+      }
     }
 
 

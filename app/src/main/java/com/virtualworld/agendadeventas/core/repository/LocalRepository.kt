@@ -221,6 +221,10 @@ class LocalRepository @Inject constructor(
         return productsLocalDataSource.addProduct(productRoom)
     }
 
+    suspend fun deleteProduct(id:Int){
+        productsLocalDataSource.deleteProductById(id)
+    }
+
 
 
 }

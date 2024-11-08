@@ -44,10 +44,7 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
     }
 
 
-    private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
-    private val mainThreadHandler by lazy {
-        Handler(Looper.getMainLooper())
-    }
+
 
 
 
@@ -68,11 +65,13 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
 
 
 
-    fun removeProducto(producto: ProductRoom, callback: (Int) -> Unit) {
-        executorService.execute {
-            val respuesta = productoDao.borrar(producto)
-            mainThreadHandler.post { callback(respuesta) }
-        }
+    suspend fun deleteProductById(id:Int) {
+
+        println(id)
+
+        productoDao.deleteProductById(id)
+
+
     }
 
 
