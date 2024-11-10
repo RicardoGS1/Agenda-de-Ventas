@@ -49,45 +49,40 @@ import com.virtualworld.agendadeventas.domain.models.ProductWithStoresActive
 @Composable
 fun ListProductsSwipeToDismiss(
     productsState: List<ProductWithStoresActive>,
-    changeWindowEditView: () -> Unit,
-    onEditProduct: (ProductWithStoresActive) -> Unit,
-    onRemoveProduct: (ProductWithStoresActive) -> Unit,
-    modifier: Modifier
+    selectProduct: (ProductWithStoresActive) -> Unit,
+    changeShowEditView: () -> Unit,
+
+    showConfirmDelete: Boolean,
+    changeShowDelete: (Boolean) -> Unit
 ) {
 
-  var isConfirm by remember { mutableStateOf (false) }
-    val actualize ={isConfirm = !isConfirm}
+  var cancelDelete by remember { mutableStateOf (false) }
 
-    var selctProduct by remember {
-        mutableStateOf(ProductWithStoresActive())
+    LaunchedEffect(key1 = showConfirmDelete) {
+        if(!showConfirmDelete){
+            cancelDelete=!cancelDelete
+        }
     }
-    val changeSelect={select:ProductWithStoresActive->  selctProduct = select }
 
 
-
-    LazyColumn(modifier = modifier) {
+    LazyColumn() {
 
         items(productsState.size) { product ->
 
             SwipeBox(
                 onDelete = {
 
-
-                    ConfirmDelete(productsState[product], onRemoveProduct,actualize)
-                    // Just for Example. Is not optimal!
-                    // myList = myList.toMutableList().also { it.remove(item) }
+                    selectProduct(productsState[product])
+                    changeShowDelete(true)
                 },
                 onEdit = {
-                    changeWindowEditView()
-                    productsState[product]
                 },
+
                 modifier = Modifier,
-                restart =  isConfirm
+                restart =  cancelDelete
             ) {
 
-                ListItem(productsState[product], onEditProduct, changeWindowEditView,)
-
-
+                ListItem(productsState[product], selectProduct, changeShowEditView,)
             }
         }
     }
@@ -101,10 +96,10 @@ fun ListItem(
     changeWindowEditView: () -> Unit
 ) {
 
-    Card(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp)
+            .padding(vertical =  2.dp).background(MaterialTheme.colorScheme.inverseOnSurface)
             .clickable {
                 changeWindowEditView()
                 changeProductSelect(product)
@@ -148,7 +143,7 @@ fun ListItem(
 @Composable
 private fun SwipeBox(
     modifier: Modifier = Modifier,
-    onDelete: @Composable () -> Unit,
+    onDelete: () -> Unit,
     onEdit: () -> Unit,
     restart : Boolean,
     content: @Composable () -> Unit,
@@ -157,12 +152,9 @@ private fun SwipeBox(
 
     val swipeState = rememberSwipeToDismissBoxState()
 
-
-
     LaunchedEffect(key1 = restart) {
         swipeState.reset()
     }
-
 
     lateinit var icon: ImageVector
     lateinit var alignment: Alignment
@@ -172,30 +164,32 @@ private fun SwipeBox(
         SwipeToDismissBoxValue.EndToStart -> {
             icon = Icons.Outlined.Delete
             alignment = Alignment.CenterEnd
-            color = MaterialTheme.colorScheme.errorContainer
+            color = MaterialTheme.colorScheme.error
         }
 
         SwipeToDismissBoxValue.StartToEnd -> {
             icon = Icons.Outlined.Edit
             alignment = Alignment.CenterStart
             color =
-                Color.Green.copy(alpha = 0.3f) // You can generate theme for successContainer in themeBuilder
+                Color.Green.copy(alpha = 0.3f)
         }
 
         SwipeToDismissBoxValue.Settled -> {
             icon = Icons.Outlined.Delete
             alignment = Alignment.CenterEnd
-            color = MaterialTheme.colorScheme.errorContainer
+            color = MaterialTheme.colorScheme.surface
         }
     }
 
     SwipeToDismissBox(
         modifier = modifier.animateContentSize(),
+        enableDismissFromStartToEnd = false,
         state = swipeState,
         backgroundContent = {
             Box(
                 contentAlignment = alignment,
                 modifier = Modifier
+                    .padding(vertical = 2.dp)
                     .fillMaxSize()
                     .background(color)
             ) {
@@ -211,9 +205,9 @@ private fun SwipeBox(
 
     when (swipeState.currentValue) {
         SwipeToDismissBoxValue.EndToStart -> {
-
-            onDelete( )
-
+            LaunchedEffect(swipeState) {
+                onDelete()
+            }
         }
 
         SwipeToDismissBoxValue.StartToEnd -> {
@@ -227,55 +221,3 @@ private fun SwipeBox(
         }
     }
 }
-
-
-@Composable
-fun ConfirmDelete(
-    product: ProductWithStoresActive,
-    onRemoveProduct: (ProductWithStoresActive) -> Unit,
-    actualize: () -> Unit,
-
-    ) {
-
-    var isVisible by remember { mutableStateOf(true) }
-
-    if (isVisible) {
-
-        AlertDialog(
-            onDismissRequest = {
-
-                isVisible = false
-                actualize ()
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    onRemoveProduct(product)
-                }
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.boton_confirmar_borrar),
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    actualize ()
-                    isVisible = false
-
-                }
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.boton_confirmar_no_borrar),
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            },
-            title = { Text(text = stringResource(id = R.string.ventana_borrar)) },
-            text = { Text(text = product.productName) }
-        )
-
-
-    }
-}
-
