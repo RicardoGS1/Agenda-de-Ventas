@@ -2,16 +2,17 @@ package com.virtualworld.agendadeventas.ui.screen.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.domain.Model.ProductWithStoresActive
-import com.virtualworld.agendadeventas.domain.Model.StoresValues
+import com.virtualworld.agendadeventas.domain.mapper.toProductRoom
+import com.virtualworld.agendadeventas.domain.models.ProductWithStoresActive
+import com.virtualworld.agendadeventas.domain.models.StoresValues
 import com.virtualworld.agendadeventas.domain.usecase.AddProductUseCase
 import com.virtualworld.agendadeventas.domain.usecase.DeleteProductUseCase
 import com.virtualworld.agendadeventas.domain.usecase.GetProductForStore
-import com.virtualworld.agendadeventas.ui.screen.add.checkDecimalNumber
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
+import com.virtualworld.agendadeventas.ui.screen.common.checkDecimalNumber
+import com.virtualworld.agendadeventas.ui.screen.common.productValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,14 +29,14 @@ class EditViewModel @Inject constructor(
 
 
     private val _productsState =
-        MutableStateFlow<List<ProductWithStoresActive>>(listOf(ProductWithStoresActive()))
+        MutableStateFlow(listOf(ProductWithStoresActive()))
     val productsState: StateFlow<List<ProductWithStoresActive>> = _productsState
 
     private val _productSelectState =
-        MutableStateFlow<ProductWithStoresActive>(ProductWithStoresActive())
+        MutableStateFlow(ProductWithStoresActive())
     val productSelectState: StateFlow<ProductWithStoresActive> = _productSelectState
 
-    private val _screenUiState = MutableStateFlow<ScreenUiState>(ScreenUiState.LOADING)
+    private val _screenUiState = MutableStateFlow(ScreenUiState.LOADING)
     val screenUiState: StateFlow<ScreenUiState> = _screenUiState
 
     init {
@@ -45,7 +46,6 @@ class EditViewModel @Inject constructor(
     private fun getProductForStoresActive() {
         viewModelScope.launch {
             getProductForStore.getProductsWithActivesStores().collect { state ->
-
 
                 when (state) {
                     is NetworkResponseState.Error -> _screenUiState.update { ScreenUiState.ERROR }
@@ -57,25 +57,19 @@ class EditViewModel @Inject constructor(
 
                         if (_screenUiState.value != ScreenUiState.OK)
                             _screenUiState.update { ScreenUiState.NEUTRAL }
-
-
                     }
-
                 }
-
             }
         }
     }
 
     fun changerUiState(message: ScreenUiState) {
-        println(message)
         _screenUiState.update {
             message
         }
     }
 
     fun changeProductSelect(product: ProductWithStoresActive) {
-
         _productSelectState.update {
             product
         }
@@ -91,8 +85,6 @@ class EditViewModel @Inject constructor(
                     else
                         it
                 }
-
-                //currentState.storesValues + ("storeId" to checkDecimalNumber(value))
             )
         }
     }
@@ -110,23 +102,10 @@ class EditViewModel @Inject constructor(
         viewModelScope.launch {
             //changerUiState(ScreenUiState.LOADING)
 
-            if (_productSelectState.value.productName != "" && _productSelectState.value.productCost != "") {
+            if (productValidator(_productSelectState.value)) {
 
-                val listMap = _productSelectState.value.storesValues.associate {
-                    it.idStore.toInt() to it.value
-                }
-
-                val productRoom = ProductRoom(
-                    id = _productSelectState.value.idProduct.toLong(),
-                    nombre = _productSelectState.value.productName,
-                    compra = _productSelectState.value.productCost.toLong(),
-                    venta1 = listMap[1]?.toLong() ?: 0,
-                    venta2 = listMap[2]?.toLong() ?: 0,
-                    venta3 = listMap[3]?.toLong() ?: 0,
-                    venta4 = listMap[4]?.toLong() ?: 0,
-                    venta5 = listMap[5]?.toLong() ?: 0
-                )
-
+                val product = productSelectState.value
+                val productRoom = product.toProductRoom()
 
                 val result = addProductUseCase.updateProduct(productRoom)
 
@@ -135,10 +114,7 @@ class EditViewModel @Inject constructor(
                     is NetworkResponseState.Loading -> ScreenUiState.LOADING
                     is NetworkResponseState.Success -> ScreenUiState.OK
                 }
-
                 changerUiState(state)
-                // restartProductUI()
-
             } else {
                 changerUiState(ScreenUiState.ERROR)
 
@@ -147,9 +123,9 @@ class EditViewModel @Inject constructor(
     }
 
     fun deleteProduct(product: ProductWithStoresActive) {
-      viewModelScope.launch {
-          deleteProductUseCase(product.idProduct.toInt())
-      }
+        viewModelScope.launch {
+            deleteProductUseCase(product.idProduct.toInt())
+        }
     }
 
 

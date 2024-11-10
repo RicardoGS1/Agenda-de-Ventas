@@ -3,13 +3,10 @@ package com.virtualworld.agendadeventas.domain.usecase
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
 import com.virtualworld.agendadeventas.core.repository.LocalRepository
-import com.virtualworld.agendadeventas.domain.Model.ProductWithStoresActive
-import com.virtualworld.agendadeventas.domain.Model.StoresValues
-import com.virtualworld.agendadeventas.ui.screen.common.ProductUiState
+import com.virtualworld.agendadeventas.domain.models.ProductWithStoresActive
+import com.virtualworld.agendadeventas.domain.models.StoresValues
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
