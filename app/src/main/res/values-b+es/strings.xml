@@ -27,6 +27,7 @@
     <string name="nombre_producto_detalles">Detalles</string>
     <string name="precio_compra_detalles">Precio de compra</string>
     <string name="precio_venta_detalles">Precio de venta: </string>
+    <string name="editar_costo">Costo: </string>
 
     //PANTALLA VENDER
     <string name="label_spiner_vender">Selecciona una tienda</string>

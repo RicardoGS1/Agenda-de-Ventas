@@ -15,17 +15,19 @@ import org.junit.Before
 import org.junit.Test
 
 
-class GetProductStoreTest {
+class GetProductForStoreTest {
 
 
     private val localRepository: LocalRepository = mockk() // Creamos un mock del repositorio
+    private val getStoresActiveUseCase: GetStoresActiveUseCase = mockk()
+    private val getProductAllUseCase: GetProductAllUseCase  = mockk()
 
-    private lateinit var getProductStore: GetProductStore // Instancia de la clase que vamos a probar
+    private lateinit var getProductForStore: GetProductForStore // Instancia de la clase que vamos a probar
 
     @Before
     fun onBefore() {
         //MockKAnnotations.init(this)
-        getProductStore = GetProductStore(localRepository) // Inicializamos la clase con el mock
+        getProductForStore = GetProductForStore(localRepository,getStoresActiveUseCase, getProductAllUseCase) // Inicializamos la clase con el mock
     }
 
 
@@ -46,7 +48,7 @@ class GetProductStoreTest {
 
             // Act (Actuar)
             val resultFlow =
-                getProductStore.getProductForStore(idStore) // Llamamos a la función que estamos probando
+                getProductForStore.getProductForStore(idStore) // Llamamos a la función que estamos probando
 
             // Assert (Verificar)
             resultFlow.test {
@@ -84,7 +86,7 @@ class GetProductStoreTest {
             // Mockeamos el repositorio para que devuelva Error
 
             // Act
-            val resultFlow = getProductStore.getProductForStore(idStore)
+            val resultFlow = getProductForStore.getProductForStore(idStore)
 
             // Assert
             resultFlow.test {

@@ -165,6 +165,8 @@ class LocalRepository @Inject constructor(
         storesLocalDataSource.updateStores(storeRoom)
     }
 
+
+
     //obtiene los productos por tienda especificada por id de tienda
     fun getAllProductsStore(idStore: Int): Flow<NetworkResponseState<List<ProductStoreCore>>> {
         return flow {
@@ -217,6 +219,10 @@ class LocalRepository @Inject constructor(
 
     suspend fun addProduct(productRoom: ProductRoom): NetworkResponseState<Unit> {
         return productsLocalDataSource.addProduct(productRoom)
+    }
+
+    suspend fun deleteProduct(id:Int){
+        productsLocalDataSource.deleteProductById(id)
     }
 
 

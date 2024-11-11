@@ -1,4 +1,4 @@
-package com.virtualworld.agendadeventas.ui.screen.add
+package com.virtualworld.agendadeventas.ui.screen.common
 
 data class ProductUiState(
     val productName: String = "",

@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 import com.virtualworld.agendadeventas.ui.screen.add.AddScreen
-import com.virtualword3d.salesregister.Screen.Editar.PantallaEditar
+import com.virtualworld.agendadeventas.ui.screen.edit.ScreenEdit
 import com.virtualworld.agendadeventas.ui.screen.resume.ResumeScreen
 import com.virtualworld.agendadeventas.ui.screen.record.RecordScreen
 import com.virtualworld.agendadeventas.ui.screen.stores.ScreenStores
@@ -23,7 +23,7 @@ fun AppNavegation(navController: NavHostController, paddingValues: PaddingValues
     NavHost(navController = navController, startDestination = DrawerNavDestination.Resumen.route){
         composable(DrawerNavDestination.Resumen.route) { ResumeScreen() }
         composable(DrawerNavDestination.Agregar.route) { AddScreen() }
-        composable(DrawerNavDestination.Editar.route) { PantallaEditar() }
+        composable(DrawerNavDestination.Editar.route) { ScreenEdit() }
        composable(DrawerNavDestination.Vender.route) { SellScreen() }
        composable(DrawerNavDestination.Registro.route) { RecordScreen() }
         composable(DrawerNavDestination.Tiendas.route) { ScreenStores() }

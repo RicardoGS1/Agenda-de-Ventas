@@ -26,13 +26,13 @@ import androidx.room.PrimaryKey
 data class ProductRoom(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-    val nombre: String,
-    val compra: Long,
-    val venta1: Long,
-    val venta2: Long,
-    val venta3: Long,
-    val venta4: Long,
-    val venta5: Long,
+    val nombre: String = "",
+    val compra: Long = 0,
+    val venta1: Long = 0,
+    val venta2: Long = 0,
+    val venta3: Long = 0,
+    val venta4: Long = 0,
+    val venta5: Long = 0,
 ) {
 
 
