@@ -2,6 +2,7 @@ package com.virtualworld.agendadeventas.core.repository
 
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
+import com.virtualword3d.salesregister.Data.Entity.StoreRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.ResumeSoldForStoreCore
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
@@ -10,14 +11,19 @@ import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
 import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
 import com.virtualworld.agendadeventas.core.Model.StoresActiveCore
 import com.virtualworld.agendadeventas.core.source.local.ProductsLocalDataSource
+import com.virtualworld.agendadeventas.id.IoDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class LocalRepository @Inject constructor(
     private val storesLocalDataSource: StoresLocalDataSource,
     private val soldLocalDataSource: SoldLocalDataSource,
-    private val productsLocalDataSource: ProductsLocalDataSource
+    private val productsLocalDataSource: ProductsLocalDataSource,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
 
 
@@ -32,7 +38,7 @@ class LocalRepository @Inject constructor(
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
-        }
+        }.flowOn(ioDispatcher)
 
     //obtiene todas las ventas realizadas de la base de datos
     fun getAllSold(): Flow<NetworkResponseState<List<SoldRoom>>> =
@@ -45,7 +51,7 @@ class LocalRepository @Inject constructor(
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
-        }
+        }.flowOn(ioDispatcher)
 
     //obtiene las ventas de una tienda especificada por su id
     fun getAllSoldForStore(idStore: Int): Flow<NetworkResponseState<List<SoldForStoreCore>>> =
@@ -70,7 +76,7 @@ class LocalRepository @Inject constructor(
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
-        }
+        }.flowOn(ioDispatcher)
 
 
     //obtener los datos sumados de venta de todas las tiendas activas
@@ -93,7 +99,7 @@ class LocalRepository @Inject constructor(
                                     listVendidos.filter { it.tienda.toLong() == tienda.id }
 
 
-                                val compra = ventasTienda.sumOf { it.compra * it.unidades}
+                                val compra = ventasTienda.sumOf { it.compra * it.unidades }
 
                                 val valor = ventasTienda.sumOf { it.valor * it.unidades }
 
@@ -119,7 +125,7 @@ class LocalRepository @Inject constructor(
             } catch (e: Exception) {
                 NetworkResponseState.Error(e)
             }
-        }
+        }.flowOn(ioDispatcher)
     }
 
     //ogtiene las tiendas activas
@@ -139,7 +145,27 @@ class LocalRepository @Inject constructor(
                 NetworkResponseState.Error(e)
             }
 
-        }
+        }.flowOn(ioDispatcher)
+
+    //ogtiene las tiendas
+    fun getAllStores(): Flow<NetworkResponseState<List<StoreRoom>>> =
+        flow {
+            emit(NetworkResponseState.Loading)
+            try {
+                storesLocalDataSource.getAllStores().collect { listStore ->
+                    emit(NetworkResponseState.Success(listStore))
+                }
+            } catch (e: Exception) {
+                NetworkResponseState.Error(e)
+            }
+
+        }.flowOn(ioDispatcher)
+
+    suspend fun updateStores(storeRoom: List<StoreRoom>) {
+        storesLocalDataSource.updateStores(storeRoom)
+    }
+
+
 
     //obtiene los productos por tienda especificada por id de tienda
     fun getAllProductsStore(idStore: Int): Flow<NetworkResponseState<List<ProductStoreCore>>> {
@@ -172,11 +198,11 @@ class LocalRepository @Inject constructor(
                 NetworkResponseState.Error(e)
             }
 
-        }
+        }.flowOn(ioDispatcher)
     }
 
     suspend fun insertListSales(listSoldRoom: List<SoldRoom>) {
-        soldLocalDataSource.addProductoVendido(listSoldRoom)
+        soldLocalDataSource.addProductsSold(listSoldRoom)
     }
 
     suspend fun deleteAllSales() {
@@ -190,5 +216,15 @@ class LocalRepository @Inject constructor(
     suspend fun insertListProducts(result: List<ProductRoom>) {
         productsLocalDataSource.insertListProduct(result)
     }
+
+    suspend fun addProduct(productRoom: ProductRoom): NetworkResponseState<Unit> {
+        return productsLocalDataSource.addProduct(productRoom)
+    }
+
+    suspend fun deleteProduct(id:Int){
+        productsLocalDataSource.deleteProductById(id)
+    }
+
+
 
 }

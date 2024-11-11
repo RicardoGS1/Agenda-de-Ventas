@@ -24,15 +24,15 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "productos")
 data class ProductRoom(
-    @PrimaryKey
-    var id: Long=0,
-    val nombre: String,
-    val compra: Long,
-    val venta1: Long,
-    val venta2: Long,
-    val venta3: Long,
-    val venta4: Long,
-    val venta5: Long,
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0,
+    val nombre: String = "",
+    val compra: Long = 0,
+    val venta1: Long = 0,
+    val venta2: Long = 0,
+    val venta3: Long = 0,
+    val venta4: Long = 0,
+    val venta5: Long = 0,
 ) {
 
 

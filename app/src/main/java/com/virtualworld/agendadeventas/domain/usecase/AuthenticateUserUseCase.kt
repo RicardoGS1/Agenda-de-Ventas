@@ -1,13 +1,10 @@
-package com.virtualword3d.salesregister.CasoUso
+package com.virtualworld.agendadeventas.domain.usecase
 
-import com.virtualword3d.salesregister.Data.Entity.ProductRoom
-import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
-import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.source.FirebaseRepository
 import javax.inject.Inject
 
-class FirebaseUseCase @Inject constructor(private val firebaseRepository: FirebaseRepository)
+class AuthenticateUserUseCase @Inject constructor(private val firebaseRepository: FirebaseRepository)
 {
 
     suspend fun authenticateUser(email: String, password: String, isNewUser: Boolean):NetworkResponseState<String>

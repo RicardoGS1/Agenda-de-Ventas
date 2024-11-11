@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun ScreenUIStateViwe(
+fun ManagerScreenStateView(
     uiMessengerState: ScreenUiState,
     modifier: Modifier,
     onChangerMessenger: (ScreenUiState) -> Unit
@@ -73,6 +73,7 @@ fun ScreenUIStateViwe(
         if (uiMessengerState == ScreenUiState.OK) {
 
             iniciarSnakbar(stringResource(id = R.string.mensaje_exitoso_export))
+            onChangerMessenger(ScreenUiState.NEUTRAL)
 
         }
     }

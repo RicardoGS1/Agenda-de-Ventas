@@ -27,6 +27,7 @@
     <string name="nombre_producto_detalles">Detalles</string>
     <string name="precio_compra_detalles">Precio de compra</string>
     <string name="precio_venta_detalles">Precio de venta: </string>
+    <string name="editar_costo">Costo: </string>
 
     //PANTALLA VENDER
     <string name="label_spiner_vender">Selecciona una tienda</string>
@@ -55,16 +56,6 @@
     <string name="mensaje_error_tiendas">El nombre de la tienda no pueden estar vasios</string>
     <string name="mensaje_confirmar_tiendas">Confirmar</string>
     <string name="mensaje_guardado_tiendas">Los cambios an sido guardados correctamente</string>
-
-
-
-    //Vista Tiendas
-    <string name="label_tienda1">Nombre de tienada 1</string>
-    <string name="label_tienda2">Nombre de tienada 2</string>
-    <string name="label_tienda3">Nombre de tienada 3</string>
-    <string name="label_tienda4">Nombre de tienada 4</string>
-    <string name="label_tienda5">Nombre de tienada 5</string>
-
 
 
 

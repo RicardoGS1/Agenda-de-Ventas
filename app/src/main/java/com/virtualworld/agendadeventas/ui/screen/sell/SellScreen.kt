@@ -25,7 +25,7 @@ import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
 import com.virtualworld.agendadeventas.ui.screen.common.DropDownMenuStoresView
-import com.virtualworld.agendadeventas.ui.screen.common.ScreenUIStateViwe
+import com.virtualworld.agendadeventas.ui.screen.common.ManagerScreenStateView
 
 
 @Composable
@@ -44,7 +44,7 @@ fun SellScreen(viewModel: SellViewModel = hiltViewModel()) {
         onChangerMessenger = { stateUi -> viewModel.changerUiState(stateUi) },
         onStoreSelected = { storeId -> viewModel.getProductForStore(storeId) },
         onUnitSellChanged = { changer -> viewModel.changerUnitSell(changer) },
-        onSaveSellClicked = { storeId -> viewModel.SalveSell(storeId) }
+        onSaveSellClicked = { storeId -> viewModel.salveSell(storeId) }
     )
 }
 
@@ -93,7 +93,7 @@ fun SellScreenContent(
             onClick = { onSaveSellClicked(storesActiveState[selectedStoreIndex].first) }
         )
 
-        ScreenUIStateViwe(
+        ManagerScreenStateView(
             uiMessengerState,
             modifier = Modifier.align(Alignment.BottomCenter),
             onChangerMessenger=onChangerMessenger

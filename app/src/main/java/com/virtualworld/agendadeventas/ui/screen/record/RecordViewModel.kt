@@ -7,7 +7,7 @@ import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.SoldForStoreCore
 import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
-import com.virtualworld.agendadeventas.domain.usecase.GetProductStore
+import com.virtualworld.agendadeventas.domain.usecase.GetProductForStore
 import com.virtualworld.agendadeventas.domain.usecase.GetSoldForStoreUseCase
 import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecordViewModel @Inject constructor(
     private val getStoresActiveUseCase: GetStoresActiveUseCase,
-    private val getProductStore: GetProductStore,
+    private val getProductForStore: GetProductForStore,
     private val getSoldForStoreUseCase: GetSoldForStoreUseCase,
     private val vendidoRepo: SoldLocalDataSource
 ) : ViewModel() {
@@ -60,7 +60,7 @@ class RecordViewModel @Inject constructor(
 
     fun getStoresActive() {
 
-        getStoresActiveUseCase.GetTiendasActivas().onEach { state ->
+        getStoresActiveUseCase.getStoresActive().onEach { state ->
 
             when (state) {
                 is NetworkResponseState.Error -> _messengerState.update { ScreenUiState.ERROR }

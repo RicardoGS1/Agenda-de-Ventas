@@ -1,6 +1,5 @@
 package com.virtualworld.agendadeventas.ui.screen.add
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,23 +9,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,50 +29,55 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.virtualworld.agendadeventas.R
+import com.virtualworld.agendadeventas.ui.screen.common.ManagerScreenStateView
+import com.virtualworld.agendadeventas.ui.screen.common.ProductUiState
 
 
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
-import kotlinx.coroutines.launch
-
 
 @Composable
-fun PantallaAgregar() {
-    Log.d("efecto", "PantallaAgregar")
+fun AddScreen() {
 
     val viewModel: AddViewModel = hiltViewModel()
-    viewModel.getTiendas()
-    AgregarProductos(viewModel)
-    MensajesAgregar(viewModel)
+    val storesActiveState by viewModel.storesActiveState.collectAsState()
+    val productUiState by viewModel.productUiState.collectAsState()
+    val screenUiState: ScreenUiState by viewModel.screenUiState.collectAsState()
+
+    val onChangerScreenUiState = { stateUi: ScreenUiState -> viewModel.changerUiState(stateUi) }
+    val updateProductName = { name: String -> viewModel.updateProductName(name) }
+    val updateProductCost = { cost: String -> viewModel.updateProductCost(cost) }
+    val updateStoreValue = { storeId: Int, value: String ->
+        viewModel.updateStoreValue(
+            storeId,
+            value
+        )
+    }
+    val setProduct = { viewModel.setProduct() }
+
+
+    ContentAddProduct(
+        productUiState,
+        storesActiveState,
+        screenUiState,
+        onChangerScreenUiState, updateProductName, updateProductCost, updateStoreValue, setProduct
+    )
+
 
 }
 
 
 @Composable
-fun AgregarProductos(viewModel: AddViewModel) {
-    Log.d("efecto", "AgregarProductos")
-
-
-    val nombreProducto: String by viewModel.nombreProducto.observeAsState(initial = "")
-    val precioCompra: String by viewModel.precioCompra.observeAsState(initial = "")
-    val precioTienda1: String by viewModel.precioTienda1.observeAsState(initial = "")
-    val precioTienda2: String by viewModel.precioTienda2.observeAsState(initial = "")
-    val precioTienda3: String by viewModel.precioTienda3.observeAsState(initial = "")
-    val precioTienda4: String by viewModel.precioTienda4.observeAsState(initial = "")
-    val precioTienda5: String by viewModel.precioTienda5.observeAsState(initial = "")
-
-    val activaTienda1: Boolean by viewModel.activaTienda1.observeAsState(initial = true)
-    val activaTienda2: Boolean by viewModel.activaTienda2.observeAsState(initial = true)
-    val activaTienda3: Boolean by viewModel.activaTienda3.observeAsState(initial = true)
-    val activaTienda4: Boolean by viewModel.activaTienda4.observeAsState(initial = true)
-    val activaTienda5: Boolean by viewModel.activaTienda5.observeAsState(initial = true)
-
-    val nombreTienda1: String by viewModel.nombreTienda1.observeAsState(initial = "")
-    val nombreTienda2: String by viewModel.nombreTienda2.observeAsState(initial = "")
-    val nombreTienda3: String by viewModel.nombreTienda3.observeAsState(initial = "")
-    val nombreTienda4: String by viewModel.nombreTienda4.observeAsState(initial = "")
-    val nombreTienda5: String by viewModel.nombreTienda5.observeAsState(initial = "")
-
+fun ContentAddProduct(
+    productUiState: ProductUiState,
+    storesActiveState: List<Pair<Int, String>>,
+    screenUiState: ScreenUiState,
+    onChangerScreenUiState: (ScreenUiState) -> Unit,
+    updateProductName: (String) -> Unit,
+    updateProductCost: (String) -> Unit,
+    updateStoreValue: (Int, String) -> Unit,
+    setProduct: () -> Unit,
+) {
 
     Box() {
 
@@ -92,7 +89,6 @@ fun AgregarProductos(viewModel: AddViewModel) {
                     .clip(RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp))
                     .background(MaterialTheme.colorScheme.primary)
             ) {
-
                 Text(
                     text = stringResource(id = R.string.titulo_agregar),
                     fontSize = 24.sp,
@@ -101,56 +97,36 @@ fun AgregarProductos(viewModel: AddViewModel) {
                         .padding(top = 16.dp, bottom = 16.dp),
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onPrimary
-                    //fontWeight = FontWeight.Bold,
-                    //color = MaterialTheme.colors.onSurface,
-
-
                 )
-
             }
 
+            if (screenUiState != ScreenUiState.LOADING) {
 
-
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize().padding(vertical = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                //NOMBRE PRODUCTO
-                item {
-                    TextField(
-                        value = nombreProducto,
-                        onValueChange = { viewModel.OnChangedNombreProducto(it) },
-                        label = { Text(text = stringResource(id = R.string.label_nombre_producto)) },
-                        modifier = Modifier
-                            .padding(horizontal = 32.dp)
-                            .padding(vertical = 8.dp),
-                        singleLine = true
-                    )
-                }
-
-                //PRECIO COMPRA
-                item {
-                    TextField(
-                        value = precioCompra,
-                        onValueChange = { viewModel.OnChangedPrecioCompra(it) },
-                        label = { Text(text = stringResource(id = R.string.label_precio_compra)) },
-                        modifier = Modifier
-                            .padding(horizontal = 32.dp)
-                            .padding(vertical = 8.dp),
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-                    )
-                }
-
-                //TIENDA1
-                if (activaTienda1) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(vertical = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    //NOMBRE PRODUCTO
                     item {
                         TextField(
-                            value = precioTienda1,
-                            onValueChange = { viewModel.OnChangedPrecioTienda1(it) },
-                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda1") },
+                            value = productUiState.productName,
+                            onValueChange = { updateProductName(it) },
+                            label = { Text(text = stringResource(id = R.string.label_nombre_producto)) },
+                            modifier = Modifier
+                                .padding(horizontal = 32.dp)
+                                .padding(vertical = 8.dp),
+                            singleLine = true
+                        )
+                    }
+
+                    //PRECIO COMPRA
+                    item {
+                        TextField(
+                            value = productUiState.productCost,
+                            onValueChange = { updateProductCost(it) },
+                            label = { Text(text = stringResource(id = R.string.label_precio_compra)) },
                             modifier = Modifier
                                 .padding(horizontal = 32.dp)
                                 .padding(vertical = 8.dp),
@@ -158,73 +134,34 @@ fun AgregarProductos(viewModel: AddViewModel) {
                             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                         )
                     }
-                }
 
-                if (activaTienda2) {
-                    item {
-                        TextField(
-                            value = precioTienda2,
-                            onValueChange = { viewModel.OnChangedPrecioTienda2(it) },
-                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda2") },
-                            modifier = Modifier
+                    //STORES
+                    storesActiveState.forEach { store ->
+                        val storeValue = productUiState.storeValues[store.first] ?: ""
 
-                                .padding(horizontal = 32.dp)
-                                .padding(vertical = 8.dp),
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-                        )
+
+                        item {
+                            TextField(
+                                value = storeValue,
+                                onValueChange = { newValue ->
+                                    updateStoreValue(store.first, newValue)
+                                },
+                                label = { Text(text = stringResource(id = R.string.label_precio_venta) + " ${store.second}") },
+                                modifier = Modifier
+                                    .padding(horizontal = 32.dp)
+                                    .padding(vertical = 8.dp),
+                                singleLine = true,
+                                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                            )
+                        }
                     }
-                }
 
-                if (activaTienda3) {
-                    item {
-                        TextField(
-                            value = precioTienda3,
-                            onValueChange = { viewModel.OnChangedPrecioTienda3(it) },
-                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda3") },
-                            modifier = Modifier
-                                .padding(horizontal = 32.dp)
-                                .padding(vertical = 8.dp),
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-                        )
-                    }
-                }
-
-                if (activaTienda4) {
-                    item {
-                        TextField(
-                            value = precioTienda4,
-                            onValueChange = { viewModel.OnChangedPrecioTienda4(it) },
-                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda4") },
-                            modifier = Modifier
-                                .padding(horizontal = 32.dp)
-                                .padding(vertical = 8.dp),
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-                        )
-                    }
-                }
-
-                if (activaTienda5) {
-                    item {
-                        TextField(
-                            value = precioTienda5,
-                            onValueChange = { viewModel.OnChangedPrecioTienda5(it) },
-                            label = { Text(text = stringResource(id = R.string.label_precio_venta) + " $nombreTienda5") },
-                            modifier = Modifier
-                                .padding(horizontal = 32.dp)
-                                .padding(vertical = 8.dp),
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        )
-                    }
                 }
             }
         }
 
         Button(
-            onClick = { viewModel.setProducto() },
+            onClick = { setProduct() },
             modifier = Modifier
                 .align(alignment = Alignment.BottomCenter)
                 .padding(bottom = 16.dp),
@@ -237,55 +174,17 @@ fun AgregarProductos(viewModel: AddViewModel) {
                 color = MaterialTheme.colorScheme.primaryContainer
             )
         }
-    }
 
-}
-
-
-@Composable
-fun MensajesAgregar(viewModel: AddViewModel) {
-    Log.d("efecto", "MensajesAgregar")
-
-    val respuestaError: ScreenUiState by viewModel.respuestaError.observeAsState(ScreenUiState.NEUTRAL)
-    val snackState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-
-    SnackbarHost(hostState = snackState)
-
-    fun iniciarSnakbar(texto: String) {
-        scope.launch {
-            snackState.showSnackbar(
-                message = texto,
-                duration = SnackbarDuration.Short
-            )
-        }
-    }
-
-    if (respuestaError == ScreenUiState.ERROR) {
-
-        AlertDialog(
-            onDismissRequest = { viewModel.controlMensaje(ScreenUiState.NEUTRAL) },
-            confirmButton = {
-                TextButton(onClick = { viewModel.controlMensaje(ScreenUiState.NEUTRAL) }) {
-                    Text(
-                        text = stringResource(id = R.string.boton_mensaje_confirmar),
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            },
-            title = { Text(text = stringResource(id = R.string.titulo_mensaje_error)) },
-            text = { Text(text = stringResource(id = R.string.text_mensaje_error)) }
+        ManagerScreenStateView(
+            uiMessengerState = screenUiState,
+            modifier = Modifier.align(Alignment.BottomCenter),
+            onChangerScreenUiState
         )
     }
 
-    if (respuestaError == ScreenUiState.OK) {
-
-        iniciarSnakbar(stringResource(id = R.string.text_mensaje_agregado))
-        viewModel.reiniciarValores()
-        viewModel.controlMensaje(ScreenUiState.NEUTRAL)
-    }
-
 }
+
+
 
 
 

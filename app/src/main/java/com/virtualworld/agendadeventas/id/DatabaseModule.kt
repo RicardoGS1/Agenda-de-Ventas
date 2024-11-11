@@ -1,8 +1,8 @@
-package com.virtualword3d.salesregister.ID
+package com.virtualworld.agendadeventas.id
 
 import android.content.Context
 import androidx.room.Room
-import com.virtualword3d.salesregister.Data.Dao.ProductoDao
+import com.virtualworld.agendadeventas.core.Dao.ProductoDao
 import com.virtualword3d.salesregister.Data.DataBases.ProductoDatabase
 
 

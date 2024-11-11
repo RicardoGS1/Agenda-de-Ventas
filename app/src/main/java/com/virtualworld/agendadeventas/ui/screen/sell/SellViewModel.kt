@@ -8,7 +8,7 @@ import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
 import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
-import com.virtualworld.agendadeventas.domain.usecase.GetProductStore
+import com.virtualworld.agendadeventas.domain.usecase.GetProductForStore
 import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SellViewModel @Inject constructor(
     private val getStoresActiveUseCase: GetStoresActiveUseCase,
-    private val getProductStore: GetProductStore,
+    private val getProductStore: GetProductForStore,
     private val vendidoRepo: SoldLocalDataSource
 ) : ViewModel() {
 
@@ -55,9 +55,9 @@ class SellViewModel @Inject constructor(
     }
 
 
-    fun getStoresActive() {
+    private fun getStoresActive() {
 
-        getStoresActiveUseCase.GetTiendasActivas().onEach { state ->
+        getStoresActiveUseCase.getStoresActive().onEach { state ->
 
             when (state) {
                 is NetworkResponseState.Error -> _screenUiState.update { ScreenUiState.ERROR }
@@ -130,7 +130,7 @@ class SellViewModel @Inject constructor(
 
     }
 
-    fun SalveSell(selectedIndex: Int) {
+    fun salveSell(selectedIndex: Int) {
 
         viewModelScope.launch {
 
@@ -139,7 +139,7 @@ class SellViewModel @Inject constructor(
 
         val b = mutableListOf<SoldRoom>()
 
-        val a = _productForStore.value.map { product ->
+         _productForStore.value.map { product ->
 
             _listChangerProductsSell.value.find { pair -> pair.first == product.idProduct && pair.second != 0 }
                 ?.let {
@@ -160,7 +160,7 @@ class SellViewModel @Inject constructor(
 
         }
 
-        vendidoRepo.addProductoVendido(b)
+        vendidoRepo.addProductsSold(b)
         changerUiState(ScreenUiState.OK)
         startUnitProduct()
         }

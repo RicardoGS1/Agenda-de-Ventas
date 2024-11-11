@@ -18,7 +18,7 @@ package com.virtualword3d.salesregister.Data.DataBases
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.virtualword3d.salesregister.Data.Dao.ProductoDao
+import com.virtualworld.agendadeventas.core.Dao.ProductoDao
 import com.virtualword3d.salesregister.Data.Entity.ProductRoom
 
 /**

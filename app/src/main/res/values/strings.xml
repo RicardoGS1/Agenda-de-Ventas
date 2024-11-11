@@ -26,6 +26,7 @@
     <string name="nombre_producto_detalles">Details</string>
     <string name="precio_compra_detalles">Purchase price</string>
     <string name="precio_venta_detalles">Sale price: </string>
+    <string name="editar_costo">Cost: </string>
 
 
     //SCREEN SELL
@@ -51,16 +52,6 @@
     <string name="mensaje_error_tiendas">The store name cannot be empty</string>
     <string name="mensaje_confirmar_tiendas">Confirm</string>
     <string name="mensaje_guardado_tiendas">The changes have been saved correctly</string>
-
-
-
-
-    //Vista Tiendas
-    <string name="label_tienda1">Store name 1</string>
-    <string name="label_tienda2">Store name 2</string>
-    <string name="label_tienda3">Store name 3</string>
-    <string name="label_tienda4">Store name 4</string>
-    <string name="label_tienda5">Store name 5</string>
 
 
 
