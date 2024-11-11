@@ -1,6 +1,6 @@
 package com.virtualworld.agendadeventas.domain.usecase
 
-import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.repository.LocalRepository
 import com.virtualworld.agendadeventas.ui.screen.common.ProductUiState
@@ -32,15 +32,15 @@ class AddProductUseCaseTest{
 
         val productRoom = ProductRoom(
             nombre = productUiState.productName,
-            compra = productUiState.productCost.ifEmpty { "0" }.toLong(),
-            venta1 = productUiState.storeValues[1]?.ifEmpty { "0" }?.toLong() ?: 0,
-            venta2 = productUiState.storeValues[2]?.ifEmpty { "0" }?.toLong() ?: 0,
-            venta3 = productUiState.storeValues[3]?.ifEmpty { "0" }?.toLong() ?: 0,
-            venta4 = productUiState.storeValues[4]?.ifEmpty { "0" }?.toLong() ?: 0,
-            venta5 = productUiState.storeValues[5]?.ifEmpty { "0" }?.toLong() ?: 0,
+            compra = productUiState.productCost.ifEmpty { "0" }.toFloat(),
+            venta1 = productUiState.storeValues[1]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            venta2 = productUiState.storeValues[2]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            venta3 = productUiState.storeValues[3]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            venta4 = productUiState.storeValues[4]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            venta5 = productUiState.storeValues[5]?.ifEmpty { "0" }?.toFloat() ?: 0f,
         )
 
-        val result1 =  ProductRoom(nombre="Nombre del producto", compra = 10L, venta1 = 15L, venta2 = 20L, venta3 = 0L, venta4 = 0L, venta5 = 0L)
+        val result1 =  ProductRoom(nombre="Nombre del producto", compra = 10f, venta1 = 15f, venta2 = 20f, venta3 = 0f, venta4 = 0f, venta5 = 0f)
 
         coEvery { localRepository.addProduct(productRoom) } returns NetworkResponseState.Success(Unit)
 
@@ -65,12 +65,12 @@ class AddProductUseCaseTest{
 
         val productRoom = ProductRoom(
             nombre = productUiState.productName,
-            compra = productUiState.productCost.ifEmpty { "0" }.toLong(),
-            venta1 = productUiState.storeValues[1]?.ifEmpty { "0" }?.toLong() ?: 0,
-            venta2 = productUiState.storeValues[2]?.ifEmpty { "0" }?.toLong() ?: 0,
-            venta3 = productUiState.storeValues[3]?.ifEmpty { "0" }?.toLong() ?: 0,
-            venta4 = productUiState.storeValues[4]?.ifEmpty { "0" }?.toLong() ?: 0,
-            venta5 = productUiState.storeValues[5]?.ifEmpty { "0" }?.toLong() ?: 0,
+            compra = productUiState.productCost.ifEmpty { "0" }.toFloat(),
+            venta1 = productUiState.storeValues[1]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            venta2 = productUiState.storeValues[2]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            venta3 = productUiState.storeValues[3]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            venta4 = productUiState.storeValues[4]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            venta5 = productUiState.storeValues[5]?.ifEmpty { "0" }?.toFloat() ?: 0f,
         )
 
         coEvery { localRepository.addProduct(productRoom) } returns NetworkResponseState.Success(Unit)

@@ -16,17 +16,12 @@
 
 package com.virtualworld.agendadeventas.core.source.local
 
-import android.os.Handler
-import android.os.Looper
-
 import com.virtualworld.agendadeventas.core.Dao.ProductoDao
-import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import kotlinx.coroutines.flow.Flow
 
 
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -54,6 +49,7 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
 
             productoDao.insertAll(productRoom)
 
+            println(productRoom)
 
             NetworkResponseState.Success(Unit)
         }catch(e:Exception){
@@ -66,8 +62,6 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
 
 
     suspend fun deleteProductById(id:Int) {
-
-        println(id)
 
         productoDao.deleteProductById(id)
 

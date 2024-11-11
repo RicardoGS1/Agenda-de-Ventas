@@ -5,16 +5,13 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
 
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.id.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -158,12 +155,12 @@ class FirebaseRepository @Inject constructor(
                     ProductRoom(
                         id = document.getLong("id") ?: 0,
                         nombre = document.getString("nombre") ?: "",
-                        compra = document.getLong("compra") ?: 0,
-                        venta1 = document.getLong("venta1") ?: 0,
-                        venta2 = document.getLong("venta2") ?: 0,
-                        venta3 = document.getLong("venta3") ?: 0,
-                        venta4 = document.getLong("venta4") ?: 0,
-                        venta5 = document.getLong("venta5") ?: 0
+                        compra = document.getDouble("compra")?.toFloat() ?: 0f,
+                        venta1 = document.getDouble("venta1")?.toFloat() ?: 0f,
+                        venta2 = document.getDouble("venta2")?.toFloat() ?: 0f,
+                        venta3 = document.getDouble("venta3")?.toFloat() ?: 0f,
+                        venta4 = document.getDouble("venta4") ?.toFloat() ?: 0f,
+                        venta5 = document.getDouble("venta5") ?.toFloat() ?: 0f,
                     )
                 }
 
@@ -196,8 +193,8 @@ class FirebaseRepository @Inject constructor(
                         idbd = document.getLong("idbd") ?: 0,
                         idprod = document.getLong("idprod") ?: 0,
                         nombre = document.getString("nombre") ?: "",
-                        compra = document.getLong("compra") ?: 0,
-                        valor = document.getLong("valor") ?: 0,
+                        compra = document.getDouble("compra")?.toFloat() ?: 0f,
+                        valor = document.getDouble("valor")?.toFloat() ?: 0f,
                         tienda = document.getLong("tienda")?.toInt() ?: 0,
                         unidades = document.getLong("unidades")?.toInt() ?: 0,
                         fecha = document.getLong("fecha") ?: 0

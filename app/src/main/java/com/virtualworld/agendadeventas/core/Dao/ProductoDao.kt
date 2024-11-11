@@ -17,7 +17,7 @@
 package com.virtualworld.agendadeventas.core.Dao
 
 import androidx.room.*
-import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import kotlinx.coroutines.flow.Flow
 
 

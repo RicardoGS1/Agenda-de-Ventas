@@ -1,6 +1,6 @@
 package com.virtualworld.agendadeventas.domain.mapper
 
-import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualworld.agendadeventas.domain.models.ProductWithStoresActive
 
 fun ProductWithStoresActive.toProductRoom(): ProductRoom {
@@ -9,11 +9,11 @@ fun ProductWithStoresActive.toProductRoom(): ProductRoom {
     return  ProductRoom(
         id = idProduct.toLong(),
         nombre = productName,
-        compra = productCost.toLong(),
-        venta1 = listMap[1]?.toLong() ?: 0,
-        venta2 = listMap[2]?.toLong() ?: 0,
-        venta3 = listMap[3]?.toLong() ?: 0,
-        venta4 = listMap[4]?.toLong() ?: 0,
-        venta5 = listMap[5]?.toLong() ?: 0
+        compra = productCost.toFloat(),
+        venta1 = listMap[1]?.toFloat() ?: 0f,
+        venta2 = listMap[2]?.toFloat() ?: 0f,
+        venta3 = listMap[3]?.toFloat() ?: 0f,
+        venta4 = listMap[4]?.toFloat() ?: 0f,
+        venta5 = listMap[5]?.toFloat() ?: 0f,
     )
 }

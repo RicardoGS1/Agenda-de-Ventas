@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.Model.SoldForStoreCore
+import com.virtualworld.agendadeventas.core.model.SoldForStoreCore
 import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
 import com.virtualworld.agendadeventas.domain.usecase.GetProductForStore
 import com.virtualworld.agendadeventas.domain.usecase.GetSoldForStoreUseCase
