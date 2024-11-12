@@ -64,7 +64,7 @@ fun ResumeScreen(viewModel: ViewModelResume = hiltViewModel()) {
                             title = stringResource(id = R.string.inicio_ganancia),
                             colum2 = stringResource(id = R.string.inicio_info_ganancia),
                             resumeScreenState.map { it.store },
-                            resumeScreenState.map { it.profit.toString() }
+                            resumeScreenState.map { it.profit }
                         )
                     }
                 }
