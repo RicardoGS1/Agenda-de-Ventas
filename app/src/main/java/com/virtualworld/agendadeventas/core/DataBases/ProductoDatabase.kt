@@ -19,7 +19,7 @@ package com.virtualword3d.salesregister.Data.DataBases
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.virtualworld.agendadeventas.core.Dao.ProductoDao
-import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import com.virtualworld.agendadeventas.core.entity.ProductRoom
 
 /**
  * SQLite Database for storing the logs.

@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.virtualworld.agendadeventas.R
-import com.virtualworld.agendadeventas.core.Model.SoldForStoreCore
+import com.virtualworld.agendadeventas.core.model.SoldForStoreCore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -49,8 +49,8 @@ fun ListProductRecordView(stateScreenProductStore: List<SoldForStoreCore>) {
 fun TtemProducto(
     soldForStore: String,
     unidades: Int,
-    costoProducto: Long,
-    precioProducto: Long,
+    costoProducto: Float,
+    precioProducto: Float,
     fechaVenta: String
 ) {
 

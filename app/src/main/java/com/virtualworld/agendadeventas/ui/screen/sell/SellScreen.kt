@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.R
-import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
+import com.virtualworld.agendadeventas.core.model.ProductStoreCore
 import com.virtualworld.agendadeventas.ui.screen.common.DropDownMenuStoresView
 import com.virtualworld.agendadeventas.ui.screen.common.ManagerScreenStateView
 

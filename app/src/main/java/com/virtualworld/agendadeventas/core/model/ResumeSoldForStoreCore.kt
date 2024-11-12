@@ -1,8 +1,8 @@
-package com.virtualworld.agendadeventas.core.Model
+package com.virtualworld.agendadeventas.core.model
 
 data class ResumeSoldForStoreCore(
-    val compra : Long,
-    val valor : Long,
+    val compra : Float,
+    val valor : Float,
     val unidades : Int,
     val idTienda : Int,
     val tienda : String,

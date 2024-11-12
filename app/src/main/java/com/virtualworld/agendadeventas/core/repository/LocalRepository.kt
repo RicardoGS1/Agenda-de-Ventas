@@ -1,15 +1,15 @@
 package com.virtualworld.agendadeventas.core.repository
 
-import com.virtualword3d.salesregister.Data.Entity.ProductRoom
+import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualword3d.salesregister.Data.Entity.StoreRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.Model.ResumeSoldForStoreCore
-import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
-import com.virtualworld.agendadeventas.core.Model.SoldForStoreCore
+import com.virtualworld.agendadeventas.core.model.ResumeSoldForStoreCore
+import com.virtualworld.agendadeventas.core.model.ProductStoreCore
+import com.virtualworld.agendadeventas.core.model.SoldForStoreCore
 import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
 import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
-import com.virtualworld.agendadeventas.core.Model.StoresActiveCore
+import com.virtualworld.agendadeventas.core.model.StoresActiveCore
 import com.virtualworld.agendadeventas.core.source.local.ProductsLocalDataSource
 import com.virtualworld.agendadeventas.id.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -99,9 +99,9 @@ class LocalRepository @Inject constructor(
                                     listVendidos.filter { it.tienda.toLong() == tienda.id }
 
 
-                                val compra = ventasTienda.sumOf { it.compra * it.unidades }
+                                val compra = ventasTienda.fold(0f) { acc, sold -> acc + (sold.compra * sold.unidades) }
 
-                                val valor = ventasTienda.sumOf { it.valor * it.unidades }
+                                val valor = ventasTienda.fold(0f) { acc, sold -> acc + (sold.valor * sold.unidades) }
 
                                 val unidades = ventasTienda.sumOf { it.unidades }
 
@@ -185,7 +185,7 @@ class LocalRepository @Inject constructor(
                             4 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta4)
                             5 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta5)
                             else -> {
-                                ProductStoreCore(-1, "", 0, 0)
+                                ProductStoreCore(-1, "", 0f, 0f)
                             }
                         }
 

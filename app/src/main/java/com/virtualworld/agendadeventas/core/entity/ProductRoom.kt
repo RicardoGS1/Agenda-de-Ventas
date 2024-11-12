@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.virtualword3d.salesregister.Data.Entity
+package com.virtualworld.agendadeventas.core.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -27,12 +27,12 @@ data class ProductRoom(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
     val nombre: String = "",
-    val compra: Long = 0,
-    val venta1: Long = 0,
-    val venta2: Long = 0,
-    val venta3: Long = 0,
-    val venta4: Long = 0,
-    val venta5: Long = 0,
+    val compra: Float = 0f,
+    val venta1: Float = 0f,
+    val venta2: Float = 0f,
+    val venta3: Float = 0f,
+    val venta4: Float = 0f,
+    val venta5: Float = 0f,
 ) {
 
 

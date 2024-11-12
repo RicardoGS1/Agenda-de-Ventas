@@ -3,7 +3,7 @@ package com.virtualworld.agendadeventas.domain.usecase
 
 import app.cash.turbine.test
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
+import com.virtualworld.agendadeventas.core.model.ProductStoreCore
 import com.virtualworld.agendadeventas.core.repository.LocalRepository
 import io.mockk.coEvery
 import io.mockk.mockk

@@ -6,7 +6,7 @@ import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.Model.ProductStoreCore
+import com.virtualworld.agendadeventas.core.model.ProductStoreCore
 import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
 import com.virtualworld.agendadeventas.domain.usecase.GetProductForStore
 import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
@@ -35,7 +35,7 @@ class SellViewModel @Inject constructor(
     private val _screenUiState = MutableStateFlow(ScreenUiState.LOADING)
     val screenUiState: StateFlow<ScreenUiState> = _screenUiState
 
-    private val _productForStore = MutableStateFlow(listOf(ProductStoreCore(0, "", 0, 0)))
+    private val _productForStore = MutableStateFlow(listOf(ProductStoreCore(0, "", 0f, 0f)))
     val productForStore: StateFlow<List<ProductStoreCore>> = _productForStore
 
     private val _listChangerProductsSell = MutableStateFlow(mutableListOf(Pair(0, 0)))
