@@ -47,7 +47,7 @@ fun ResumeScreen(viewModel: ViewModelResume = hiltViewModel()) {
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.10f))
             ) {
-                SeleccionarPeriodos(viewModel)
+                SelectPeriod(viewModel)
 
                 LazyColumn() {
 
@@ -78,7 +78,7 @@ fun ResumeScreen(viewModel: ViewModelResume = hiltViewModel()) {
 
 
 @Composable
-fun SeleccionarPeriodos(viewModel: ViewModelResume) {
+fun SelectPeriod(viewModel: ViewModelResume) {
 
 
     val dateEnd: Long? by viewModel.dateEnd.collectAsState(null)
