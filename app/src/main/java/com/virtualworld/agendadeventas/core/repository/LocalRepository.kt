@@ -1,26 +1,23 @@
 package com.virtualworld.agendadeventas.core.repository
 
-import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualword3d.salesregister.Data.Entity.StoreRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.model.ResumeSoldForStoreCore
+import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualworld.agendadeventas.core.model.ProductStoreCore
+import com.virtualworld.agendadeventas.core.model.ResumeSoldForStoreCore
 import com.virtualworld.agendadeventas.core.model.SoldForStoreCore
-import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
-import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
 import com.virtualworld.agendadeventas.core.model.StoresActiveCore
 import com.virtualworld.agendadeventas.core.source.local.ProductsLocalDataSource
+import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
+import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
 import com.virtualworld.agendadeventas.id.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 class LocalRepository @Inject constructor(
