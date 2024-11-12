@@ -1,20 +1,21 @@
 package com.virtualworld.agendadeventas.core.repository
 
-import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualword3d.salesregister.Data.Entity.StoreRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.core.model.ResumeSoldForStoreCore
+import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualworld.agendadeventas.core.model.ProductStoreCore
+import com.virtualworld.agendadeventas.core.model.ResumeSoldForStoreCore
 import com.virtualworld.agendadeventas.core.model.SoldForStoreCore
-import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
-import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
 import com.virtualworld.agendadeventas.core.model.StoresActiveCore
 import com.virtualworld.agendadeventas.core.source.local.ProductsLocalDataSource
+import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
+import com.virtualworld.agendadeventas.core.source.local.StoresLocalDataSource
 import com.virtualworld.agendadeventas.id.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -84,48 +85,42 @@ class LocalRepository @Inject constructor(
         dateStart: Long?, dateEnd: Long?
     ): Flow<NetworkResponseState<List<ResumeSoldForStoreCore>>> {
 
-        return flow {
-            emit(NetworkResponseState.Loading)
-            try {
-                soldLocalDataSource.getAllSoldFromTo(dateStart, dateEnd)
-                    .collect { listVendidos ->
+       return flow {
+           emit(NetworkResponseState.Loading)
 
-                        storesLocalDataSource.getAllStores().collect { listTiendas ->
+          try {
+              combine(
+                  soldLocalDataSource.getAllSoldFromTo(dateStart, dateEnd),
+                  storesLocalDataSource.getAllStores()
+              ) { listVendidos, listTiendas ->
 
-                            val resume = listTiendas.filter { it.activa }.map { tienda ->
+                  NetworkResponseState.Success(
+                      listTiendas
+                          .filter { it.activa }
+                          .map {tienda ->
+                              calcularResumenVentasTienda(tienda, listVendidos)
+                          }
+                  )
+              }.collect { emit(it) }
+          } catch (e:Exception){
+              emit(NetworkResponseState.Error(e))
+          }
 
-
-                                val ventasTienda =
-                                    listVendidos.filter { it.tienda.toLong() == tienda.id }
-
-
-                                val compra = ventasTienda.fold(0f) { acc, sold -> acc + (sold.compra * sold.unidades) }
-
-                                val valor = ventasTienda.fold(0f) { acc, sold -> acc + (sold.valor * sold.unidades) }
-
-                                val unidades = ventasTienda.sumOf { it.unidades }
-
-
-                                ResumeSoldForStoreCore(
-                                    compra,
-                                    valor,
-                                    unidades,
-                                    tienda.id.toInt(),
-                                    tienda.nombre
-                                )
-
-
-                            }
-
-                            emit(NetworkResponseState.Success(resume))
-
-                        }
-
-                    }
-            } catch (e: Exception) {
-                NetworkResponseState.Error(e)
-            }
         }.flowOn(ioDispatcher)
+
+
+    }
+
+
+    private fun calcularResumenVentasTienda(
+        tienda: StoreRoom,
+        listVendidos: List<SoldRoom>
+    ): ResumeSoldForStoreCore {
+        val ventasTienda = listVendidos.filter { it.tienda.toLong() == tienda.id }
+        val compra = ventasTienda.fold(0f) { acc, sold -> acc + (sold.compra * sold.unidades) }
+        val valor = ventasTienda.fold(0f) { acc, sold -> acc + (sold.valor * sold.unidades) }
+        val unidades = ventasTienda.sumOf { it.unidades }
+        return ResumeSoldForStoreCore(compra, valor, unidades, tienda.id.toInt(), tienda.nombre)
     }
 
     //ogtiene las tiendas activas
@@ -164,7 +159,6 @@ class LocalRepository @Inject constructor(
     suspend fun updateStores(storeRoom: List<StoreRoom>) {
         storesLocalDataSource.updateStores(storeRoom)
     }
-
 
 
     //obtiene los productos por tienda especificada por id de tienda
@@ -221,10 +215,9 @@ class LocalRepository @Inject constructor(
         return productsLocalDataSource.addProduct(productRoom)
     }
 
-    suspend fun deleteProduct(id:Int){
+    suspend fun deleteProduct(id: Int) {
         productsLocalDataSource.deleteProductById(id)
     }
-
 
 
 }
