@@ -112,52 +112,6 @@ class LocalRepository @Inject constructor(
     }
 
 
-//        return flow {
-//            emit(NetworkResponseState.Loading)
-//            try {
-//                soldLocalDataSource.getAllSoldFromTo(dateStart, dateEnd)
-//                    .collect { listVendidos ->
-//
-//                        var resume = listOf<ResumeSoldForStoreCore>()
-//
-//                        storesLocalDataSource.getAllStores().collect { listTiendas ->
-//
-//                             resume = listTiendas.filter { it.activa }.map { tienda ->
-//
-//
-//                                val ventasTienda =
-//                                    listVendidos.filter { it.tienda.toLong() == tienda.id }
-//
-//
-//                                val compra = ventasTienda.fold(0f) { acc, sold -> acc + (sold.compra * sold.unidades) }
-//
-//                                val valor = ventasTienda.fold(0f) { acc, sold -> acc + (sold.valor * sold.unidades) }
-//
-//                                val unidades = ventasTienda.sumOf { it.unidades }
-//
-//
-//                                ResumeSoldForStoreCore(
-//                                    compra,
-//                                    valor,
-//                                    unidades,
-//                                    tienda.id.toInt(),
-//                                    tienda.nombre
-//                                )
-//
-//
-//                            }
-//
-//
-//
-//                        }
-//                        emit(NetworkResponseState.Success(resume))
-//                    }
-//            } catch (e: Exception) {
-//                NetworkResponseState.Error(e)
-//            }
-//        }.flowOn(ioDispatcher)
-
-
     private fun calcularResumenVentasTienda(
         tienda: StoreRoom,
         listVendidos: List<SoldRoom>
