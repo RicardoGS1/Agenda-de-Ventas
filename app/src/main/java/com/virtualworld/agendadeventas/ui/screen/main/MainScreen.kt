@@ -36,17 +36,9 @@ import com.virtualworld.agendadeventas.ui.screen.main.view.MyTopAppBar
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen(changeColorBarNotification: (Color) -> Unit) {
-
-
+fun MainScreen() {
 
     val navController = rememberNavController()
-
-    val colorBarNotification = MaterialTheme.colorScheme.primary
-    LaunchedEffect(key1 = true) {
-        changeColorBarNotification(colorBarNotification)
-    }
-
 
     //VARIABLES DE LA VISTA
     val drawerState = rememberDrawerState(DrawerValue.Closed)
