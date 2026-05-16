@@ -107,12 +107,15 @@
     <string name="inventory_section_title">Inventory</string>
     <string name="inventory_toggle_label">This product has inventory control</string>
     <string name="inventory_quantity_label">Initial stock</string>
+    <string name="inventory_store_quantity_label">Stock at %1$s</string>
     <string name="inventory_stock_label">Stock:&#160;</string>
 
     //SCREEN PURCHASES
     <string name="menu_compras">Purchases</string>
     <string name="purchases_title">Purchases</string>
-    <string name="purchases_subtitle">Add stock to products with inventory</string>
+    <string name="purchases_subtitle">Choose a store and add stock per product</string>
+    <string name="purchases_store_label">Store for purchases</string>
+    <string name="purchases_pick_store">Select a store to see inventory and register purchases.</string>
     <string name="purchases_confirm_button">Confirm purchases</string>
     <string name="purchases_empty_title">No products with inventory</string>
     <string name="purchases_empty_subtitle">Enable inventory control on a product from Add or Edit to manage stock here.</string>

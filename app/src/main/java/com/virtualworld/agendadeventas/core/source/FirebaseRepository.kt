@@ -115,7 +115,13 @@ class FirebaseRepository @Inject constructor(
                         "venta2" to productRoom.venta2,
                         "venta3" to productRoom.venta3,
                         "venta4" to productRoom.venta4,
-                        "venta5" to productRoom.venta5
+                        "venta5" to productRoom.venta5,
+                        "tieneInventario" to productRoom.tieneInventario,
+                        "inventario1" to productRoom.inventario1,
+                        "inventario2" to productRoom.inventario2,
+                        "inventario3" to productRoom.inventario3,
+                        "inventario4" to productRoom.inventario4,
+                        "inventario5" to productRoom.inventario5,
                     )
                     val documentRefForSoldRoom =
                         documentRef.collection("productRoomList")
@@ -152,6 +158,7 @@ class FirebaseRepository @Inject constructor(
                 val querySnapshot = collectionRef.get().await()
 
                 val liProductRoom = querySnapshot.documents.map { document ->
+                    val legacyInv = document.getLong("inventario")?.toInt() ?: 0
                     ProductRoom(
                         id = document.getLong("id") ?: 0,
                         nombre = document.getString("nombre") ?: "",
@@ -159,8 +166,14 @@ class FirebaseRepository @Inject constructor(
                         venta1 = document.getDouble("venta1")?.toFloat() ?: 0f,
                         venta2 = document.getDouble("venta2")?.toFloat() ?: 0f,
                         venta3 = document.getDouble("venta3")?.toFloat() ?: 0f,
-                        venta4 = document.getDouble("venta4") ?.toFloat() ?: 0f,
-                        venta5 = document.getDouble("venta5") ?.toFloat() ?: 0f,
+                        venta4 = document.getDouble("venta4")?.toFloat() ?: 0f,
+                        venta5 = document.getDouble("venta5")?.toFloat() ?: 0f,
+                        tieneInventario = document.getBoolean("tieneInventario") ?: false,
+                        inventario1 = document.getLong("inventario1")?.toInt() ?: legacyInv,
+                        inventario2 = document.getLong("inventario2")?.toInt() ?: 0,
+                        inventario3 = document.getLong("inventario3")?.toInt() ?: 0,
+                        inventario4 = document.getLong("inventario4")?.toInt() ?: 0,
+                        inventario5 = document.getLong("inventario5")?.toInt() ?: 0,
                     )
                 }
 

@@ -34,5 +34,18 @@ data class ProductRoom(
     val venta4: Float = 0f,
     val venta5: Float = 0f,
     val tieneInventario: Boolean = false,
-    val inventario: Int = 0,
+    val inventario1: Int = 0,
+    val inventario2: Int = 0,
+    val inventario3: Int = 0,
+    val inventario4: Int = 0,
+    val inventario5: Int = 0,
 )
+
+fun ProductRoom.inventoryForStore(storeId: Int): Int = when (storeId) {
+    1 -> inventario1
+    2 -> inventario2
+    3 -> inventario3
+    4 -> inventario4
+    5 -> inventario5
+    else -> 0
+}

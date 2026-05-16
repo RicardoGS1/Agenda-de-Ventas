@@ -171,7 +171,7 @@ class SellViewModel @Inject constructor(
         b.forEach { sold ->
             val product = _productForStore.value.find { it.idProduct == sold.idprod.toInt() }
             if (product?.tieneInventario == true) {
-                updateInventoryUseCase.discountStock(sold.idprod, sold.unidades)
+                updateInventoryUseCase.discountStock(sold.idprod, selectedIndex, sold.unidades)
             }
         }
 

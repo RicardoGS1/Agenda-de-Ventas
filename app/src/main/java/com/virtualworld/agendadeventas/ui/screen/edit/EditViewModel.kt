@@ -81,7 +81,21 @@ class EditViewModel @Inject constructor(
             currentState.copy(
                 storesValues = currentState.storesValues.map {
                     if (it.idStore == storeId)
-                        StoresValues(storeId, it.nameStore, checkDecimalNumber(value))
+                        StoresValues(storeId, it.nameStore, checkDecimalNumber(value), it.inventoryValue)
+                    else
+                        it
+                }
+            )
+        }
+    }
+
+    fun updateStoreInventory(storeId: String, value: String) {
+        val filtered = value.filter { it.isDigit() }
+        _productSelectState.update { currentState ->
+            currentState.copy(
+                storesValues = currentState.storesValues.map {
+                    if (it.idStore == storeId)
+                        StoresValues(storeId, it.nameStore, it.value, filtered)
                     else
                         it
                 }
@@ -99,13 +113,6 @@ class EditViewModel @Inject constructor(
 
     fun updateTieneInventario(value: Boolean) {
         _productSelectState.update { it.copy(tieneInventario = value) }
-    }
-
-    fun updateInventario(value: String) {
-        val filtered = value.filter { it.isDigit() }
-        _productSelectState.update {
-            it.copy(inventario = filtered.toIntOrNull() ?: 0)
-        }
     }
 
     fun setProduct() {

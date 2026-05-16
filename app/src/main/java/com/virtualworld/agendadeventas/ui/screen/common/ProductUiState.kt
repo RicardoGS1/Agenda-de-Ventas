@@ -5,6 +5,5 @@ data class ProductUiState(
     val productCost: String = "",
     val storeValues: Map<Int, String> = emptyMap(),
     val tieneInventario: Boolean = false,
-    val inventario: String = "0",
+    val storeInventoryValues: Map<Int, String> = emptyMap(),
 )
-

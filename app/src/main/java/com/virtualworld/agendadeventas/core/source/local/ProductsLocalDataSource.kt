@@ -79,8 +79,15 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
         productoDao.insertProductRoomList(result)
     }
 
-    suspend fun adjustInventory(id: Long, delta: Int) {
-        productoDao.adjustInventory(id, delta)
+    suspend fun adjustInventory(id: Long, storeId: Int, delta: Int) {
+        when (storeId) {
+            1 -> productoDao.adjustInventoryStore1(id, delta)
+            2 -> productoDao.adjustInventoryStore2(id, delta)
+            3 -> productoDao.adjustInventoryStore3(id, delta)
+            4 -> productoDao.adjustInventoryStore4(id, delta)
+            5 -> productoDao.adjustInventoryStore5(id, delta)
+            else -> Unit
+        }
     }
 
     suspend fun getProductById(id: Long): ProductRoom? {

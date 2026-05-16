@@ -41,6 +41,7 @@ import com.virtualworld.agendadeventas.ui.screen.common.ProductInventoryFormCard
 import com.virtualworld.agendadeventas.ui.screen.common.ProductSalePricesFormCard
 import com.virtualworld.agendadeventas.ui.screen.common.ProductUiState
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
+import com.virtualworld.agendadeventas.ui.screen.common.StoreInventoryField
 import com.virtualworld.agendadeventas.ui.screen.common.StorePriceField
 
 @Composable
@@ -59,7 +60,7 @@ fun AddScreen() {
         updateProductCost = viewModel::updateProductCost,
         updateStoreValue = viewModel::updateStoreValue,
         updateTieneInventario = viewModel::updateTieneInventario,
-        updateInventario = viewModel::updateInventario,
+        updateStoreInventory = viewModel::updateStoreInventory,
         setProduct = viewModel::setProduct
     )
 }
@@ -74,7 +75,7 @@ fun ContentAddProduct(
     updateProductCost: (String) -> Unit,
     updateStoreValue: (Int, String) -> Unit,
     updateTieneInventario: (Boolean) -> Unit,
-    updateInventario: (String) -> Unit,
+    updateStoreInventory: (Int, String) -> Unit,
     setProduct: () -> Unit,
 ) {
     val isFormVisible = screenUiState != ScreenUiState.LOADING
@@ -121,9 +122,14 @@ fun ContentAddProduct(
                     item {
                         ProductInventoryFormCard(
                             tieneInventario = productUiState.tieneInventario,
-                            inventario = productUiState.inventario,
+                            storeInventoryFields = storesActiveState.map { (storeId, storeName) ->
+                                StoreInventoryField(
+                                    storeName = storeName,
+                                    value = productUiState.storeInventoryValues[storeId] ?: "",
+                                    onValueChange = { updateStoreInventory(storeId, it) },
+                                )
+                            },
                             onTieneInventarioChange = updateTieneInventario,
-                            onInventarioChange = updateInventario
                         )
                     }
                 }

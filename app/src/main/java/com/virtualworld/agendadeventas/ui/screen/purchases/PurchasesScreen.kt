@@ -37,9 +37,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,41 +55,63 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import java.text.DecimalFormat
 import com.virtualworld.agendadeventas.R
-import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualworld.agendadeventas.ui.screen.common.ManagerScreenStateView
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
+import com.virtualworld.agendadeventas.ui.screen.common.StoreSelectView
 
 @Composable
 fun PurchasesScreen(viewModel: PurchasesViewModel = hiltViewModel()) {
     val screenUiState by viewModel.screenUiState.collectAsState()
-    val productsWithInventory by viewModel.productsWithInventory.collectAsState()
+    val storesActiveState by viewModel.storesActiveState.collectAsState()
+    val purchaseRows by viewModel.purchaseRows.collectAsState()
     val addAmounts by viewModel.addAmounts.collectAsState()
 
     PurchasesContent(
         screenUiState = screenUiState,
-        products = productsWithInventory,
+        storesActiveState = storesActiveState,
+        purchaseRows = purchaseRows,
         addAmounts = addAmounts,
         onIncrement = viewModel::incrementAmount,
         onDecrement = viewModel::decrementAmount,
         onConfirm = viewModel::confirmPurchases,
         onChangerUiState = viewModel::changerUiState,
+        onStoreSelected = viewModel::selectStore,
     )
 }
 
 @Composable
 private fun PurchasesContent(
     screenUiState: ScreenUiState,
-    products: List<ProductRoom>,
+    storesActiveState: List<Pair<Int, String>>,
+    purchaseRows: List<PurchaseProductRow>,
     addAmounts: Map<Long, Int>,
     onIncrement: (Long) -> Unit,
     onDecrement: (Long) -> Unit,
     onConfirm: () -> Unit,
     onChangerUiState: (ScreenUiState) -> Unit,
+    onStoreSelected: (Int?) -> Unit,
 ) {
-    val purchaseTotalAmount = remember(products, addAmounts) {
-        products.sumOf { product ->
-            val qty = addAmounts[product.id] ?: 0
-            (product.compra * qty).toDouble()
+    var selectedStoreIndex by remember { mutableIntStateOf(-1) }
+
+    LaunchedEffect(storesActiveState) {
+        if (selectedStoreIndex >= storesActiveState.size) {
+            selectedStoreIndex = -1
+            onStoreSelected(null)
+        }
+    }
+
+    LaunchedEffect(selectedStoreIndex, storesActiveState) {
+        if (selectedStoreIndex >= 0 && selectedStoreIndex < storesActiveState.size) {
+            onStoreSelected(storesActiveState[selectedStoreIndex].first)
+        } else {
+            onStoreSelected(null)
+        }
+    }
+
+    val purchaseTotalAmount = remember(purchaseRows, addAmounts) {
+        purchaseRows.sumOf { row ->
+            val qty = addAmounts[row.id] ?: 0
+            (row.compra * qty).toDouble()
         }.toFloat()
     }
 
@@ -94,9 +119,28 @@ private fun PurchasesContent(
         Column(modifier = Modifier.fillMaxSize()) {
             PurchasesHeader()
 
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
+                    .background(MaterialTheme.colorScheme.primary),
+            ) {
+                StoreSelectView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                    label = stringResource(R.string.purchases_store_label),
+                    stores = storesActiveState,
+                    selectedIndex = selectedStoreIndex,
+                    isLoading = screenUiState == ScreenUiState.LOADING && storesActiveState.isEmpty(),
+                    placeholder = stringResource(R.string.label_spiner_vender),
+                    onStoreSelected = { index -> selectedStoreIndex = index },
+                )
+            }
+
             AnimatedVisibility(
                 visible = screenUiState != ScreenUiState.LOADING &&
-                    products.isNotEmpty() &&
+                    purchaseRows.isNotEmpty() &&
                     purchaseTotalAmount > 0f,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
@@ -107,23 +151,57 @@ private fun PurchasesContent(
             }
 
             when {
-                screenUiState == ScreenUiState.LOADING -> {
+                storesActiveState.isEmpty() && screenUiState != ScreenUiState.LOADING -> {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.sell_no_stores),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                }
+
+                selectedStoreIndex == -1 -> {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.purchases_pick_store),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                }
+
+                screenUiState == ScreenUiState.LOADING && purchaseRows.isEmpty() -> {
                     Box(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                     }
                 }
 
-                products.isEmpty() -> {
+                purchaseRows.isEmpty() -> {
                     Box(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
                     ) {
                         PurchasesEmptyState()
                     }
@@ -138,16 +216,16 @@ private fun PurchasesContent(
                             start = 16.dp,
                             end = 16.dp,
                             top = 16.dp,
-                            bottom = 88.dp
+                            bottom = 88.dp,
                         ),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
-                        items(items = products, key = { it.id }) { product ->
+                        items(items = purchaseRows, key = { it.id }) { row ->
                             PurchaseProductItem(
-                                product = product,
-                                amount = addAmounts[product.id] ?: 0,
-                                onIncrement = { onIncrement(product.id) },
-                                onDecrement = { onDecrement(product.id) },
+                                row = row,
+                                amount = addAmounts[row.id] ?: 0,
+                                onIncrement = { onIncrement(row.id) },
+                                onDecrement = { onDecrement(row.id) },
                             )
                         }
                     }
@@ -155,7 +233,10 @@ private fun PurchasesContent(
             }
         }
 
-        if (screenUiState != ScreenUiState.LOADING && products.isNotEmpty()) {
+        if (screenUiState != ScreenUiState.LOADING &&
+            selectedStoreIndex != -1 &&
+            purchaseRows.isNotEmpty()
+        ) {
             val hasAnyAmount = addAmounts.values.any { it > 0 }
             Button(
                 onClick = onConfirm,
@@ -166,19 +247,19 @@ private fun PurchasesContent(
                     .padding(horizontal = 16.dp, vertical = 16.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
+                    containerColor = MaterialTheme.colorScheme.primary,
+                ),
             ) {
                 Icon(
                     imageVector = Icons.Outlined.ShoppingCart,
                     contentDescription = null,
                     modifier = Modifier
                         .padding(end = 8.dp)
-                        .size(20.dp)
+                        .size(20.dp),
                 )
                 Text(
                     text = stringResource(id = R.string.purchases_confirm_button),
-                    modifier = Modifier.padding(vertical = 4.dp)
+                    modifier = Modifier.padding(vertical = 4.dp),
                 )
             }
         }
@@ -233,7 +314,7 @@ private fun PurchasesHeader() {
             .fillMaxWidth()
             .clip(RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp))
             .background(MaterialTheme.colorScheme.primary)
-            .padding(horizontal = 20.dp, vertical = 24.dp)
+            .padding(horizontal = 20.dp, vertical = 24.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
@@ -241,13 +322,13 @@ private fun PurchasesHeader() {
                     .size(44.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f)),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = Icons.Outlined.ShoppingCart,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.size(26.dp)
+                    modifier = Modifier.size(26.dp),
                 )
             }
             Column(modifier = Modifier.padding(start = 14.dp)) {
@@ -255,13 +336,13 @@ private fun PurchasesHeader() {
                     text = stringResource(id = R.string.purchases_title),
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
                 Text(
                     text = stringResource(id = R.string.purchases_subtitle),
                     color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.85f),
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 4.dp)
+                    modifier = Modifier.padding(top = 4.dp),
                 )
             }
         }
@@ -270,7 +351,7 @@ private fun PurchasesHeader() {
 
 @Composable
 private fun PurchaseProductItem(
-    product: ProductRoom,
+    row: PurchaseProductRow,
     amount: Int,
     onIncrement: () -> Unit,
     onDecrement: () -> Unit,
@@ -291,10 +372,10 @@ private fun PurchaseProductItem(
                     .size(48.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.primaryContainer),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = product.nombre.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
+                    text = row.nombre.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,
@@ -307,7 +388,7 @@ private fun PurchaseProductItem(
                     .padding(horizontal = 14.dp),
             ) {
                 Text(
-                    text = product.nombre,
+                    text = row.nombre,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     maxLines = 2,
@@ -324,7 +405,7 @@ private fun PurchaseProductItem(
                         color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.65f),
                     ) {
                         Text(
-                            text = stringResource(R.string.purchases_current_stock, product.inventario),
+                            text = stringResource(R.string.purchases_current_stock, row.stockAtStore),
                             style = MaterialTheme.typography.labelSmall,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.primary,

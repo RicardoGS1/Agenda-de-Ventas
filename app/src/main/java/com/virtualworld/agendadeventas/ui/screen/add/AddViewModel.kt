@@ -87,9 +87,13 @@ class AddViewModel @Inject constructor(
         _productUiState.update { it.copy(tieneInventario = value) }
     }
 
-    fun updateInventario(value: String) {
+    fun updateStoreInventory(storeId: Int, value: String) {
         val filtered = value.filter { it.isDigit() }
-        _productUiState.update { it.copy(inventario = filtered) }
+        _productUiState.update { currentState ->
+            currentState.copy(
+                storeInventoryValues = currentState.storeInventoryValues + (storeId to filtered)
+            )
+        }
     }
 
     private fun restartProductUI() {

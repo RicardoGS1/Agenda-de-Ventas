@@ -111,12 +111,15 @@
     <string name="inventory_section_title">Inventario</string>
     <string name="inventory_toggle_label">Este producto tiene control de inventario</string>
     <string name="inventory_quantity_label">Stock inicial</string>
+    <string name="inventory_store_quantity_label">Stock en %1$s</string>
     <string name="inventory_stock_label">Stock:&#160;</string>
 
     //PANTALLA COMPRAS
     <string name="menu_compras">Compras</string>
     <string name="purchases_title">Compras</string>
-    <string name="purchases_subtitle">Agrega stock a los productos con inventario</string>
+    <string name="purchases_subtitle">Elige una tienda y agrega stock por producto</string>
+    <string name="purchases_store_label">Tienda para compras</string>
+    <string name="purchases_pick_store">Selecciona una tienda para ver el inventario y registrar compras.</string>
     <string name="purchases_confirm_button">Confirmar compras</string>
     <string name="purchases_empty_title">Sin productos con inventario</string>
     <string name="purchases_empty_subtitle">Activa el control de inventario en un producto desde Agregar o Editar para gestionar el stock aquí.</string>

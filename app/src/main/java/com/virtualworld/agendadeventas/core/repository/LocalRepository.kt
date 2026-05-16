@@ -173,11 +173,11 @@ class LocalRepository @Inject constructor(
                     val listProductStore = listProductAll.map {
 
                         when (idStore) {
-                            1 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta1, it.tieneInventario, it.inventario)
-                            2 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta2, it.tieneInventario, it.inventario)
-                            3 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta3, it.tieneInventario, it.inventario)
-                            4 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta4, it.tieneInventario, it.inventario)
-                            5 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta5, it.tieneInventario, it.inventario)
+                            1 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta1, it.tieneInventario, it.inventario1)
+                            2 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta2, it.tieneInventario, it.inventario2)
+                            3 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta3, it.tieneInventario, it.inventario3)
+                            4 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta4, it.tieneInventario, it.inventario4)
+                            5 -> ProductStoreCore(it.id.toInt(), it.nombre, it.compra, it.venta5, it.tieneInventario, it.inventario5)
                             else -> {
                                 ProductStoreCore(-1, "", 0f, 0f, false, 0)
                             }
@@ -219,8 +219,8 @@ class LocalRepository @Inject constructor(
         productsLocalDataSource.deleteProductById(id)
     }
 
-    suspend fun adjustInventory(id: Long, delta: Int) {
-        productsLocalDataSource.adjustInventory(id, delta)
+    suspend fun adjustInventory(id: Long, storeId: Int, delta: Int) {
+        productsLocalDataSource.adjustInventory(id, storeId, delta)
     }
 
     suspend fun getProductById(id: Long): ProductRoom? {

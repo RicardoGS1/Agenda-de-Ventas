@@ -47,6 +47,12 @@ data class StorePriceField(
     val onValueChange: (String) -> Unit,
 )
 
+data class StoreInventoryField(
+    val storeName: String,
+    val value: String,
+    val onValueChange: (String) -> Unit,
+)
+
 @Composable
 fun ProductFormInfoBanner(@StringRes descriptionResId: Int) {
     Card(
@@ -203,9 +209,8 @@ fun ProductSalePricesFormCard(stores: List<StorePriceField>) {
 @Composable
 fun ProductInventoryFormCard(
     tieneInventario: Boolean,
-    inventario: String,
+    storeInventoryFields: List<StoreInventoryField>,
     onTieneInventarioChange: (Boolean) -> Unit,
-    onInventarioChange: (String) -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -239,26 +244,54 @@ fun ProductInventoryFormCard(
             }
 
             AnimatedVisibility(
-                visible = tieneInventario,
+                visible = tieneInventario && storeInventoryFields.isNotEmpty(),
                 enter = expandVertically(),
                 exit = shrinkVertically()
             ) {
-                OutlinedTextField(
-                    value = inventario,
-                    onValueChange = onInventarioChange,
-                    label = { Text(text = stringResource(id = R.string.inventory_quantity_label)) },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Outlined.Inventory2,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    shape = RoundedCornerShape(10.dp)
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    storeInventoryFields.forEachIndexed { index, store ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.secondaryContainer),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Inventory2,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier.size(22.dp)
+                                )
+                            }
+                            OutlinedTextField(
+                                value = store.value,
+                                onValueChange = store.onValueChange,
+                                label = {
+                                    Text(
+                                        text = stringResource(
+                                            id = R.string.inventory_store_quantity_label,
+                                            store.storeName
+                                        )
+                                    )
+                                },
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(start = 12.dp),
+                                singleLine = true,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                shape = RoundedCornerShape(10.dp)
+                            )
+                        }
+                        if (index < storeInventoryFields.lastIndex) {
+                            Spacer(modifier = Modifier.padding(top = 4.dp))
+                        }
+                    }
+                }
             }
         }
     }

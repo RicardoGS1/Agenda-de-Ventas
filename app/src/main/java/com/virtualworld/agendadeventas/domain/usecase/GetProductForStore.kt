@@ -46,12 +46,12 @@ class GetProductForStore @Inject constructor(
                         val lismap: List<StoresValues> = storesActiveResponse.result.map {
 
                             when(it.idStore){
-                                1 ->{ StoresValues("1", it.nameStore , product.venta1.toString())}
-                                2 ->{ StoresValues("2", it.nameStore , product.venta2.toString())}
-                                3 ->{StoresValues("3", it.nameStore , product.venta3.toString())}
-                               4 ->{StoresValues("4", it.nameStore , product.venta4.toString())}
-                                5 ->{StoresValues("5", it.nameStore , product.venta5.toString())}
-                                else -> {StoresValues("", "" , "")}
+                                1 -> StoresValues("1", it.nameStore, product.venta1.toString(), product.inventario1.toString())
+                                2 -> StoresValues("2", it.nameStore, product.venta2.toString(), product.inventario2.toString())
+                                3 -> StoresValues("3", it.nameStore, product.venta3.toString(), product.inventario3.toString())
+                                4 -> StoresValues("4", it.nameStore, product.venta4.toString(), product.inventario4.toString())
+                                5 -> StoresValues("5", it.nameStore, product.venta5.toString(), product.inventario5.toString())
+                                else -> StoresValues("", "", "")
                             }
                         }
 
@@ -61,7 +61,6 @@ class GetProductForStore @Inject constructor(
                             productCost = product.compra.toString(),
                             storesValues = lismap,
                             tieneInventario = product.tieneInventario,
-                            inventario = product.inventario,
                         )
 
 

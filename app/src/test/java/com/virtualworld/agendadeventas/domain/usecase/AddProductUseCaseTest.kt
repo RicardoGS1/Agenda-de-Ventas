@@ -6,6 +6,7 @@ import com.virtualworld.agendadeventas.core.repository.LocalRepository
 import com.virtualworld.agendadeventas.ui.screen.common.ProductUiState
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import io.mockk.coEvery
+import io.mockk.any
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -38,9 +39,29 @@ class AddProductUseCaseTest{
             venta3 = productUiState.storeValues[3]?.ifEmpty { "0" }?.toFloat() ?: 0f,
             venta4 = productUiState.storeValues[4]?.ifEmpty { "0" }?.toFloat() ?: 0f,
             venta5 = productUiState.storeValues[5]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            tieneInventario = false,
+            inventario1 = 0,
+            inventario2 = 0,
+            inventario3 = 0,
+            inventario4 = 0,
+            inventario5 = 0,
         )
 
-        val result1 =  ProductRoom(nombre="Nombre del producto", compra = 10f, venta1 = 15f, venta2 = 20f, venta3 = 0f, venta4 = 0f, venta5 = 0f)
+        val result1 = ProductRoom(
+            nombre = "Nombre del producto",
+            compra = 10f,
+            venta1 = 15f,
+            venta2 = 20f,
+            venta3 = 0f,
+            venta4 = 0f,
+            venta5 = 0f,
+            tieneInventario = false,
+            inventario1 = 0,
+            inventario2 = 0,
+            inventario3 = 0,
+            inventario4 = 0,
+            inventario5 = 0,
+        )
 
         coEvery { localRepository.addProduct(productRoom) } returns NetworkResponseState.Success(Unit)
 
@@ -71,6 +92,12 @@ class AddProductUseCaseTest{
             venta3 = productUiState.storeValues[3]?.ifEmpty { "0" }?.toFloat() ?: 0f,
             venta4 = productUiState.storeValues[4]?.ifEmpty { "0" }?.toFloat() ?: 0f,
             venta5 = productUiState.storeValues[5]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            tieneInventario = false,
+            inventario1 = 0,
+            inventario2 = 0,
+            inventario3 = 0,
+            inventario4 = 0,
+            inventario5 = 0,
         )
 
         coEvery { localRepository.addProduct(productRoom) } returns NetworkResponseState.Success(Unit)

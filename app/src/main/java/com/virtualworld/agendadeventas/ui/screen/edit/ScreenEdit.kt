@@ -84,7 +84,9 @@ fun ScreenEdit() {
         viewModel.updateStoreValue(storeId, value)
     }
     val updateTieneInventario = { value: Boolean -> viewModel.updateTieneInventario(value) }
-    val updateInventario = { value: String -> viewModel.updateInventario(value) }
+    val updateStoreInventory = { storeId: String, value: String ->
+        viewModel.updateStoreInventory(storeId, value)
+    }
 
 
     Box() {
@@ -107,7 +109,7 @@ fun ScreenEdit() {
                 updateProductCost = updateProductCost,
                 updateStoreValue = updateStoreValue,
                 updateTieneInventario = updateTieneInventario,
-                updateInventario = updateInventario,
+                updateStoreInventory = updateStoreInventory,
                 setProduct = setProduct,
                 isVisible = windowEditView.value
             )
