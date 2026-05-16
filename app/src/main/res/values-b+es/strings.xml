@@ -36,6 +36,14 @@
     <string name="precio_compra_detalles">Precio de compra</string>
     <string name="precio_venta_detalles">Precio de venta: </string>
     <string name="editar_costo">Costo: </string>
+    <string name="edit_list_hint">Toca un producto para editarlo. Desliza a la izquierda para eliminar.</string>
+    <string name="edit_empty_title">Sin productos</string>
+    <string name="edit_empty_subtitle">Agrega productos desde la pantalla Agregar para gestionarlos aquí.</string>
+    <string name="edit_swipe_delete">Eliminar</string>
+    <plurals name="edit_products_count">
+        <item quantity="one">%d producto</item>
+        <item quantity="other">%d productos</item>
+    </plurals>
 
     //PANTALLA VENDER
     <string name="label_spiner_vender">Selecciona una tienda</string>
@@ -93,6 +101,8 @@
 
     //PANTALLA INICIO
     <string name="inicio_priodo">Periodo</string>
+    <string name="inicio_fecha_inicio">Fecha de inicio</string>
+    <string name="inicio_fecha_final">Fecha final</string>
     <string name="inicio_desde">Inicio</string>
     <string name="inicio_hasta">Hoy</string>
     <string name="inicio_unidades_vendidas">Unidades Vendidas</string>
@@ -100,6 +110,16 @@
     <string name="inicio_info_tiendas">Tiendas</string>
     <string name="inicio_info_unidades">Unidades</string>
     <string name="inicio_info_ganancia">Ganancia</string>
+    <string name="inicio_inversion_recuperada">Inversión recuperada</string>
+    <string name="inicio_importe_total_venta">Importe total de venta</string>
+    <string name="inicio_info_inversion">Inversión</string>
+    <string name="inicio_info_importe">Importe</string>
+    <string name="inicio_desc_unidades">Muestra las unidades vendidas por cada tienda en el periodo seleccionado.</string>
+    <string name="inicio_desc_ganancia">Muestra la ganancia (ventas menos coste de compra) por cada tienda en el periodo.</string>
+    <string name="inicio_desc_inversion">Muestra el coste total de compra de los productos vendidos por tienda. Es la inversión recuperada con las ventas.</string>
+    <string name="inicio_desc_importe">Muestra el importe total facturado por ventas en cada tienda del periodo.</string>
+    <string name="inicio_info_cerrar">Entendido</string>
+    <string name="inicio_info_icon">Más información</string>
     <string name="inicio_empty_message">Pulsa el botón para configurar tus tiendas y agregar tu primer producto.</string>
     <string name="inicio_empty_button">Configurar tiendas</string>
 

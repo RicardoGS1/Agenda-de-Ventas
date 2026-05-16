@@ -35,6 +35,14 @@
     <string name="precio_compra_detalles">Purchase price</string>
     <string name="precio_venta_detalles">Sale price: </string>
     <string name="editar_costo">Cost: </string>
+    <string name="edit_list_hint">Tap a product to edit it. Swipe left to delete.</string>
+    <string name="edit_empty_title">No products yet</string>
+    <string name="edit_empty_subtitle">Add products from the Add screen to manage them here.</string>
+    <string name="edit_swipe_delete">Delete</string>
+    <plurals name="edit_products_count">
+        <item quantity="one">%d product</item>
+        <item quantity="other">%d products</item>
+    </plurals>
 
 
     //SCREEN SELL
@@ -89,6 +97,8 @@
 
     //PANTALLA INICIO
     <string name="inicio_priodo">Period</string>
+    <string name="inicio_fecha_inicio">Start date</string>
+    <string name="inicio_fecha_final">End date</string>
     <string name="inicio_desde">Start</string>
     <string name="inicio_hasta">Today</string>
     <string name="inicio_unidades_vendidas">Sold Units</string>
@@ -96,6 +106,16 @@
     <string name="inicio_info_tiendas">Store</string>
     <string name="inicio_info_unidades">Units</string>
     <string name="inicio_info_ganancia">Profits</string>
+    <string name="inicio_inversion_recuperada">Recovered investment</string>
+    <string name="inicio_importe_total_venta">Total sales amount</string>
+    <string name="inicio_info_inversion">Investment</string>
+    <string name="inicio_info_importe">Amount</string>
+    <string name="inicio_desc_unidades">Shows the units sold per store in the selected period.</string>
+    <string name="inicio_desc_ganancia">Shows the profit (sales minus purchase cost) per store in the selected period.</string>
+    <string name="inicio_desc_inversion">Shows the total purchase cost of products sold per store. This is the investment recovered through sales.</string>
+    <string name="inicio_desc_importe">Shows the total amount billed from sales per store in the selected period.</string>
+    <string name="inicio_info_cerrar">Got it</string>
+    <string name="inicio_info_icon">More information</string>
     <string name="inicio_empty_message">Tap the button to configure your stores and add your first product.</string>
     <string name="inicio_empty_button">Configure stores</string>
 

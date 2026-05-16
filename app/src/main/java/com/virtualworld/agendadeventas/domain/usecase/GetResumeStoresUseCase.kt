@@ -36,9 +36,11 @@ class GetResumeStoresUseCase @Inject constructor(private val localRepository: Lo
                     val resumeDataUI = response.result.map {
 
                         ResumeDataUI(
-                            profit =  decimalFormat.format(it.valor-it.compra),
+                            profit = decimalFormat.format(it.valor - it.compra),
                             units = it.unidades,
-                            store = it.tienda
+                            store = it.tienda,
+                            recoveredInvestment = decimalFormat.format(it.compra),
+                            totalSales = decimalFormat.format(it.valor),
                         )
                     }
 

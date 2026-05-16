@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -60,16 +61,39 @@ fun ResumeScreen(
                             CardResumeStores(
                                 title = stringResource(id = R.string.inicio_unidades_vendidas),
                                 colum2 = stringResource(id = R.string.inicio_info_unidades),
-                                resumeScreenState.map { it.store },
-                                resumeScreenState.map { it.units.toString() })
+                                detalleCol1 = resumeScreenState.map { it.store },
+                                detalleCol2 = resumeScreenState.map { it.units.toString() },
+                                infoDescription = stringResource(id = R.string.inicio_desc_unidades),
+                            )
+                        }
+
+                        item {
+                            CardResumeStores(
+                                title = stringResource(id = R.string.inicio_importe_total_venta),
+                                colum2 = stringResource(id = R.string.inicio_info_importe),
+                                detalleCol1 = resumeScreenState.map { it.store },
+                                detalleCol2 = resumeScreenState.map { it.totalSales },
+                                infoDescription = stringResource(id = R.string.inicio_desc_importe),
+                            )
+                        }
+
+                        item {
+                            CardResumeStores(
+                                title = stringResource(id = R.string.inicio_inversion_recuperada),
+                                colum2 = stringResource(id = R.string.inicio_info_inversion),
+                                detalleCol1 = resumeScreenState.map { it.store },
+                                detalleCol2 = resumeScreenState.map { it.recoveredInvestment },
+                                infoDescription = stringResource(id = R.string.inicio_desc_inversion),
+                            )
                         }
 
                         item {
                             CardResumeStores(
                                 title = stringResource(id = R.string.inicio_ganancia),
                                 colum2 = stringResource(id = R.string.inicio_info_ganancia),
-                                resumeScreenState.map { it.store },
-                                resumeScreenState.map { it.profit }
+                                detalleCol1 = resumeScreenState.map { it.store },
+                                detalleCol2 = resumeScreenState.map { it.profit },
+                                infoDescription = stringResource(id = R.string.inicio_desc_ganancia),
                             )
                         }
                     }
@@ -140,33 +164,33 @@ fun SelectPeriod(viewModel: ViewModelResume) {
 
             )
 
-            //CONTENEDOR BOTONES
-            Box(modifier = Modifier.fillMaxWidth()) {
-
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 12.dp, bottom = 20.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
                 ButtonSelctFechaView(
-                    Modifier.align(Alignment.CenterStart),
-                    dateStart,
-                    stringResource(R.string.inicio_desde),
-                    0,
-                    0,
-                    0
-                ) {
-                    viewModel.changerDateStart(
-                        it
-                    )
-                }
+                    modifier = Modifier.weight(1f),
+                    label = stringResource(R.string.inicio_fecha_inicio),
+                    stateFecha = dateStart,
+                    placeholder = stringResource(R.string.inicio_desde),
+                    h = 0,
+                    m = 0,
+                    s = 0,
+                    onDateSelected = { viewModel.changerDateStart(it) },
+                )
                 ButtonSelctFechaView(
-                    Modifier.align(Alignment.CenterEnd),
-                    dateEnd,
-                    stringResource(R.string.inicio_hasta),
-                    24,
-                    59,
-                    59
-                ) {
-                    viewModel.changerDateEnd(
-                        it
-                    )
-                }
+                    modifier = Modifier.weight(1f),
+                    label = stringResource(R.string.inicio_fecha_final),
+                    stateFecha = dateEnd,
+                    placeholder = stringResource(R.string.inicio_hasta),
+                    h = 23,
+                    m = 59,
+                    s = 59,
+                    onDateSelected = { viewModel.changerDateEnd(it) },
+                )
             }
         }
     }
