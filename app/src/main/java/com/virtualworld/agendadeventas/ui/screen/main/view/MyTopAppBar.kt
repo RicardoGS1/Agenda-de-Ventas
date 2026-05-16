@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 
 @Composable
@@ -29,7 +30,6 @@ fun MyTopAppBar(
         },
 
         backgroundColor = MaterialTheme.colorScheme.primary,
-       // contentColor = MaterialTheme.colorScheme.primaryContainer
-
+        elevation = 0.dp,
     )
 }
