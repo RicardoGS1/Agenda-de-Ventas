@@ -1,11 +1,12 @@
 package com.virtualworld.agendadeventas.ui.screen.record
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-
 import androidx.compose.foundation.layout.fillMaxWidth
-
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,14 +15,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
+import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.core.model.SoldForStoreCore
-import com.virtualworld.agendadeventas.ui.screen.common.DropDownMenuStoresView
+import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
+import com.virtualworld.agendadeventas.ui.screen.common.StoreSelectView
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun RecordScreen(viewModel: RecordViewModel = hiltViewModel()) {
-
 
     val storesActiveState by viewModel.storesActiveState.collectAsState()
     val uiMessengerState by viewModel.messengerState.collectAsState()
@@ -33,8 +38,6 @@ fun RecordScreen(viewModel: RecordViewModel = hiltViewModel()) {
         soldForStore,
         onStoreSelected = { storeId -> viewModel.getSoldForStore(storeId) },
     )
-
-
 }
 
 @Composable
@@ -42,43 +45,43 @@ fun RecordScreenContent(
     storesActiveState: List<Pair<Int, String>>,
     uiMessengerState: ScreenUiState,
     soldForStore: List<SoldForStoreCore>,
-    onStoreSelected: (Int) -> Unit
+    onStoreSelected: (Int) -> Unit,
 ) {
-
-
     var selectedStoreIndex by remember { mutableStateOf(-1) }
 
-    //Envia al viewModel el id de la tienda seleccionado por el usuario
     LaunchedEffect(selectedStoreIndex) {
         if (selectedStoreIndex != -1) {
             onStoreSelected(storesActiveState[selectedStoreIndex].first)
         }
     }
 
-
     Box(modifier = Modifier.fillMaxSize()) {
-
-        Column(modifier = Modifier.fillMaxWidth()) {
-            DropDownMenuStoresView(
-                storesActiveState,
-                uiMessengerState,
-                selectedStoreIndex,
-                { index ->
-                    selectedStoreIndex = index
-                })
+        Column(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
+                    .background(MaterialTheme.colorScheme.primary),
+            ) {
+                StoreSelectView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                    label = stringResource(R.string.sell_label_tienda),
+                    stores = storesActiveState,
+                    selectedIndex = selectedStoreIndex,
+                    isLoading = uiMessengerState == ScreenUiState.LOADING,
+                    placeholder = stringResource(R.string.label_spiner_vender),
+                    onStoreSelected = { index -> selectedStoreIndex = index },
+                )
+            }
 
             if (selectedStoreIndex != -1) {
-                println(soldForStore)
-                ListProductRecordView(soldForStore)
+                ListProductRecordView(
+                    stateScreenProductStore = soldForStore,
+                    modifier = Modifier.weight(1f),
+                )
             }
         }
-
-
     }
-
-
 }
-
-
-
-

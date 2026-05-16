@@ -70,6 +70,23 @@
     <string name="record_precio">Precio:</string>
     <string name="record_costo">Costo:</string>
     <string name="record_fecha">Fecha:</string>
+    <string name="record_empty_title">Sin ventas registradas</string>
+    <string name="record_empty_subtitle">Las ventas de esta tienda aparecerán aquí agrupadas por fecha.</string>
+    <string name="record_date_today">Hoy</string>
+    <string name="record_date_yesterday">Ayer</string>
+    <string name="record_line_total">%1$d × %2$s = %3$s</string>
+    <plurals name="record_day_sales_count">
+        <item quantity="one">%d venta</item>
+        <item quantity="other">%d ventas</item>
+    </plurals>
+    <plurals name="record_sales_count">
+        <item quantity="one">%d venta</item>
+        <item quantity="other">%d ventas</item>
+    </plurals>
+    <plurals name="record_days_count">
+        <item quantity="one">%d día</item>
+        <item quantity="other">%d días</item>
+    </plurals>
 
 
 

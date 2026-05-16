@@ -68,6 +68,23 @@
     <string name="record_precio">Price:</string>
     <string name="record_costo">Cost:</string>
     <string name="record_fecha">Date:</string>
+    <string name="record_empty_title">No sales recorded</string>
+    <string name="record_empty_subtitle">Sales for this store will appear here grouped by date.</string>
+    <string name="record_date_today">Today</string>
+    <string name="record_date_yesterday">Yesterday</string>
+    <string name="record_line_total">%1$d × %2$s = %3$s</string>
+    <plurals name="record_day_sales_count">
+        <item quantity="one">%d sale</item>
+        <item quantity="other">%d sales</item>
+    </plurals>
+    <plurals name="record_sales_count">
+        <item quantity="one">%d sale</item>
+        <item quantity="other">%d sales</item>
+    </plurals>
+    <plurals name="record_days_count">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
 
     //SCREEN STORE
     <string name="titulo_Tiendas">Setting stores</string>
