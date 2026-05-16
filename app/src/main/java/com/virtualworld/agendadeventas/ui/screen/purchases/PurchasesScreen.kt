@@ -51,7 +51,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import java.text.DecimalFormat
 import com.virtualworld.agendadeventas.R
@@ -117,8 +116,6 @@ private fun PurchasesContent(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
-            PurchasesHeader()
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -303,48 +300,6 @@ private fun PurchasesTotalBanner(amountFormatted: String) {
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
             )
-        }
-    }
-}
-
-@Composable
-private fun PurchasesHeader() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp))
-            .background(MaterialTheme.colorScheme.primary)
-            .padding(horizontal = 20.dp, vertical = 24.dp),
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(
-                modifier = Modifier
-                    .size(44.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f)),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.ShoppingCart,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.size(26.dp),
-                )
-            }
-            Column(modifier = Modifier.padding(start = 14.dp)) {
-                Text(
-                    text = stringResource(id = R.string.purchases_title),
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = stringResource(id = R.string.purchases_subtitle),
-                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.85f),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 4.dp),
-                )
-            }
         }
     }
 }
