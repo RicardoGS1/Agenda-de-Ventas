@@ -1,5 +1,10 @@
 package com.virtualworld.agendadeventas.ui.screen.purchases
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.outlined.AttachMoney
 import androidx.compose.material.icons.outlined.Inventory2
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Button
@@ -33,6 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,6 +50,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import java.text.DecimalFormat
 import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.core.entity.ProductRoom
 import com.virtualworld.agendadeventas.ui.screen.common.ManagerScreenStateView
@@ -75,9 +83,28 @@ private fun PurchasesContent(
     onConfirm: () -> Unit,
     onChangerUiState: (ScreenUiState) -> Unit,
 ) {
+    val purchaseTotalAmount = remember(products, addAmounts) {
+        products.sumOf { product ->
+            val qty = addAmounts[product.id] ?: 0
+            (product.compra * qty).toDouble()
+        }.toFloat()
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             PurchasesHeader()
+
+            AnimatedVisibility(
+                visible = screenUiState != ScreenUiState.LOADING &&
+                    products.isNotEmpty() &&
+                    purchaseTotalAmount > 0f,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically(),
+            ) {
+                PurchasesTotalBanner(
+                    amountFormatted = purchasesTotalPriceFormat.format(purchaseTotalAmount),
+                )
+            }
 
             when {
                 screenUiState == ScreenUiState.LOADING -> {
@@ -161,6 +188,41 @@ private fun PurchasesContent(
             modifier = Modifier.align(Alignment.BottomCenter),
             onChangerMessenger = onChangerUiState,
         )
+    }
+}
+
+private val purchasesTotalPriceFormat = DecimalFormat("#.##")
+
+@Composable
+private fun PurchasesTotalBanner(amountFormatted: String) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 10.dp),
+        shape = RoundedCornerShape(14.dp),
+        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.85f),
+        tonalElevation = 1.dp,
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.AttachMoney,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(26.dp),
+            )
+            Text(
+                text = stringResource(id = R.string.purchases_total, amountFormatted),
+                modifier = Modifier.padding(start = 10.dp),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+        }
     }
 }
 

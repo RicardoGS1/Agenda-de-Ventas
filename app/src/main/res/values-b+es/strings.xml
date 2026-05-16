@@ -56,6 +56,7 @@
     <string name="sell_empty_title">No hay productos en esta tienda</string>
     <string name="sell_empty_subtitle">Agrega productos y asigna precios para esta tienda desde Agregar o Editar.</string>
     <string name="sell_line_subtotal">%1$d × subtotal %2$s</string>
+    <string name="sell_total_sale">Total venta: %1$s</string>
     <string name="sell_decrease_quantity">Disminuir cantidad</string>
     <string name="sell_increase_quantity">Aumentar cantidad</string>
     <plurals name="sell_selected_count">
@@ -121,6 +122,7 @@
     <string name="purchases_empty_subtitle">Activa el control de inventario en un producto desde Agregar o Editar para gestionar el stock aquí.</string>
     <string name="purchases_current_stock">Stock: %1$d</string>
     <string name="purchases_adding_amount">+%1$d</string>
+    <string name="purchases_total">Total compra: %1$s</string>
     <string name="purchases_success">Stock actualizado correctamente</string>
 
     //MAIN ACTYVITY

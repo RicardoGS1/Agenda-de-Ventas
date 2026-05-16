@@ -56,6 +56,7 @@
     <string name="sell_empty_title">No products in this store</string>
     <string name="sell_empty_subtitle">Add products and assign prices for this store from the Add or Edit screen.</string>
     <string name="sell_line_subtotal">%1$d × subtotal %2$s</string>
+    <string name="sell_total_sale">Sale total: %1$s</string>
     <string name="sell_decrease_quantity">Decrease quantity</string>
     <string name="sell_increase_quantity">Increase quantity</string>
     <plurals name="sell_selected_count">
@@ -117,6 +118,7 @@
     <string name="purchases_empty_subtitle">Enable inventory control on a product from Add or Edit to manage stock here.</string>
     <string name="purchases_current_stock">Stock: %1$d</string>
     <string name="purchases_adding_amount">+%1$d</string>
+    <string name="purchases_total">Purchase total: %1$s</string>
     <string name="purchases_success">Stock updated successfully</string>
 
     //MAIN ACTYVITY
