@@ -53,6 +53,12 @@ interface ProductoDao {
     @Delete
    suspend fun borrar(producto: ProductRoom): Int
 
+    @Query("UPDATE productos SET inventario = inventario + :delta WHERE id = :id AND tieneInventario = 1")
+    suspend fun adjustInventory(id: Long, delta: Int)
+
+    @Query("SELECT * FROM productos WHERE id = :id")
+    suspend fun getProductById(id: Long): ProductRoom?
+
     @Query("DELETE FROM productos")
     suspend fun cleanAll():Int
 }

@@ -5,5 +5,6 @@ data class ProductStoreCore(
     val nombre: String,
     val compra: Float,
     val venta: Float,
-
+    val tieneInventario: Boolean = false,
+    val inventario: Int = 0,
 )

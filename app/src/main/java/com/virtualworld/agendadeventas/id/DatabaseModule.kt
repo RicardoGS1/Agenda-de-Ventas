@@ -26,7 +26,7 @@ object DatabaseModule {
             appContext,
             ProductoDatabase::class.java,
             "logging.db"
-        ).build()
+        ).addMigrations(ProductoDatabase.MIGRATION_1_2).build()
     }
 
     @Provides

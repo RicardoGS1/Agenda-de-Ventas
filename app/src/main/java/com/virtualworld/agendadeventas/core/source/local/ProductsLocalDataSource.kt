@@ -76,9 +76,14 @@ class ProductsLocalDataSource @Inject constructor(private val productoDao: Produ
     }
 
     suspend fun insertListProduct(result: List<ProductRoom>) {
-
         productoDao.insertProductRoomList(result)
     }
 
+    suspend fun adjustInventory(id: Long, delta: Int) {
+        productoDao.adjustInventory(id, delta)
+    }
 
+    suspend fun getProductById(id: Long): ProductRoom? {
+        return productoDao.getProductById(id)
+    }
 }

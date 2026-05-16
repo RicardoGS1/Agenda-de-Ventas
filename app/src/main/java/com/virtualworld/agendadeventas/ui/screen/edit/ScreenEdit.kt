@@ -83,6 +83,8 @@ fun ScreenEdit() {
     val updateStoreValue = { storeId: String, value: String ->
         viewModel.updateStoreValue(storeId, value)
     }
+    val updateTieneInventario = { value: Boolean -> viewModel.updateTieneInventario(value) }
+    val updateInventario = { value: String -> viewModel.updateInventario(value) }
 
 
     Box() {
@@ -99,13 +101,15 @@ fun ScreenEdit() {
             )
 
             WindowsEditView(
-                changeShowEditView,
-                productSelectState,
-                updateProductName,
-                updateProductCost,
-                updateStoreValue,
-                setProduct,
-                windowEditView.value
+                changeWindowEditView = changeShowEditView,
+                productSelectState = productSelectState,
+                updateProductName = updateProductName,
+                updateProductCost = updateProductCost,
+                updateStoreValue = updateStoreValue,
+                updateTieneInventario = updateTieneInventario,
+                updateInventario = updateInventario,
+                setProduct = setProduct,
+                isVisible = windowEditView.value
             )
 
             DialogDelete(

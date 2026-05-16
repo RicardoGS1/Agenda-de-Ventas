@@ -43,6 +43,7 @@ import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.domain.models.ProductWithStoresActive
 import com.virtualworld.agendadeventas.ui.screen.common.ProductFormInfoBanner
 import com.virtualworld.agendadeventas.ui.screen.common.ProductInfoFormCard
+import com.virtualworld.agendadeventas.ui.screen.common.ProductInventoryFormCard
 import com.virtualworld.agendadeventas.ui.screen.common.ProductSalePricesFormCard
 import com.virtualworld.agendadeventas.ui.screen.common.StorePriceField
 
@@ -53,6 +54,8 @@ fun WindowsEditView(
     updateProductName: (String) -> Unit,
     updateProductCost: (String) -> Unit,
     updateStoreValue: (String, String) -> Unit,
+    updateTieneInventario: (Boolean) -> Unit,
+    updateInventario: (String) -> Unit,
     setProduct: (ProductWithStoresActive) -> Unit,
     isVisible: Boolean,
 ) {
@@ -125,6 +128,14 @@ fun WindowsEditView(
                                         onValueChange = { updateStoreValue(store.idStore, it) }
                                     )
                                 }
+                            )
+                        }
+                        item {
+                            ProductInventoryFormCard(
+                                tieneInventario = productSelectState.tieneInventario,
+                                inventario = productSelectState.inventario.toString(),
+                                onTieneInventarioChange = updateTieneInventario,
+                                onInventarioChange = updateInventario
                             )
                         }
                     }

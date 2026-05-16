@@ -59,7 +59,9 @@ class GetProductForStore @Inject constructor(
                             idProduct = product.id.toString(),
                             productName = product.nombre,
                             productCost = product.compra.toString(),
-                            storesValues = lismap
+                            storesValues = lismap,
+                            tieneInventario = product.tieneInventario,
+                            inventario = product.inventario,
                         )
 
 

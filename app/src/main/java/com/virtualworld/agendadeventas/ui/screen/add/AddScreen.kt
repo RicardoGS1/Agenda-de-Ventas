@@ -37,6 +37,7 @@ import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.ui.screen.common.ManagerScreenStateView
 import com.virtualworld.agendadeventas.ui.screen.common.ProductFormInfoBanner
 import com.virtualworld.agendadeventas.ui.screen.common.ProductInfoFormCard
+import com.virtualworld.agendadeventas.ui.screen.common.ProductInventoryFormCard
 import com.virtualworld.agendadeventas.ui.screen.common.ProductSalePricesFormCard
 import com.virtualworld.agendadeventas.ui.screen.common.ProductUiState
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
@@ -57,6 +58,8 @@ fun AddScreen() {
         updateProductName = viewModel::updateProductName,
         updateProductCost = viewModel::updateProductCost,
         updateStoreValue = viewModel::updateStoreValue,
+        updateTieneInventario = viewModel::updateTieneInventario,
+        updateInventario = viewModel::updateInventario,
         setProduct = viewModel::setProduct
     )
 }
@@ -70,6 +73,8 @@ fun ContentAddProduct(
     updateProductName: (String) -> Unit,
     updateProductCost: (String) -> Unit,
     updateStoreValue: (Int, String) -> Unit,
+    updateTieneInventario: (Boolean) -> Unit,
+    updateInventario: (String) -> Unit,
     setProduct: () -> Unit,
 ) {
     val isFormVisible = screenUiState != ScreenUiState.LOADING
@@ -112,6 +117,14 @@ fun ContentAddProduct(
                                 }
                             )
                         }
+                    }
+                    item {
+                        ProductInventoryFormCard(
+                            tieneInventario = productUiState.tieneInventario,
+                            inventario = productUiState.inventario,
+                            onTieneInventarioChange = updateTieneInventario,
+                            onInventarioChange = updateInventario
+                        )
                     }
                 }
             } else {

@@ -6,7 +6,7 @@ import com.virtualworld.agendadeventas.domain.models.ProductWithStoresActive
 fun ProductWithStoresActive.toProductRoom(): ProductRoom {
     val listMap = storesValues.associate { it.idStore.toInt() to it.value }
 
-    return  ProductRoom(
+    return ProductRoom(
         id = idProduct.toLong(),
         nombre = productName,
         compra = productCost.toFloat(),
@@ -15,5 +15,7 @@ fun ProductWithStoresActive.toProductRoom(): ProductRoom {
         venta3 = listMap[3]?.toFloat() ?: 0f,
         venta4 = listMap[4]?.toFloat() ?: 0f,
         venta5 = listMap[5]?.toFloat() ?: 0f,
+        tieneInventario = tieneInventario,
+        inventario = inventario,
     )
 }

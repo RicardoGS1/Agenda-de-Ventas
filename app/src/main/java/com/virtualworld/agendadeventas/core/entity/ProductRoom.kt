@@ -33,7 +33,6 @@ data class ProductRoom(
     val venta3: Float = 0f,
     val venta4: Float = 0f,
     val venta5: Float = 0f,
-) {
-
-
-}
+    val tieneInventario: Boolean = false,
+    val inventario: Int = 0,
+)

@@ -19,6 +19,8 @@ class AddProductUseCase @Inject constructor(private val localRepository: LocalRe
             venta3 = productUiState.storeValues[3]?.ifEmpty { "0" }?.toFloat() ?: 0f,
             venta4 = productUiState.storeValues[4]?.ifEmpty { "0" }?.toFloat() ?: 0f,
             venta5 = productUiState.storeValues[5]?.ifEmpty { "0" }?.toFloat() ?: 0f,
+            tieneInventario = productUiState.tieneInventario,
+            inventario = productUiState.inventario.ifEmpty { "0" }.toIntOrNull() ?: 0,
         )
 
         println(productRoom)

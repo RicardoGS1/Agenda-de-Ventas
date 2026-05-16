@@ -152,6 +152,7 @@ fun ListProductSellView(
                     onQuantityChange = changeUnitSell,
                 )
             }
+
         }
     }
 }
@@ -164,6 +165,7 @@ private fun SellProductListItem(
 ) {
     val shape = RoundedCornerShape(16.dp)
     val isSelected = quantity > 0
+    val isAtStockLimit = product.tieneInventario && quantity >= product.inventario
     val targetBorderColor = if (isSelected) {
         MaterialTheme.colorScheme.primary.copy(alpha = 0.55f)
     } else {
@@ -226,24 +228,32 @@ private fun SellProductListItem(
                         color = MaterialTheme.colorScheme.onSurface,
                     )
 
-                    Row(
-                        modifier = Modifier.padding(top = 8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        SellPriceChip(
-                            label = stringResource(id = R.string.sell_item_detall_cost),
-                            value = formatSellPrice(product.compra),
-                        )
-                        SellPriceChip(
-                            label = stringResource(id = R.string.sell_item_detall_price),
-                            value = formatSellPrice(product.venta),
-                            highlighted = true,
-                        )
-                    }
+                        Row(
+                            modifier = Modifier.padding(top = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            SellPriceChip(
+                                label = stringResource(id = R.string.sell_item_detall_cost),
+                                value = formatSellPrice(product.compra),
+                            )
+                            SellPriceChip(
+                                label = stringResource(id = R.string.sell_item_detall_price),
+                                value = formatSellPrice(product.venta),
+                                highlighted = true,
+                            )
+                            if (product.tieneInventario) {
+                                SellPriceChip(
+                                    label = stringResource(id = R.string.inventory_stock_label),
+                                    value = product.inventario.toString(),
+                                    highlighted = product.inventario == 0,
+                                )
+                            }
+                        }
                 }
 
                 SellQuantityStepper(
                     quantity = quantity,
+                    increaseEnabled = !isAtStockLimit,
                     onDecrease = { onQuantityChange(Pair(product.idProduct, -1)) },
                     onIncrease = { onQuantityChange(Pair(product.idProduct, 1)) },
                 )
@@ -291,6 +301,7 @@ private fun SellProductListItem(
 @Composable
 private fun SellQuantityStepper(
     quantity: Int,
+    increaseEnabled: Boolean = true,
     onDecrease: () -> Unit,
     onIncrease: () -> Unit,
 ) {
@@ -347,11 +358,14 @@ private fun SellQuantityStepper(
 
             FilledIconButton(
                 onClick = onIncrease,
+                enabled = increaseEnabled,
                 modifier = Modifier.size(36.dp),
                 shape = CircleShape,
                 colors = IconButtonDefaults.filledIconButtonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
+                    disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
                 ),
             ) {
                 Icon(

@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material.icons.filled.PointOfSale
 import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.virtualworld.agendadeventas.R
@@ -62,6 +63,13 @@ sealed class DrawerNavDestination(val route: String, @StringRes val title: Int, 
         icon = Icons.Default.Storefront,
     )
 
+    object Compras : DrawerNavDestination(
+        route = "Compras",
+        title = R.string.menu_compras,
+        contentDescription = "go to screen Compras",
+        icon = Icons.Default.ShoppingCart,
+    )
+
     object Exportar : DrawerNavDestination(
         route = "Exportar",
         title =  R.string.menu_exportar,
@@ -84,6 +92,7 @@ sealed class DrawerNavDestination(val route: String, @StringRes val title: Int, 
                 Editar,
                 Vender,
                 Registro,
+                Compras,
                 Tiendas,
                 Exportar,
                 Configuracion

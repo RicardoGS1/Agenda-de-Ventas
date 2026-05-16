@@ -16,6 +16,7 @@ import com.virtualworld.agendadeventas.navigation.DrawerNavDestination
 import com.virtualword3d.salesregister.Navegation.navigateToBottomNavDestination
 import com.virtualworld.agendadeventas.ui.screen.export.ExportScreen
 import com.virtualworld.agendadeventas.navigation.SettingsRoutes
+import com.virtualworld.agendadeventas.ui.screen.purchases.PurchasesScreen
 import com.virtualworld.agendadeventas.ui.screen.settings.LanguageSettingsScreen
 import com.virtualworld.agendadeventas.ui.screen.settings.SettingsScreen
 
@@ -47,6 +48,7 @@ fun AppNavegation(
                 }
             )
         }
+        composable(DrawerNavDestination.Compras.route) { PurchasesScreen() }
         composable(DrawerNavDestination.Exportar.route) { ExportScreen() }
         composable(DrawerNavDestination.Configuracion.route) {
             SettingsScreen(

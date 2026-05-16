@@ -10,6 +10,7 @@ import com.virtualworld.agendadeventas.core.model.ProductStoreCore
 import com.virtualworld.agendadeventas.core.source.local.SoldLocalDataSource
 import com.virtualworld.agendadeventas.domain.usecase.GetProductForStore
 import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
+import com.virtualworld.agendadeventas.domain.usecase.UpdateInventoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +26,8 @@ import javax.inject.Inject
 class SellViewModel @Inject constructor(
     private val getStoresActiveUseCase: GetStoresActiveUseCase,
     private val getProductStore: GetProductForStore,
-    private val vendidoRepo: SoldLocalDataSource
+    private val vendidoRepo: SoldLocalDataSource,
+    private val updateInventoryUseCase: UpdateInventoryUseCase,
 ) : ViewModel() {
 
 
@@ -115,19 +117,23 @@ class SellViewModel @Inject constructor(
     }
 
     fun changerUnitSell(changer: Pair<Int, Int>) {
+        val product = _productForStore.value.find { it.idProduct == changer.first }
 
         val a = _listChangerProductsSell.value.map { pair ->
-
-            if (pair.first == changer.first) Pair(pair.first, pair.second + changer.second)
-            else Pair(pair.first, pair.second)
-
+            if (pair.first == changer.first) {
+                val newQty = pair.second + changer.second
+                val clampedQty = if (product?.tieneInventario == true) {
+                    newQty.coerceIn(0, product.inventario)
+                } else {
+                    maxOf(0, newQty)
+                }
+                Pair(pair.first, clampedQty)
+            } else {
+                pair
+            }
         }.toMutableList()
 
-        _listChangerProductsSell.update {
-            a
-        }
-
-
+        _listChangerProductsSell.update { a }
     }
 
     fun salveSell(selectedIndex: Int) {
@@ -161,6 +167,14 @@ class SellViewModel @Inject constructor(
         }
 
         vendidoRepo.addProductsSold(b)
+
+        b.forEach { sold ->
+            val product = _productForStore.value.find { it.idProduct == sold.idprod.toInt() }
+            if (product?.tieneInventario == true) {
+                updateInventoryUseCase.discountStock(sold.idprod, sold.unidades)
+            }
+        }
+
         changerUiState(ScreenUiState.OK)
         startUnitProduct()
         }

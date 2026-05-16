@@ -1,6 +1,9 @@
 package com.virtualworld.agendadeventas.ui.screen.common
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +28,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -191,6 +195,70 @@ fun ProductSalePricesFormCard(stores: List<StorePriceField>) {
                 if (index < stores.lastIndex) {
                     Spacer(modifier = Modifier.padding(top = 4.dp))
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun ProductInventoryFormCard(
+    tieneInventario: Boolean,
+    inventario: String,
+    onTieneInventarioChange: (Boolean) -> Unit,
+    onInventarioChange: (String) -> Unit,
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            ProductFormSectionTitle(
+                icon = Icons.Outlined.Inventory2,
+                title = stringResource(id = R.string.inventory_section_title)
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = stringResource(id = R.string.inventory_toggle_label),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.weight(1f)
+                )
+                Switch(
+                    checked = tieneInventario,
+                    onCheckedChange = onTieneInventarioChange
+                )
+            }
+
+            AnimatedVisibility(
+                visible = tieneInventario,
+                enter = expandVertically(),
+                exit = shrinkVertically()
+            ) {
+                OutlinedTextField(
+                    value = inventario,
+                    onValueChange = onInventarioChange,
+                    label = { Text(text = stringResource(id = R.string.inventory_quantity_label)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Inventory2,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    shape = RoundedCornerShape(10.dp)
+                )
             }
         }
     }
