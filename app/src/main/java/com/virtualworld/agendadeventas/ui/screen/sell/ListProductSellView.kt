@@ -2,6 +2,7 @@ package com.virtualworld.agendadeventas.ui.screen.sell
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -150,11 +151,12 @@ private fun SellProductListItem(
     quantity: Int,
     onQuantityChange: (Pair<Int, Int>) -> Unit,
 ) {
+    val shape = RoundedCornerShape(16.dp)
     val isSelected = quantity > 0
     val borderColor = if (isSelected) {
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.65f)
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.55f)
     } else {
-        MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
+        MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f)
     }
     val containerColor = if (isSelected) {
         MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.18f)
@@ -163,10 +165,11 @@ private fun SellProductListItem(
     }
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) 3.dp else 1.dp),
-        border = BorderStroke(width = 1.5.dp, color = borderColor),
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(width = 1.dp, color = borderColor, shape = shape),
+        shape = shape,
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         colors = CardDefaults.cardColors(containerColor = containerColor),
     ) {
         Column(
