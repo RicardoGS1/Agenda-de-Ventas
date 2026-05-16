@@ -3,6 +3,7 @@ package com.virtualworld.agendadeventas.ui.screen.resume
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
+import com.virtualworld.agendadeventas.domain.usecase.GetResumeInventoryUseCase
 import com.virtualworld.agendadeventas.domain.usecase.GetResumeStoresUseCase
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.domain.usecase.GetProductAllUseCase
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewModelResume @Inject constructor(
     private val getResumeStoresUseCase: GetResumeStoresUseCase,
+    private val getResumeInventoryUseCase: GetResumeInventoryUseCase,
     private val getProductAllUseCase: GetProductAllUseCase,
 ) : ViewModel() {
 
@@ -25,6 +27,9 @@ class ViewModelResume @Inject constructor(
 
     private val _resumeDataState = MutableStateFlow(listOf(ResumeDataUI()))
     val resumeDataState: StateFlow<List<ResumeDataUI>> = _resumeDataState
+
+    private val _inventoryResumeDataState = MutableStateFlow(listOf(InventoryResumeDataUI()))
+    val inventoryResumeDataState: StateFlow<List<InventoryResumeDataUI>> = _inventoryResumeDataState
 
     private val _dateStart = MutableStateFlow<Long?>(null)
     val dateStart: StateFlow<Long?> = _dateStart
@@ -37,6 +42,7 @@ class ViewModelResume @Inject constructor(
 
     init {
         getResumeSoldStoreActive()
+        getResumeInventoryStoreActive()
         observeHasProducts()
     }
 
@@ -45,6 +51,7 @@ class ViewModelResume @Inject constructor(
             getProductAllUseCase().collect { state ->
                 if (state is NetworkResponseState.Success) {
                     _hasProducts.update { state.result.isNotEmpty() }
+                    getResumeInventoryStoreActive()
                 }
             }
         }
@@ -94,7 +101,15 @@ class ViewModelResume @Inject constructor(
 
     }
 
-
+    private fun getResumeInventoryStoreActive() {
+        viewModelScope.launch {
+            getResumeInventoryUseCase.getResumeInventoryStoreActive().collect { state ->
+                if (state is NetworkResponseState.Success) {
+                    _inventoryResumeDataState.update { state.result }
+                }
+            }
+        }
+    }
 }
 
 

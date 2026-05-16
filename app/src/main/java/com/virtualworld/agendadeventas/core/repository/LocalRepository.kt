@@ -4,7 +4,10 @@ import com.virtualword3d.salesregister.Data.Entity.SoldRoom
 import com.virtualword3d.salesregister.Data.Entity.StoreRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.core.entity.ProductRoom
+import com.virtualworld.agendadeventas.core.entity.inventoryForStore
+import com.virtualworld.agendadeventas.core.entity.salePriceForStore
 import com.virtualworld.agendadeventas.core.model.ProductStoreCore
+import com.virtualworld.agendadeventas.core.model.ResumeInventoryForStoreCore
 import com.virtualworld.agendadeventas.core.model.ResumeSoldForStoreCore
 import com.virtualworld.agendadeventas.core.model.SoldForStoreCore
 import com.virtualworld.agendadeventas.core.model.StoresActiveCore
@@ -111,6 +114,27 @@ class LocalRepository @Inject constructor(
 
     }
 
+    fun getResumeInventoryStoreActive(): Flow<NetworkResponseState<List<ResumeInventoryForStoreCore>>> {
+        return flow {
+            emit(NetworkResponseState.Loading)
+            try {
+                combine(
+                    productsLocalDataSource.getAllProducts(),
+                    storesLocalDataSource.getAllStores(),
+                ) { listProducts, listStores ->
+                    NetworkResponseState.Success(
+                        listStores
+                            .filter { it.activa }
+                            .map { tienda ->
+                                calcularResumenInventarioTienda(tienda, listProducts)
+                            },
+                    )
+                }.collect { emit(it) }
+            } catch (e: Exception) {
+                emit(NetworkResponseState.Error(e))
+            }
+        }.flowOn(ioDispatcher)
+    }
 
     private fun calcularResumenVentasTienda(
         tienda: StoreRoom,
@@ -121,6 +145,32 @@ class LocalRepository @Inject constructor(
         val valor = ventasTienda.fold(0f) { acc, sold -> acc + (sold.valor * sold.unidades) }
         val unidades = ventasTienda.sumOf { it.unidades }
         return ResumeSoldForStoreCore(compra, valor, unidades, tienda.id.toInt(), tienda.nombre)
+    }
+
+    private fun calcularResumenInventarioTienda(
+        tienda: StoreRoom,
+        products: List<ProductRoom>,
+    ): ResumeInventoryForStoreCore {
+        val storeId = tienda.id.toInt()
+        var unidades = 0
+        var inversion = 0f
+        var ganancia = 0f
+
+        products.filter { it.tieneInventario }.forEach { product ->
+            val stock = product.inventoryForStore(storeId)
+            val venta = product.salePriceForStore(storeId)
+            unidades += stock
+            inversion += product.compra * stock
+            ganancia += (venta - product.compra) * stock
+        }
+
+        return ResumeInventoryForStoreCore(
+            unidades = unidades,
+            inversion = inversion,
+            ganancia = ganancia,
+            idTienda = storeId,
+            tienda = tienda.nombre,
+        )
     }
 
     //ogtiene las tiendas activas

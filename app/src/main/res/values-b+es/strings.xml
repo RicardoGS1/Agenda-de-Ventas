@@ -172,6 +172,14 @@
     <string name="inicio_info_icon">Más información</string>
     <string name="inicio_empty_message">Pulsa el botón para configurar tus tiendas y agregar tu primer producto.</string>
     <string name="inicio_empty_button">Configurar tiendas</string>
+    <string name="inicio_tab_ventas">Ventas</string>
+    <string name="inicio_tab_inventario">Inventario</string>
+    <string name="inicio_inventario_unidades_total">Unidades total</string>
+    <string name="inicio_inventario_inversion_total">Importe total de inversión</string>
+    <string name="inicio_inventario_ganancia_total">Ganancia total del inventario</string>
+    <string name="inicio_desc_inventario_unidades">Muestra las unidades totales en stock por tienda de los productos con control de inventario.</string>
+    <string name="inicio_desc_inventario_inversion">Muestra el coste total de compra del stock actual por tienda (precio de compra × unidades).</string>
+    <string name="inicio_desc_inventario_ganancia">Muestra la ganancia potencial del stock actual por tienda ((precio de venta − precio de compra) × unidades).</string>
 
 
 

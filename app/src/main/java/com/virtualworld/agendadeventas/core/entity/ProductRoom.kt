@@ -49,3 +49,12 @@ fun ProductRoom.inventoryForStore(storeId: Int): Int = when (storeId) {
     5 -> inventario5
     else -> 0
 }
+
+fun ProductRoom.salePriceForStore(storeId: Int): Float = when (storeId) {
+    1 -> venta1
+    2 -> venta2
+    3 -> venta3
+    4 -> venta4
+    5 -> venta5
+    else -> 0f
+}

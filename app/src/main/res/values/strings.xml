@@ -168,6 +168,14 @@
     <string name="inicio_info_icon">More information</string>
     <string name="inicio_empty_message">Tap the button to configure your stores and add your first product.</string>
     <string name="inicio_empty_button">Configure stores</string>
+    <string name="inicio_tab_ventas">Sales</string>
+    <string name="inicio_tab_inventario">Inventory</string>
+    <string name="inicio_inventario_unidades_total">Total units</string>
+    <string name="inicio_inventario_inversion_total">Total investment amount</string>
+    <string name="inicio_inventario_ganancia_total">Total inventory profit</string>
+    <string name="inicio_desc_inventario_unidades">Shows the total units in stock per store for products with inventory control.</string>
+    <string name="inicio_desc_inventario_inversion">Shows the total purchase cost of current stock per store (purchase price × units).</string>
+    <string name="inicio_desc_inventario_ganancia">Shows the potential profit of current stock per store ((sale price − purchase price) × units).</string>
 
 
 
