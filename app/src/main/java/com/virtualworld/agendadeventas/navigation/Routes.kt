@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material.icons.filled.PointOfSale
 import androidx.compose.material.icons.filled.Storefront
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.virtualworld.agendadeventas.R
@@ -68,6 +69,13 @@ sealed class DrawerNavDestination(val route: String, @StringRes val title: Int, 
         icon = Icons.Default.ImportExport,
     )
 
+    object Configuracion : DrawerNavDestination(
+        route = "Configuracion",
+        title = R.string.menu_configuracion,
+        contentDescription = "go to screen Settings",
+        icon = Icons.Default.Settings,
+    )
+
     companion object {
         fun getDestinations(): List<DrawerNavDestination> {
             return listOf(
@@ -77,8 +85,15 @@ sealed class DrawerNavDestination(val route: String, @StringRes val title: Int, 
                 Vender,
                 Registro,
                 Tiendas,
-                Exportar
+                Exportar,
+                Configuracion
             )
+        }
+
+        fun fromRoute(route: String?): DrawerNavDestination? {
+            if (route == null) return null
+            return getDestinations().find { it.route == route }
+                ?: if (route.startsWith(Configuracion.route)) Configuracion else null
         }
     }
 

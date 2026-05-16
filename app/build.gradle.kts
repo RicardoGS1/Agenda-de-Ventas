@@ -59,6 +59,7 @@ dependencies {
 
     //kotlin
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
 
     //compose
     implementation(libs.androidx.activity.compose)

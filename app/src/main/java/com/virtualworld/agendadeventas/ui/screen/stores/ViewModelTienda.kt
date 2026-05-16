@@ -5,13 +5,17 @@ import androidx.lifecycle.viewModelScope
 import com.virtualword3d.salesregister.Data.Entity.StoreRoom
 import com.virtualworld.agendadeventas.common.NetworkResponseState
 import com.virtualworld.agendadeventas.domain.usecase.GetAllStoreUseCase
+import com.virtualworld.agendadeventas.domain.usecase.GetProductAllUseCase
 import com.virtualworld.agendadeventas.domain.usecase.UpdateStoresUseCase
 
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewModelTienda @Inject constructor(
     private val getAllStoreUseCase: GetAllStoreUseCase,
-    private val updateStoresUseCase: UpdateStoresUseCase
+    private val updateStoresUseCase: UpdateStoresUseCase,
+    private val getProductAllUseCase: GetProductAllUseCase,
 ) :
     ViewModel() {
 
@@ -28,6 +33,9 @@ class ViewModelTienda @Inject constructor(
 
     private val _screenUiState = MutableStateFlow(ScreenUiState.NEUTRAL)
     val screenUiState: StateFlow<ScreenUiState> = _screenUiState
+
+    private val _navigateToAddProduct = MutableSharedFlow<Unit>()
+    val navigateToAddProduct: SharedFlow<Unit> = _navigateToAddProduct.asSharedFlow()
 
     init {
         getAllStores()
@@ -107,10 +115,13 @@ class ViewModelTienda @Inject constructor(
         viewModelScope.launch {
             changerUiState(ScreenUiState.LOADING)
             updateStoresUseCase(_storesAllState.value)
-
             changerUiState(ScreenUiState.OK)
-        }
 
+            val productsState = getProductAllUseCase().first { it !is NetworkResponseState.Loading }
+            if (productsState is NetworkResponseState.Success && productsState.result.isEmpty()) {
+                _navigateToAddProduct.emit(Unit)
+            }
+        }
     }
 }
 

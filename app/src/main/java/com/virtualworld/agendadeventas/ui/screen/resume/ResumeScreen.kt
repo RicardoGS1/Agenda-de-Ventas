@@ -1,15 +1,18 @@
 package com.virtualworld.agendadeventas.ui.screen.resume
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-
 import androidx.compose.foundation.layout.Column
-
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,12 +35,14 @@ import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 
 
 @Composable
-fun ResumeScreen(viewModel: ViewModelResume = hiltViewModel()) {
+fun ResumeScreen(
+    viewModel: ViewModelResume = hiltViewModel(),
+    onNavigateToStores: () -> Unit = {},
+) {
 
     val resumeScreenState by viewModel.resumeDataState.collectAsState()
     val screenUiState: ScreenUiState by viewModel.screenUiState.collectAsState()
-
-
+    val hasResumeData = resumeScreenState.any { it.units > 0 }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -49,29 +54,57 @@ fun ResumeScreen(viewModel: ViewModelResume = hiltViewModel()) {
             ) {
                 SelectPeriod(viewModel)
 
-                LazyColumn() {
+                if (hasResumeData) {
+                    LazyColumn {
+                        item {
+                            CardResumeStores(
+                                title = stringResource(id = R.string.inicio_unidades_vendidas),
+                                colum2 = stringResource(id = R.string.inicio_info_unidades),
+                                resumeScreenState.map { it.store },
+                                resumeScreenState.map { it.units.toString() })
+                        }
 
-                    item {
-                        CardResumeStores(
-                            title = stringResource(id = R.string.inicio_unidades_vendidas),
-                            colum2 = stringResource(id = R.string.inicio_info_unidades),
-                            resumeScreenState.map { it.store },
-                            resumeScreenState.map { it.units.toString() })
+                        item {
+                            CardResumeStores(
+                                title = stringResource(id = R.string.inicio_ganancia),
+                                colum2 = stringResource(id = R.string.inicio_info_ganancia),
+                                resumeScreenState.map { it.store },
+                                resumeScreenState.map { it.profit }
+                            )
+                        }
                     }
-
-                    item {
-                        CardResumeStores(
-                            title = stringResource(id = R.string.inicio_ganancia),
-                            colum2 = stringResource(id = R.string.inicio_info_ganancia),
-                            resumeScreenState.map { it.store },
-                            resumeScreenState.map { it.profit }
-                        )
-                    }
+                } else {
+                    ResumeEmptyState(onNavigateToStores = onNavigateToStores)
                 }
             }
         } else {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 
+        }
+    }
+}
+
+@Composable
+private fun ResumeEmptyState(onNavigateToStores: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 24.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text(
+            text = stringResource(id = R.string.inicio_empty_message),
+            style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        Button(
+            onClick = onNavigateToStores,
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+        ) {
+            Text(text = stringResource(id = R.string.inicio_empty_button))
         }
     }
 }

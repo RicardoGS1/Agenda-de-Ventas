@@ -20,10 +20,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -36,22 +35,25 @@ import com.virtualworld.agendadeventas.ui.screen.main.view.MyTopAppBar
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    onLanguageChanged: () -> Unit = {}
+) {
 
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
-    //VARIABLES DE LA VISTA
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val items = DrawerNavDestination.getDestinations()
-    val selectedItem = remember { mutableStateOf(items[0]) }
+    val selectedItem = DrawerNavDestination.fromRoute(currentRoute) ?: DrawerNavDestination.Resumen
 
 
     Scaffold(
 
         topBar = {
             MyTopAppBar(
-                title = stringResource(id = selectedItem.value.title),
+                title = stringResource(id = selectedItem.title),
                 modifier = Modifier.statusBarsPadding(),
             ) {
                 scope.launch {
@@ -85,12 +87,10 @@ fun MainScreen() {
                                     )
                                 },
                                 label = { Text(stringResource(id = item.title)) },
-                                selected = item == selectedItem.value,
+                                selected = item == selectedItem,
                                 onClick = {
-
                                     scope.launch { drawerState.close() }
                                     navController.navigateToBottomNavDestination(item)
-                                    selectedItem.value = item
                                 },
                                 modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                             )
@@ -105,7 +105,7 @@ fun MainScreen() {
 
                     ) {
 
-                    AppNavegation(navController, contentPadding)
+                    AppNavegation(navController, contentPadding, onLanguageChanged)
                 }
 
 

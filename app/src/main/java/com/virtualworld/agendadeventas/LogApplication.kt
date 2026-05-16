@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.virtualword3d.salesregister.Data.Entity.StoreRoom
 import com.virtualworld.agendadeventas.core.Dao.StoreDao
+import com.virtualworld.agendadeventas.core.locale.LocaleManager
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.HiltAndroidApp
@@ -20,10 +21,12 @@ class LogApplication : Application() {
     @Inject
     lateinit var database: StoreDao
 
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(LocaleManager.applyLocale(base))
+    }
 
     override fun onCreate() {
         super.onCreate()
-
 
         val prefs = getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
         val esPrimeraEjecucion = prefs.getBoolean("first_run", true)

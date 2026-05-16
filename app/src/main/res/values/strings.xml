@@ -3,6 +3,11 @@
 
     //SCREEN ADD
     <string name="titulo_agregar">Add new product</string>
+    <string name="add_subtitle">Enter the product details and sale prices</string>
+    <string name="add_info_description">Fill in the name and cost, then set the sale price for each active store.</string>
+    <string name="add_section_product">Product information</string>
+    <string name="add_section_prices">Sale prices</string>
+    <string name="add_store_price_label">Price at %1$s</string>
     <string name="boton_guardar_agregar">Add</string>
     <string name="label_nombre_producto">Product name</string>
     <string name="label_precio_compra">Cost of the product</string>
@@ -44,9 +49,12 @@
 
     //SCREEN STORE
     <string name="titulo_Tiendas">Setting stores</string>
+    <string name="stores_info_description">Customize each store name. If you manage more than one, you can turn stores on or off so only active ones appear when selling and in your summary.</string>
+    <string name="stores_item_title">Store %1$d</string>
+    <string name="stores_active_label">Active</string>
     <string name="info_colunas_nombre">Name stores</string>
     <string name="info_colunas_activas">Active stores</string>
-    <string name="label_nombre_de_tiendas">Name store</string>
+    <string name="label_nombre_de_tiendas">Store name</string>
     <string name="boton_guardar_Tiendas">Salve</string>
     <string name="mensaje_titulo_error_tiendas">Eror</string>
     <string name="mensaje_error_tiendas">The store name cannot be empty</string>
@@ -64,6 +72,16 @@
     <string name="menu_registro">Record</string>
     <string name="menu_tiendas">Stores</string>
     <string name="menu_exportar">Export</string>
+    <string name="menu_configuracion">Settings</string>
+
+    //SCREEN SETTINGS
+    <string name="settings_title">Settings</string>
+    <string name="settings_change_language">Change language</string>
+    <string name="settings_language_title">Language</string>
+    <string name="settings_rate_app">Rate app</string>
+    <string name="settings_share_app">Share app</string>
+    <string name="settings_share_message">Check out Agenda de Ventas: %1$s</string>
+    <string name="settings_back">Back</string>
 
 
     //PANTALLA INICIO
@@ -75,6 +93,8 @@
     <string name="inicio_info_tiendas">Store</string>
     <string name="inicio_info_unidades">Units</string>
     <string name="inicio_info_ganancia">Profits</string>
+    <string name="inicio_empty_message">Tap the button to configure your stores and add your first product.</string>
+    <string name="inicio_empty_button">Configure stores</string>
 
 
 
