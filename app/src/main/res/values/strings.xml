@@ -46,11 +46,22 @@
 
 
     //SCREEN SELL
+    <string name="sell_label_tienda">Store</string>
+    <string name="sell_no_stores">No active stores. Enable a store in the Stores section.</string>
     <string name="label_spiner_vender">Select a store</string>
     <string name="boton_guardar_vender">Add sales</string>
     <string name="mensaje_vendido_vender">The sale has been successful</string>
     <string name="sell_item_detall_cost">Cost:&#160;</string>
     <string name="sell_item_detall_price">Price:&#160;</string>
+    <string name="sell_empty_title">No products in this store</string>
+    <string name="sell_empty_subtitle">Add products and assign prices for this store from the Add or Edit screen.</string>
+    <string name="sell_line_subtotal">%1$d × subtotal %2$s</string>
+    <string name="sell_decrease_quantity">Decrease quantity</string>
+    <string name="sell_increase_quantity">Increase quantity</string>
+    <plurals name="sell_selected_count">
+        <item quantity="one">%d selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
 
     //SCREEN RECORD
     <string name="record_unidades">Units:</string>

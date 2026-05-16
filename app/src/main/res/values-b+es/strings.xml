@@ -46,11 +46,22 @@
     </plurals>
 
     //PANTALLA VENDER
+    <string name="sell_label_tienda">Tienda</string>
+    <string name="sell_no_stores">No hay tiendas activas. Activa una tienda en la sección Tiendas.</string>
     <string name="label_spiner_vender">Selecciona una tienda</string>
     <string name="boton_guardar_vender">Agregar Ventas</string>
     <string name="mensaje_vendido_vender">La venta se a relisado corectamente</string>
     <string name="sell_item_detall_cost">Costo:&#160;</string>
     <string name="sell_item_detall_price">Precio:&#160;</string>
+    <string name="sell_empty_title">No hay productos en esta tienda</string>
+    <string name="sell_empty_subtitle">Agrega productos y asigna precios para esta tienda desde Agregar o Editar.</string>
+    <string name="sell_line_subtotal">%1$d × subtotal %2$s</string>
+    <string name="sell_decrease_quantity">Disminuir cantidad</string>
+    <string name="sell_increase_quantity">Aumentar cantidad</string>
+    <plurals name="sell_selected_count">
+        <item quantity="one">%d seleccionado</item>
+        <item quantity="other">%d seleccionados</item>
+    </plurals>
 
 
 
