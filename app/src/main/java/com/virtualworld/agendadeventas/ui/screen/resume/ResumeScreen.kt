@@ -42,7 +42,7 @@ fun ResumeScreen(
 
     val resumeScreenState by viewModel.resumeDataState.collectAsState()
     val screenUiState: ScreenUiState by viewModel.screenUiState.collectAsState()
-    val hasResumeData = resumeScreenState.any { it.units > 0 }
+    val hasProducts by viewModel.hasProducts.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -54,7 +54,7 @@ fun ResumeScreen(
             ) {
                 SelectPeriod(viewModel)
 
-                if (hasResumeData) {
+                if (hasProducts) {
                     LazyColumn {
                         item {
                             CardResumeStores(

@@ -26,7 +26,10 @@
     <string name="ventana_borrar">Desea eliminar este producto</string>
     <string name="boton_confirmar_borrar">Si</string>
     <string name="boton_confirmar_no_borrar">No</string>
+    <string name="boton_cancelar">Cancelar</string>
     <string name="boton_guardar_editar">Guardar</string>
+    <string name="edit_subtitle">Actualiza los datos y precios del producto</string>
+    <string name="edit_info_description">Modifica el nombre, el costo o el precio de venta en cada tienda.</string>
     <string name="titulo_ventana_editar">Editar</string>
     <string name="titulo_ventana_detalles">Detalles</string>
     <string name="nombre_producto_detalles">Detalles</string>

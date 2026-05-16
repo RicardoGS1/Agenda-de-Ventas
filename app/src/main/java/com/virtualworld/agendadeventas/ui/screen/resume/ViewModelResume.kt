@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 
 import com.virtualworld.agendadeventas.domain.usecase.GetResumeStoresUseCase
 import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.domain.usecase.GetStoresActiveUseCase
+import com.virtualworld.agendadeventas.domain.usecase.GetProductAllUseCase
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewModelResume @Inject constructor(
     private val getResumeStoresUseCase: GetResumeStoresUseCase,
-    private val getStoresActiveUseCase: GetStoresActiveUseCase
+    private val getProductAllUseCase: GetProductAllUseCase,
 ) : ViewModel() {
 
     private val _screenUiState = MutableStateFlow(ScreenUiState.LOADING)
@@ -32,8 +32,22 @@ class ViewModelResume @Inject constructor(
     private val _dateEnd = MutableStateFlow<Long?>(null)
     val dateEnd: StateFlow<Long?> = _dateEnd
 
+    private val _hasProducts = MutableStateFlow(false)
+    val hasProducts: StateFlow<Boolean> = _hasProducts
+
     init {
         getResumeSoldStoreActive()
+        observeHasProducts()
+    }
+
+    private fun observeHasProducts() {
+        viewModelScope.launch {
+            getProductAllUseCase().collect { state ->
+                if (state is NetworkResponseState.Success) {
+                    _hasProducts.update { state.result.isNotEmpty() }
+                }
+            }
+        }
     }
 
     fun changerUiState(message: ScreenUiState) {
