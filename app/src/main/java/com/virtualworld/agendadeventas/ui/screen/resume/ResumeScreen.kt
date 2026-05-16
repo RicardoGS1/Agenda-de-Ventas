@@ -85,7 +85,10 @@ fun ResumeScreen(
 
 @Composable
 private fun SalesResumeContent(resumeScreenState: List<ResumeDataUI>) {
-    LazyColumn {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.padding(bottom = 16.dp),
+    ) {
         item {
             CardResumeStores(
                 title = stringResource(id = R.string.inicio_unidades_vendidas),
@@ -93,6 +96,7 @@ private fun SalesResumeContent(resumeScreenState: List<ResumeDataUI>) {
                 detalleCol1 = resumeScreenState.map { it.store },
                 detalleCol2 = resumeScreenState.map { it.units.toString() },
                 infoDescription = stringResource(id = R.string.inicio_desc_unidades),
+                metricKind = ResumeMetricKind.Units,
             )
         }
         item {
@@ -102,6 +106,7 @@ private fun SalesResumeContent(resumeScreenState: List<ResumeDataUI>) {
                 detalleCol1 = resumeScreenState.map { it.store },
                 detalleCol2 = resumeScreenState.map { it.totalSales },
                 infoDescription = stringResource(id = R.string.inicio_desc_importe),
+                metricKind = ResumeMetricKind.Amount,
             )
         }
         item {
@@ -111,6 +116,7 @@ private fun SalesResumeContent(resumeScreenState: List<ResumeDataUI>) {
                 detalleCol1 = resumeScreenState.map { it.store },
                 detalleCol2 = resumeScreenState.map { it.recoveredInvestment },
                 infoDescription = stringResource(id = R.string.inicio_desc_inversion),
+                metricKind = ResumeMetricKind.Investment,
             )
         }
         item {
@@ -120,6 +126,7 @@ private fun SalesResumeContent(resumeScreenState: List<ResumeDataUI>) {
                 detalleCol1 = resumeScreenState.map { it.store },
                 detalleCol2 = resumeScreenState.map { it.profit },
                 infoDescription = stringResource(id = R.string.inicio_desc_ganancia),
+                metricKind = ResumeMetricKind.Profit,
             )
         }
     }
@@ -127,7 +134,10 @@ private fun SalesResumeContent(resumeScreenState: List<ResumeDataUI>) {
 
 @Composable
 private fun InventoryResumeContent(inventoryResumeState: List<InventoryResumeDataUI>) {
-    LazyColumn {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.padding(bottom = 16.dp),
+    ) {
         item {
             CardResumeStores(
                 title = stringResource(id = R.string.inicio_inventario_unidades_total),
@@ -135,6 +145,7 @@ private fun InventoryResumeContent(inventoryResumeState: List<InventoryResumeDat
                 detalleCol1 = inventoryResumeState.map { it.store },
                 detalleCol2 = inventoryResumeState.map { it.totalUnits.toString() },
                 infoDescription = stringResource(id = R.string.inicio_desc_inventario_unidades),
+                metricKind = ResumeMetricKind.Units,
             )
         }
         item {
@@ -144,6 +155,7 @@ private fun InventoryResumeContent(inventoryResumeState: List<InventoryResumeDat
                 detalleCol1 = inventoryResumeState.map { it.store },
                 detalleCol2 = inventoryResumeState.map { it.totalInvestment },
                 infoDescription = stringResource(id = R.string.inicio_desc_inventario_inversion),
+                metricKind = ResumeMetricKind.Investment,
             )
         }
         item {
@@ -153,6 +165,7 @@ private fun InventoryResumeContent(inventoryResumeState: List<InventoryResumeDat
                 detalleCol1 = inventoryResumeState.map { it.store },
                 detalleCol2 = inventoryResumeState.map { it.totalProfit },
                 infoDescription = stringResource(id = R.string.inicio_desc_inventario_ganancia),
+                metricKind = ResumeMetricKind.Profit,
             )
         }
     }

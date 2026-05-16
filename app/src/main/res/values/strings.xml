@@ -168,6 +168,8 @@
     <string name="inicio_info_icon">More information</string>
     <string name="inicio_empty_message">Tap the button to configure your stores and add your first product.</string>
     <string name="inicio_empty_button">Configure stores</string>
+    <string name="inicio_resume_no_stores">No store data for this metric.</string>
+    <string name="inicio_resume_total">Total</string>
     <string name="inicio_tab_ventas">Sales</string>
     <string name="inicio_tab_inventario">Inventory</string>
     <string name="inicio_inventario_unidades_total">Total units</string>

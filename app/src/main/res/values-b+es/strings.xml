@@ -172,6 +172,8 @@
     <string name="inicio_info_icon">Más información</string>
     <string name="inicio_empty_message">Pulsa el botón para configurar tus tiendas y agregar tu primer producto.</string>
     <string name="inicio_empty_button">Configurar tiendas</string>
+    <string name="inicio_resume_no_stores">No hay datos de tiendas para esta métrica.</string>
+    <string name="inicio_resume_total">Total</string>
     <string name="inicio_tab_ventas">Ventas</string>
     <string name="inicio_tab_inventario">Inventario</string>
     <string name="inicio_inventario_unidades_total">Unidades total</string>
