@@ -1,5 +1,15 @@
 package com.virtualworld.agendadeventas.ui.screen.sell
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,6 +41,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -153,16 +164,27 @@ private fun SellProductListItem(
 ) {
     val shape = RoundedCornerShape(16.dp)
     val isSelected = quantity > 0
-    val borderColor = if (isSelected) {
+    val targetBorderColor = if (isSelected) {
         MaterialTheme.colorScheme.primary.copy(alpha = 0.55f)
     } else {
         MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f)
     }
-    val containerColor = if (isSelected) {
+    val targetContainerColor = if (isSelected) {
         MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.18f)
     } else {
         MaterialTheme.colorScheme.surface
     }
+
+    val borderColor by animateColorAsState(
+        targetValue = targetBorderColor,
+        animationSpec = tween(durationMillis = 280),
+        label = "sellItemBorderColor",
+    )
+    val containerColor by animateColorAsState(
+        targetValue = targetContainerColor,
+        animationSpec = tween(durationMillis = 280),
+        label = "sellItemContainerColor",
+    )
 
     Card(
         modifier = Modifier
@@ -175,6 +197,12 @@ private fun SellProductListItem(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .animateContentSize(
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessMediumLow,
+                    ),
+                )
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -221,7 +249,20 @@ private fun SellProductListItem(
                 )
             }
 
-            if (isSelected) {
+            AnimatedVisibility(
+                visible = isSelected,
+                enter = fadeIn(animationSpec = tween(220)) + expandVertically(
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessMediumLow,
+                    ),
+                    expandFrom = Alignment.Top,
+                ),
+                exit = fadeOut(animationSpec = tween(180)) + shrinkVertically(
+                    animationSpec = tween(200),
+                    shrinkTowards = Alignment.Top,
+                ),
+            ) {
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
@@ -284,16 +325,22 @@ private fun SellQuantityStepper(
                 )
             }
 
+            val quantityColor by animateColorAsState(
+                targetValue = if (quantity > 0) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+                animationSpec = tween(durationMillis = 280),
+                label = "sellQuantityColor",
+            )
+
             Text(
                 text = quantity.toString(),
                 modifier = Modifier.padding(horizontal = 10.dp),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = if (quantity > 0) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                },
+                color = quantityColor,
                 textAlign = TextAlign.Center,
                 minLines = 1,
             )
