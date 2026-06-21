@@ -1,0 +1,234 @@
+<resources>
+    <string name="app_name">销售日程</string>
+
+    <string name="titulo_agregar">添加新产品</string>
+    <string name="add_subtitle">输入产品信息和销售价格</string>
+    <string name="add_info_description">填写名称和成本，然后为每个活跃店铺设置销售价格。</string>
+    <string name="add_section_product">产品信息</string>
+    <string name="add_section_prices">销售价格</string>
+    <string name="add_store_price_label">%1$s 的价格</string>
+    <string name="boton_guardar_agregar">添加</string>
+    <string name="label_nombre_producto">产品名称</string>
+    <string name="label_precio_compra">产品成本</string>
+    <string name="product_photo_take">拍照</string>
+    <string name="product_photo_remove">删除照片</string>
+    <string name="label_precio_venta">销售价格：</string>
+    <string name="boton_mensaje_confirmar">确认</string>
+    <string name="titulo_mensaje_error">错误</string>
+    <string name="text_mensaje_error">请填写所有字段以添加产品</string>
+    <string name="titulo_mensaje_agregado">已添加</string>
+    <string name="text_mensaje_agregado">产品已成功添加</string>
+    <string name="boton_mensaje_seguir">继续添加</string>
+    <string name="boton_mensaje_terminar">完成</string>
+
+    <string name="ventana_borrar">确定要删除此产品吗？</string>
+    <string name="boton_confirmar_borrar">是</string>
+    <string name="boton_confirmar_no_borrar">否</string>
+    <string name="boton_cancelar">取消</string>
+    <string name="boton_guardar_editar">保存</string>
+    <string name="edit_subtitle">更新产品信息和价格</string>
+    <string name="edit_info_description">修改名称、成本或各店铺的销售价格。</string>
+    <string name="titulo_ventana_editar">编辑</string>
+    <string name="titulo_ventana_detalles">详情</string>
+    <string name="nombre_producto_detalles">详情</string>
+    <string name="precio_compra_detalles">采购价格</string>
+    <string name="precio_venta_detalles">销售价格：</string>
+    <string name="editar_costo">成本：</string>
+    <string name="edit_list_hint">点击产品进行编辑。向左滑动可删除。</string>
+    <string name="edit_empty_title">暂无产品</string>
+    <string name="edit_empty_subtitle">从添加页面添加产品后，可在此管理。</string>
+    <string name="edit_swipe_delete">删除</string>
+    <plurals name="edit_products_count">
+        <item quantity="other">%d 个产品</item>
+    </plurals>
+
+    <string name="sell_label_tienda">店铺</string>
+    <string name="sell_no_stores">没有活跃店铺。请在店铺部分启用一个店铺。</string>
+    <string name="label_spiner_vender">选择店铺</string>
+    <string name="boton_guardar_vender">添加销售</string>
+    <string name="mensaje_vendido_vender">销售成功</string>
+    <string name="sell_item_detall_cost">成本：&#160;</string>
+    <string name="sell_item_detall_price">价格：&#160;</string>
+    <string name="sell_item_no_inventory">无</string>
+    <string name="sell_empty_title">此店铺暂无产品</string>
+    <string name="sell_empty_subtitle">从添加或编辑页面为店铺添加产品并设置价格。</string>
+    <string name="sell_line_subtotal">%1$d × 小计 %2$s</string>
+    <string name="sell_total_sale">销售总额：%1$s</string>
+    <string name="sell_decrease_quantity">减少数量</string>
+    <string name="sell_increase_quantity">增加数量</string>
+    <plurals name="sell_selected_count">
+        <item quantity="other">已选 %d 项</item>
+    </plurals>
+
+    <string name="record_unidades">数量：</string>
+    <string name="record_precio">价格：</string>
+    <string name="record_costo">成本：</string>
+    <string name="record_fecha">日期：</string>
+    <string name="record_empty_title">暂无销售记录</string>
+    <string name="record_empty_subtitle">此店铺的销售记录将按日期分组显示在此。</string>
+    <string name="record_date_today">今天</string>
+    <string name="record_date_yesterday">昨天</string>
+    <string name="record_line_total">%1$d × %2$s = %3$s</string>
+    <plurals name="record_day_sales_count">
+        <item quantity="other">%d 笔销售</item>
+    </plurals>
+    <plurals name="record_sales_count">
+        <item quantity="other">%d 笔销售</item>
+    </plurals>
+    <plurals name="record_days_count">
+        <item quantity="other">%d 天</item>
+    </plurals>
+
+    <string name="menu_registro_compras">采购记录</string>
+    <string name="purchase_record_store_label">采购店铺</string>
+    <string name="purchase_record_pick_store">选择店铺以查看采购历史。</string>
+    <string name="purchase_record_empty_title">暂无采购记录</string>
+    <string name="purchase_record_empty_subtitle">此店铺的采购记录将按日期分组显示在此。</string>
+    <string name="purchase_record_cash_deducted">已从现金扣除</string>
+    <string name="purchase_record_cash_not_deducted">未从现金扣除</string>
+    <plurals name="purchase_record_day_count">
+        <item quantity="other">%d 笔采购</item>
+    </plurals>
+    <plurals name="purchase_record_count">
+        <item quantity="other">%d 笔采购</item>
+    </plurals>
+
+    <string name="titulo_Tiendas">店铺设置</string>
+    <string name="stores_info_description">自定义各店铺名称。如管理多个店铺，可启用或禁用，仅活跃店铺会出现在销售和摘要中。</string>
+    <string name="stores_item_title">店铺 %1$d</string>
+    <string name="stores_active_label">活跃</string>
+    <string name="info_colunas_nombre">店铺名称</string>
+    <string name="info_colunas_activas">活跃店铺</string>
+    <string name="label_nombre_de_tiendas">店铺名称</string>
+    <string name="boton_guardar_Tiendas">保存</string>
+    <string name="mensaje_titulo_error_tiendas">错误</string>
+    <string name="mensaje_error_tiendas">店铺名称不能为空</string>
+    <string name="mensaje_confirmar_tiendas">确认</string>
+    <string name="mensaje_guardado_tiendas">更改已成功保存</string>
+
+    <string name="inventory_section_title">库存</string>
+    <string name="inventory_toggle_label">此产品有库存管理</string>
+    <string name="inventory_quantity_label">初始库存</string>
+    <string name="inventory_store_quantity_label">%1$s 的库存</string>
+    <string name="inventory_stock_label">库存：&#160;</string>
+
+    <string name="menu_compras">采购</string>
+    <string name="menu_dinero">资金</string>
+    <string name="menu_analisis_ia">AI 分析</string>
+    <string name="purchases_title">采购</string>
+    <string name="purchases_subtitle">选择店铺并按产品添加库存</string>
+    <string name="purchases_store_label">采购店铺</string>
+    <string name="purchases_pick_store">选择店铺以查看库存并登记采购。</string>
+    <string name="purchases_confirm_button">确认采购</string>
+    <string name="purchases_empty_title">无库存管理产品</string>
+    <string name="purchases_empty_subtitle">在添加或编辑页面启用库存管理后，可在此管理库存。</string>
+    <string name="purchases_current_stock">库存：%1$d</string>
+    <string name="purchases_adding_amount">+%1$d</string>
+    <string name="purchases_total">采购总额：%1$s</string>
+    <string name="purchases_success">库存更新成功</string>
+    <string name="purchases_cash_balance">现金余额：%1$s</string>
+    <string name="purchases_remaining_balance">剩余余额：%1$s</string>
+    <string name="purchases_deduct_from_cash">关联现金</string>
+    <string name="purchases_deduct_from_cash_hint">确认后，总额将从店铺现金余额中扣除。</string>
+    <string name="purchases_insufficient_cash">现金余额不足以完成此次采购。</string>
+    <string name="purchases_cash_withdraw_note">库存采购</string>
+
+    <string name="menu_inventario">库存</string>
+    <string name="inventory_store_label">库存店铺</string>
+    <string name="inventory_pick_store">选择店铺以查看产品库存。</string>
+    <string name="inventory_view_history">采购历史</string>
+    <string name="inventory_history_title">采购历史：%1$s</string>
+    <string name="inventory_history_empty">此产品尚无采购记录。</string>
+    <string name="inventory_history_close">关闭</string>
+    <string name="inventory_history_cash_deducted">已从现金扣除</string>
+    <string name="inventory_history_cash_not_deducted">未从现金扣除</string>
+
+    <string name="menu_banel">销售记录与服务</string>
+    <string name="menu_resumen">摘要</string>
+    <string name="menu_agregar">添加</string>
+    <string name="menu_editar">产品/编辑</string>
+    <string name="menu_vender">销售</string>
+    <string name="menu_registro">销售记录</string>
+    <string name="menu_tiendas">店铺</string>
+    <string name="menu_exportar">导出</string>
+    <string name="menu_configuracion">设置</string>
+
+    <string name="settings_title">设置</string>
+    <string name="settings_change_language">更改语言</string>
+    <string name="settings_language_title">语言</string>
+    <string name="settings_rate_app">评价应用</string>
+    <string name="settings_share_app">分享应用</string>
+    <string name="settings_share_message">推荐销售日程应用：%1$s</string>
+    <string name="settings_back">返回</string>
+
+    <string name="inicio_priodo">期间</string>
+    <string name="inicio_fecha_inicio">开始日期</string>
+    <string name="inicio_fecha_final">结束日期</string>
+    <string name="inicio_desde">开始</string>
+    <string name="inicio_hasta">今天</string>
+    <string name="inicio_unidades_vendidas">已售数量</string>
+    <string name="inicio_ganancia">利润</string>
+    <string name="inicio_info_tiendas">店铺</string>
+    <string name="inicio_info_unidades">数量</string>
+    <string name="inicio_info_ganancia">利润</string>
+    <string name="inicio_inversion_recuperada">已收回投资</string>
+    <string name="inicio_importe_total_venta">销售总额</string>
+    <string name="inicio_info_inversion">投资</string>
+    <string name="inicio_info_importe">金额</string>
+    <string name="inicio_desc_unidades">显示所选期间各店铺的已售数量。</string>
+    <string name="inicio_desc_ganancia">显示所选期间各店铺的利润（销售额减去采购成本）。</string>
+    <string name="inicio_desc_inversion">显示各店铺已售产品的总采购成本，即通过销售收回的投资。</string>
+    <string name="inicio_desc_importe">显示所选期间各店铺的销售开票总额。</string>
+    <string name="inicio_info_cerrar">知道了</string>
+    <string name="inicio_info_icon">更多信息</string>
+    <string name="inicio_empty_message">点击按钮配置店铺并添加第一个产品。</string>
+    <string name="inicio_empty_button">配置店铺</string>
+    <string name="inicio_resume_no_stores">此指标暂无店铺数据。</string>
+    <string name="inicio_resume_total">合计</string>
+    <string name="inicio_tab_ventas">销售</string>
+    <string name="inicio_tab_inventario">库存</string>
+    <string name="inicio_inventario_unidades_total">总数量</string>
+    <string name="inicio_inventario_inversion_total">总投资金额</string>
+    <string name="inicio_inventario_ganancia_total">库存总利润</string>
+    <string name="inicio_desc_inventario_unidades">显示有库存管理的产品在各店铺的总库存数量。</string>
+    <string name="inicio_desc_inventario_inversion">显示各店铺当前库存的总采购成本（采购价 × 数量）。</string>
+    <string name="inicio_desc_inventario_ganancia">显示各店铺当前库存的潜在利润（（销售价 − 采购价）× 数量）。</string>
+
+    <string name="export_empresa">公司：</string>
+    <string name="cerrar_sacion">退出登录</string>
+    <string name="card_exportar_ventas">导出销售</string>
+    <string name="card_importar_ventas">导入销售</string>
+    <string name="card_exportar_ventas_text">此选项可将数据库保存到云端，以便在其他设备上下载。</string>
+    <string name="card_importar_ventas_text">此选项将从云端下载数据库，并用远程数据替换当前应用数据。</string>
+    <string name="card_exportar_ventas_boton">导出</string>
+    <string name="card_importar_ventas_boton">导入</string>
+    <string name="nota_exportar_ventas_boton">使用此选项需要注册</string>
+    <string name="mensaje_error">抱歉，发生错误</string>
+    <string name="mensaje_exitoso_export">操作已成功完成</string>
+    <string name="export_registrarse">注册</string>
+    <string name="export_correo">邮箱</string>
+    <string name="export_contracena">密码</string>
+    <string name="export_iniciar_secion">登录</string>
+    <string name="crear_cuenta">创建账户</string>
+
+    <string name="ai_analysis_title">AI 商业分析</string>
+    <string name="ai_analysis_subtitle">通过 AI 获取关于店铺的智能洞察</string>
+    <string name="ai_analysis_period_notice">结果仅基于最近 30 天的数据</string>
+    <string name="ai_analysis_loading">正在分析您的业务数据…</string>
+    <string name="ai_analysis_overview_title">总体概览</string>
+    <string name="ai_analysis_overview_desc">销售、利润和整体业务表现的执行摘要</string>
+    <string name="ai_analysis_stores_title">店铺对比</string>
+    <string name="ai_analysis_stores_desc">比较各店铺表现及需要关注的店铺</string>
+    <string name="ai_analysis_products_title">热销产品</string>
+    <string name="ai_analysis_products_desc">畅销与滞销产品分析及行动建议</string>
+    <string name="ai_analysis_profitability_title">盈利能力</string>
+    <string name="ai_analysis_profitability_desc">利润率分析及最大利润来源</string>
+    <string name="ai_analysis_inventory_title">库存状态</string>
+    <string name="ai_analysis_inventory_desc">低库存预警、积压投资及断货风险</string>
+    <string name="ai_analysis_cash_title">现金流</string>
+    <string name="ai_analysis_cash_desc">销售、存入和取出以评估财务健康</string>
+    <string name="ai_analysis_purchases_title">采购 vs 销售</string>
+    <string name="ai_analysis_purchases_desc">评估采购量是否与销售量匹配</string>
+    <string name="ai_analysis_recommendations_title">战略建议</string>
+    <string name="ai_analysis_recommendations_desc">改善销售、利润和库存的优先行动</string>
+</resources>

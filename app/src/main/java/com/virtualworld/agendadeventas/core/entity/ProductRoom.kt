@@ -39,6 +39,7 @@ data class ProductRoom(
     val inventario3: Int = 0,
     val inventario4: Int = 0,
     val inventario5: Int = 0,
+    val imagePath: String? = null,
 )
 
 fun ProductRoom.inventoryForStore(storeId: Int): Int = when (storeId) {

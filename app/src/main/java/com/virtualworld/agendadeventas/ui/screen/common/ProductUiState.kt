@@ -6,4 +6,5 @@ data class ProductUiState(
     val storeValues: Map<Int, String> = emptyMap(),
     val tieneInventario: Boolean = false,
     val storeInventoryValues: Map<Int, String> = emptyMap(),
+    val imagePath: String? = null,
 )

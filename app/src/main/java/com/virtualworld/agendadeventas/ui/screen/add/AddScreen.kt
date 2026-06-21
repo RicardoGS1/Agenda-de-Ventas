@@ -61,6 +61,7 @@ fun AddScreen() {
         updateStoreValue = viewModel::updateStoreValue,
         updateTieneInventario = viewModel::updateTieneInventario,
         updateStoreInventory = viewModel::updateStoreInventory,
+        updateProductImagePath = viewModel::updateProductImagePath,
         setProduct = viewModel::setProduct
     )
 }
@@ -76,6 +77,7 @@ fun ContentAddProduct(
     updateStoreValue: (Int, String) -> Unit,
     updateTieneInventario: (Boolean) -> Unit,
     updateStoreInventory: (Int, String) -> Unit,
+    updateProductImagePath: (String?) -> Unit,
     setProduct: () -> Unit,
 ) {
     val isFormVisible = screenUiState != ScreenUiState.LOADING
@@ -103,7 +105,9 @@ fun ContentAddProduct(
                             productName = productUiState.productName,
                             productCost = productUiState.productCost,
                             onNameChange = updateProductName,
-                            onCostChange = updateProductCost
+                            onCostChange = updateProductCost,
+                            imagePath = productUiState.imagePath,
+                            onImagePathChange = updateProductImagePath,
                         )
                     }
                     if (storesActiveState.isNotEmpty()) {

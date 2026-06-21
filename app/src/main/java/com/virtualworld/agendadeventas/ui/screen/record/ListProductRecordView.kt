@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.core.model.SoldForStoreCore
+import com.virtualworld.agendadeventas.ui.screen.common.ProductAvatar
 import com.virtualworld.agendadeventas.ui.theme.AgendaDeVentasTheme
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -220,7 +221,11 @@ private fun RecordSaleListItem(sale: SoldForStoreCore) {
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                RecordProductAvatar(name = sale.nombre)
+                ProductAvatar(
+                    name = sale.nombre,
+                    imagePath = sale.imagePath,
+                    size = 48.dp,
+                )
 
                 Column(
                     modifier = Modifier
@@ -321,26 +326,6 @@ private fun RecordInfoChip(
                 overflow = TextOverflow.Ellipsis,
             )
         }
-    }
-}
-
-@Composable
-private fun RecordProductAvatar(name: String) {
-    val initial = name.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
-
-    Box(
-        modifier = Modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.primaryContainer),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = initial,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-        )
     }
 }
 

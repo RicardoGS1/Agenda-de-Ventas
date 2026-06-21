@@ -25,6 +25,7 @@ class AddProductUseCase @Inject constructor(private val localRepository: LocalRe
             inventario3 = productUiState.storeInventoryValues[3]?.ifEmpty { "0" }?.toIntOrNull() ?: 0,
             inventario4 = productUiState.storeInventoryValues[4]?.ifEmpty { "0" }?.toIntOrNull() ?: 0,
             inventario5 = productUiState.storeInventoryValues[5]?.ifEmpty { "0" }?.toIntOrNull() ?: 0,
+            imagePath = productUiState.imagePath,
         )
 
         println(productRoom)

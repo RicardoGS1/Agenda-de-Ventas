@@ -87,6 +87,7 @@ fun ScreenEdit() {
     val updateStoreInventory = { storeId: String, value: String ->
         viewModel.updateStoreInventory(storeId, value)
     }
+    val updateProductImagePath = { path: String? -> viewModel.updateProductImagePath(path) }
 
 
     Box() {
@@ -110,6 +111,7 @@ fun ScreenEdit() {
                 updateStoreValue = updateStoreValue,
                 updateTieneInventario = updateTieneInventario,
                 updateStoreInventory = updateStoreInventory,
+                updateProductImagePath = updateProductImagePath,
                 setProduct = setProduct,
                 isVisible = windowEditView.value
             )

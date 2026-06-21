@@ -26,7 +26,7 @@ import com.virtualworld.agendadeventas.core.entity.ProductRoom
 /**
  * SQLite Database for storing the logs.
  */
-@Database(entities = arrayOf(ProductRoom::class), version = 3, exportSchema = false)
+@Database(entities = arrayOf(ProductRoom::class), version = 4, exportSchema = false)
 abstract class ProductoDatabase : RoomDatabase() {
     abstract fun logDao(): ProductoDao
 
@@ -46,6 +46,12 @@ abstract class ProductoDatabase : RoomDatabase() {
                 db.execSQL("ALTER TABLE productos ADD COLUMN inventario4 INTEGER NOT NULL DEFAULT 0")
                 db.execSQL("ALTER TABLE productos ADD COLUMN inventario5 INTEGER NOT NULL DEFAULT 0")
                 db.execSQL("UPDATE productos SET inventario1 = inventario")
+            }
+        }
+
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE productos ADD COLUMN imagePath TEXT")
             }
         }
     }

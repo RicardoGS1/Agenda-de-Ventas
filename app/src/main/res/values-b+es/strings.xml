@@ -12,6 +12,8 @@
     <string name="boton_guardar_agregar">Agregar</string>
     <string name="label_nombre_producto">Nombre del producto</string>
     <string name="label_precio_compra">Costo del producto</string>
+    <string name="product_photo_take">Tomar foto</string>
+    <string name="product_photo_remove">Quitar foto</string>
     <string name="label_precio_venta">Precio de venta:</string>
     <string name="boton_mensaje_confirmar">Confirmar</string>
     <string name="titulo_mensaje_error">Error</string>
@@ -53,6 +55,7 @@
     <string name="mensaje_vendido_vender">La venta se a relisado corectamente</string>
     <string name="sell_item_detall_cost">Costo:&#160;</string>
     <string name="sell_item_detall_price">Precio:&#160;</string>
+    <string name="sell_item_no_inventory">No tiene</string>
     <string name="sell_empty_title">No hay productos en esta tienda</string>
     <string name="sell_empty_subtitle">Agrega productos y asigna precios para esta tienda desde Agregar o Editar.</string>
     <string name="sell_line_subtotal">%1$d × subtotal %2$s</string>
@@ -87,6 +90,23 @@
     <plurals name="record_days_count">
         <item quantity="one">%d día</item>
         <item quantity="other">%d días</item>
+    </plurals>
+
+    //PANTALLA REGISTRO COMPRAS
+    <string name="menu_registro_compras">Registro Compras</string>
+    <string name="purchase_record_store_label">Tienda para compras</string>
+    <string name="purchase_record_pick_store">Selecciona una tienda para ver el historial de compras.</string>
+    <string name="purchase_record_empty_title">Sin compras registradas</string>
+    <string name="purchase_record_empty_subtitle">Las compras de esta tienda aparecerán aquí agrupadas por fecha.</string>
+    <string name="purchase_record_cash_deducted">Descontado de caja</string>
+    <string name="purchase_record_cash_not_deducted">No descontado de caja</string>
+    <plurals name="purchase_record_day_count">
+        <item quantity="one">%d compra</item>
+        <item quantity="other">%d compras</item>
+    </plurals>
+    <plurals name="purchase_record_count">
+        <item quantity="one">%d compra</item>
+        <item quantity="other">%d compras</item>
     </plurals>
 
 
@@ -127,17 +147,74 @@
     <string name="purchases_adding_amount">+%1$d</string>
     <string name="purchases_total">Total compra: %1$s</string>
     <string name="purchases_success">Stock actualizado correctamente</string>
+    <string name="purchases_cash_balance">Saldo en caja: %1$s</string>
+    <string name="purchases_remaining_balance">Saldo restante: %1$s</string>
+    <string name="purchases_deduct_from_cash">Conectar a caja</string>
+    <string name="purchases_deduct_from_cash_hint">Al confirmar, el total se descontará del saldo en caja de la tienda.</string>
+    <string name="purchases_insufficient_cash">Saldo insuficiente en caja para esta compra.</string>
+    <string name="purchases_cash_withdraw_note">Compra de inventario</string>
+
+    //PANTALLA GESTION INVENTARIO
+    <string name="menu_inventario">Inventario</string>
+    <string name="inventory_store_label">Tienda para inventario</string>
+    <string name="inventory_pick_store">Selecciona una tienda para ver el inventario de los productos.</string>
+    <string name="inventory_view_history">Historial de compras</string>
+    <string name="inventory_history_title">Historial de compras: %1$s</string>
+    <string name="inventory_history_empty">Aún no hay compras registradas para este producto.</string>
+    <string name="inventory_history_close">Cerrar</string>
+    <string name="inventory_history_cash_deducted">Descontado de caja</string>
+    <string name="inventory_history_cash_not_deducted">Conectado a caja</string>
+
+    //SCREEN MONEY
+    <string name="menu_dinero">Dinero</string>
+    <string name="menu_analisis_ia">Análisis IA</string>
+    <string name="money_store_label">Tienda para caja</string>
+    <string name="money_pick_store">Selecciona una tienda para ver el saldo y las operaciones de caja.</string>
+    <string name="money_overview_title">Saldo por tienda</string>
+    <string name="money_current_balance">Saldo actual</string>
+    <string name="money_add_cash">Agregar a caja</string>
+    <string name="money_withdraw_cash">Retirar</string>
+    <string name="money_breakdown_title">Desglose del saldo</string>
+    <string name="money_from_sales">Por ventas</string>
+    <string name="money_from_deposits">Ingresos a caja</string>
+    <string name="money_from_withdrawals">Retiros</string>
+    <string name="money_operations_title">Registro de operaciones</string>
+    <string name="money_operation_sale">Venta</string>
+    <string name="money_operation_deposit">Ingreso a caja</string>
+    <string name="money_operation_withdrawal">Retiro</string>
+    <string name="money_sale_units">%1$d unidades</string>
+    <string name="money_default_deposit_note">Ingreso manual a caja</string>
+    <string name="money_default_withdraw_note">Retiro manual de caja</string>
+    <string name="money_dialog_deposit_title">Agregar dinero a caja</string>
+    <string name="money_dialog_withdraw_title">Retirar dinero</string>
+    <string name="money_amount_label">Monto</string>
+    <string name="money_note_label">Nota (opcional)</string>
+    <string name="money_insufficient_balance">Saldo insuficiente para este retiro.</string>
+    <string name="money_empty_title">Sin operaciones aún</string>
+    <string name="money_empty_subtitle">Las ventas, ingresos y retiros de esta tienda aparecerán aquí.</string>
+    <plurals name="money_operations_count">
+        <item quantity="one">%d operación</item>
+        <item quantity="other">%d operaciones</item>
+    </plurals>
+    <plurals name="money_day_operations_count">
+        <item quantity="one">%d operación</item>
+        <item quantity="other">%d operaciones</item>
+    </plurals>
 
     //MAIN ACTYVITY
     <string name="menu_banel">Registro de ventas y servicios</string>
     <string name="menu_resumen">Resumen</string>
     <string name="menu_agregar">Agregar</string>
-    <string name="menu_editar">Editar</string>
+    <string name="menu_editar">Producto/Editar</string>
     <string name="menu_vender">Vender</string>
-    <string name="menu_registro">Registro</string>
+    <string name="menu_registro">Registro Ventas</string>
     <string name="menu_tiendas">Tiendas</string>
     <string name="menu_exportar">Exportar</string>
     <string name="menu_configuracion">Configuración</string>
+    <string name="debug_seed_data">Cargar datos de prueba</string>
+    <string name="debug_seed_data_cd">Cargar datos de ejemplo para probar la app</string>
+    <string name="debug_seed_data_success">Datos de prueba cargados correctamente</string>
+    <string name="debug_seed_data_error">No se pudieron cargar los datos de prueba</string>
 
     //PANTALLA CONFIGURACION
     <string name="settings_title">Configuración</string>
@@ -182,6 +259,9 @@
     <string name="inicio_desc_inventario_unidades">Muestra las unidades totales en stock por tienda de los productos con control de inventario.</string>
     <string name="inicio_desc_inventario_inversion">Muestra el coste total de compra del stock actual por tienda (precio de compra × unidades).</string>
     <string name="inicio_desc_inventario_ganancia">Muestra la ganancia potencial del stock actual por tienda ((precio de venta − precio de compra) × unidades).</string>
+    <string name="inicio_dinero_actual">Dinero en caja</string>
+    <string name="inicio_dinero_actual_hint">Saldo total en caja. No se ve afectado por el periodo seleccionado.</string>
+    <string name="inicio_info_dinero">Caja</string>
 
 
 
@@ -211,6 +291,28 @@
     <string name="export_contracena">Contraseña</string>
     <string name="export_iniciar_secion">Iniciar sesión</string>
     <string name="crear_cuenta">Crear Cuenta</string>
+
+    //PANTALLA ANALISIS IA
+    <string name="ai_analysis_title">Análisis de negocio con IA</string>
+    <string name="ai_analysis_subtitle">Obtén insights inteligentes sobre tus tiendas con inteligencia artificial</string>
+    <string name="ai_analysis_period_notice">Los resultados se basan únicamente en datos de los últimos 30 días</string>
+    <string name="ai_analysis_loading">Analizando los datos de tu negocio…</string>
+    <string name="ai_analysis_overview_title">Resumen general</string>
+    <string name="ai_analysis_overview_desc">Resumen ejecutivo de ventas, ganancias y rendimiento global del negocio</string>
+    <string name="ai_analysis_stores_title">Comparativa de tiendas</string>
+    <string name="ai_analysis_stores_desc">Compara qué tiendas rinden más y cuáles necesitan atención</string>
+    <string name="ai_analysis_products_title">Productos destacados</string>
+    <string name="ai_analysis_products_desc">Más vendidos y de baja rotación con sugerencias de acción</string>
+    <string name="ai_analysis_profitability_title">Rentabilidad</string>
+    <string name="ai_analysis_profitability_desc">Análisis de márgenes y dónde ganas más dinero</string>
+    <string name="ai_analysis_inventory_title">Estado del inventario</string>
+    <string name="ai_analysis_inventory_desc">Alertas de stock bajo, inversión inmovilizada y riesgo de rotura</string>
+    <string name="ai_analysis_cash_title">Flujo de caja</string>
+    <string name="ai_analysis_cash_desc">Ventas, depósitos y retiros para evaluar la salud financiera</string>
+    <string name="ai_analysis_purchases_title">Compras vs ventas</string>
+    <string name="ai_analysis_purchases_desc">Evalúa si compras de más o de menos respecto a lo que vendes</string>
+    <string name="ai_analysis_recommendations_title">Recomendaciones estratégicas</string>
+    <string name="ai_analysis_recommendations_desc">Acciones priorizadas para mejorar ventas, rentabilidad e inventario</string>
 
 
 </resources>

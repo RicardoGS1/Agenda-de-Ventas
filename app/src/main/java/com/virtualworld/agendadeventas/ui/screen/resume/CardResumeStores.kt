@@ -38,8 +38,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.virtualworld.agendadeventas.R
+import com.virtualworld.agendadeventas.ui.theme.AgendaDeVentasTheme
 
 @Composable
 fun CardResumeStores(
@@ -184,14 +186,14 @@ private fun ResumeCardHeader(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 4.dp, top = 14.dp, bottom = 14.dp),
+                .padding(start = 16.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = title,
                 modifier = Modifier.weight(1f),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.titleLarge,
+                //fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
             )
             IconButton(onClick = { showInfoDialog = true }) {
@@ -226,7 +228,7 @@ private fun ResumeColumnHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 10.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -237,20 +239,20 @@ private fun ResumeColumnHeader(
             Icon(
                 imageVector = Icons.Outlined.Store,
                 contentDescription = null,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(14.dp),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
                 text = storeLabel,
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         Text(
             text = valueLabel,
-            style = MaterialTheme.typography.labelMedium,
-            fontWeight = FontWeight.SemiBold,
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
@@ -306,19 +308,19 @@ private fun ResumeTotalRow(
 
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.secondaryContainer,
+        color = MaterialTheme.colorScheme.primaryContainer,
         shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp),
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 14.dp),
+                .padding(horizontal = 16.dp, vertical = 6.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = stringResource(id = R.string.inicio_resume_total),
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
             )
@@ -362,4 +364,49 @@ private fun ResumeCardEmptyState() {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         textAlign = TextAlign.Center,
     )
+}
+
+@Preview(showBackground = true, name = "Light Mode")
+@Composable
+private fun CardResumeStoresPreview() {
+    AgendaDeVentasTheme {
+        CardResumeStores(
+            title = "Resumen de Tiendas",
+            colum2 = "Ventas",
+            detalleCol1 = listOf("Tienda Central", "Sucursal Norte", "Tienda Sur"),
+            detalleCol2 = listOf("1500.50", "850.00", "1200.75"),
+            infoDescription = "Muestra el total de ventas acumulado por cada una de las tiendas registradas.",
+            metricKind = ResumeMetricKind.Amount,
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Dark Mode", uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun CardResumeStoresDarkPreview() {
+    AgendaDeVentasTheme {
+        CardResumeStores(
+            title = "Resumen de Tiendas",
+            colum2 = "Ventas",
+            detalleCol1 = listOf("Tienda Central", "Sucursal Norte", "Tienda Sur"),
+            detalleCol2 = listOf("1500.50", "850.00", "1200.75"),
+            infoDescription = "Muestra el total de ventas acumulado por cada una de las tiendas registradas.",
+            metricKind = ResumeMetricKind.Amount,
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Units Preview")
+@Composable
+private fun CardResumeStoresUnitsPreview() {
+    AgendaDeVentasTheme {
+        CardResumeStores(
+            title = "Unidades por Tienda",
+            colum2 = "Unidades",
+            detalleCol1 = listOf("Tienda Central", "Sucursal Norte"),
+            detalleCol2 = listOf("45", "32"),
+            infoDescription = "Muestra la cantidad de unidades vendidas por tienda.",
+            metricKind = ResumeMetricKind.Units,
+        )
+    }
 }

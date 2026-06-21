@@ -115,6 +115,10 @@ class EditViewModel @Inject constructor(
         _productSelectState.update { it.copy(tieneInventario = value) }
     }
 
+    fun updateProductImagePath(path: String?) {
+        _productSelectState.update { it.copy(imagePath = path) }
+    }
+
     fun setProduct() {
 
         viewModelScope.launch {

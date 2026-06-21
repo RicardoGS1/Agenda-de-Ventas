@@ -57,6 +57,7 @@ fun WindowsEditView(
     updateStoreValue: (String, String) -> Unit,
     updateTieneInventario: (Boolean) -> Unit,
     updateStoreInventory: (String, String) -> Unit,
+    updateProductImagePath: (String?) -> Unit,
     setProduct: (ProductWithStoresActive) -> Unit,
     isVisible: Boolean,
 ) {
@@ -117,7 +118,9 @@ fun WindowsEditView(
                                 productName = productSelectState.productName,
                                 productCost = productSelectState.productCost,
                                 onNameChange = updateProductName,
-                                onCostChange = updateProductCost
+                                onCostChange = updateProductCost,
+                                imagePath = productSelectState.imagePath,
+                                onImagePathChange = updateProductImagePath,
                             )
                         }
                         item {

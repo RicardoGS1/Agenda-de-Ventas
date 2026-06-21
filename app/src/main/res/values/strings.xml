@@ -11,6 +11,8 @@
     <string name="boton_guardar_agregar">Add</string>
     <string name="label_nombre_producto">Product name</string>
     <string name="label_precio_compra">Cost of the product</string>
+    <string name="product_photo_take">Take photo</string>
+    <string name="product_photo_remove">Remove photo</string>
     <string name="label_precio_venta">Sale price:</string>
     <string name="boton_mensaje_confirmar">Confirm</string>
     <string name="titulo_mensaje_error">Error</string>
@@ -53,6 +55,7 @@
     <string name="mensaje_vendido_vender">The sale has been successful</string>
     <string name="sell_item_detall_cost">Cost:&#160;</string>
     <string name="sell_item_detall_price">Price:&#160;</string>
+    <string name="sell_item_no_inventory">None</string>
     <string name="sell_empty_title">No products in this store</string>
     <string name="sell_empty_subtitle">Add products and assign prices for this store from the Add or Edit screen.</string>
     <string name="sell_line_subtotal">%1$d × subtotal %2$s</string>
@@ -85,6 +88,23 @@
     <plurals name="record_days_count">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
+    </plurals>
+
+    //PANTALLA REGISTRO COMPRAS
+    <string name="menu_registro_compras">Purchase Record</string>
+    <string name="purchase_record_store_label">Store for purchases</string>
+    <string name="purchase_record_pick_store">Select a store to view purchase history.</string>
+    <string name="purchase_record_empty_title">No purchases recorded</string>
+    <string name="purchase_record_empty_subtitle">Purchases for this store will appear here grouped by date.</string>
+    <string name="purchase_record_cash_deducted">Deducted from cash</string>
+    <string name="purchase_record_cash_not_deducted">Not deducted from cash</string>
+    <plurals name="purchase_record_day_count">
+        <item quantity="one">%d purchase</item>
+        <item quantity="other">%d purchases</item>
+    </plurals>
+    <plurals name="purchase_record_count">
+        <item quantity="one">%d purchase</item>
+        <item quantity="other">%d purchases</item>
     </plurals>
 
     //SCREEN STORE
@@ -123,17 +143,74 @@
     <string name="purchases_adding_amount">+%1$d</string>
     <string name="purchases_total">Purchase total: %1$s</string>
     <string name="purchases_success">Stock updated successfully</string>
+    <string name="purchases_cash_balance">Cash balance: %1$s</string>
+    <string name="purchases_remaining_balance">Remaining balance: %1$s</string>
+    <string name="purchases_deduct_from_cash">Connect to cash</string>
+    <string name="purchases_deduct_from_cash_hint">When confirmed, the total will be deducted from the store cash balance.</string>
+    <string name="purchases_insufficient_cash">Insufficient cash balance for this purchase.</string>
+    <string name="purchases_cash_withdraw_note">Inventory purchase</string>
+
+    //SCREEN INVENTORY MANAGEMENT
+    <string name="menu_inventario">Inventory</string>
+    <string name="inventory_store_label">Store for inventory</string>
+    <string name="inventory_pick_store">Select a store to view product inventory.</string>
+    <string name="inventory_view_history">Purchase history</string>
+    <string name="inventory_history_title">Purchase history: %1$s</string>
+    <string name="inventory_history_empty">No purchases recorded for this product yet.</string>
+    <string name="inventory_history_close">Close</string>
+    <string name="inventory_history_cash_deducted">Deducted from cash</string>
+    <string name="inventory_history_cash_not_deducted">Not deducted from cash</string>
+
+    //SCREEN MONEY
+    <string name="menu_dinero">Money</string>
+    <string name="menu_analisis_ia">AI Analysis</string>
+    <string name="money_store_label">Store for cash</string>
+    <string name="money_pick_store">Select a store to view cash balance and operations.</string>
+    <string name="money_overview_title">Balance by store</string>
+    <string name="money_current_balance">Current balance</string>
+    <string name="money_add_cash">Add to cash</string>
+    <string name="money_withdraw_cash">Withdraw</string>
+    <string name="money_breakdown_title">Balance breakdown</string>
+    <string name="money_from_sales">From sales</string>
+    <string name="money_from_deposits">Cash deposits</string>
+    <string name="money_from_withdrawals">Withdrawals</string>
+    <string name="money_operations_title">Operation log</string>
+    <string name="money_operation_sale">Sale</string>
+    <string name="money_operation_deposit">Cash deposit</string>
+    <string name="money_operation_withdrawal">Withdrawal</string>
+    <string name="money_sale_units">%1$d units</string>
+    <string name="money_default_deposit_note">Manual cash deposit</string>
+    <string name="money_default_withdraw_note">Manual cash withdrawal</string>
+    <string name="money_dialog_deposit_title">Add money to cash</string>
+    <string name="money_dialog_withdraw_title">Withdraw money</string>
+    <string name="money_amount_label">Amount</string>
+    <string name="money_note_label">Note (optional)</string>
+    <string name="money_insufficient_balance">Insufficient balance for this withdrawal.</string>
+    <string name="money_empty_title">No operations yet</string>
+    <string name="money_empty_subtitle">Sales, deposits and withdrawals for this store will appear here.</string>
+    <plurals name="money_operations_count">
+        <item quantity="one">%d operation</item>
+        <item quantity="other">%d operations</item>
+    </plurals>
+    <plurals name="money_day_operations_count">
+        <item quantity="one">%d operation</item>
+        <item quantity="other">%d operations</item>
+    </plurals>
 
     //MAIN ACTYVITY
     <string name="menu_banel">Sales record and service</string>
     <string name="menu_resumen">Summary</string>
     <string name="menu_agregar">Add</string>
-    <string name="menu_editar">Edit</string>
+    <string name="menu_editar">Product/Edit</string>
     <string name="menu_vender">Sell</string>
-    <string name="menu_registro">Record</string>
+    <string name="menu_registro">Sales Record</string>
     <string name="menu_tiendas">Stores</string>
     <string name="menu_exportar">Export</string>
     <string name="menu_configuracion">Settings</string>
+    <string name="debug_seed_data">Load test data</string>
+    <string name="debug_seed_data_cd">Load sample data for testing</string>
+    <string name="debug_seed_data_success">Test data loaded successfully</string>
+    <string name="debug_seed_data_error">Could not load test data</string>
 
     //SCREEN SETTINGS
     <string name="settings_title">Settings</string>
@@ -178,6 +255,9 @@
     <string name="inicio_desc_inventario_unidades">Shows the total units in stock per store for products with inventory control.</string>
     <string name="inicio_desc_inventario_inversion">Shows the total purchase cost of current stock per store (purchase price × units).</string>
     <string name="inicio_desc_inventario_ganancia">Shows the potential profit of current stock per store ((sale price − purchase price) × units).</string>
+    <string name="inicio_dinero_actual">Current cash</string>
+    <string name="inicio_dinero_actual_hint">Total balance in cash register. Not affected by the selected period.</string>
+    <string name="inicio_info_dinero">Cash</string>
 
 
 
@@ -201,5 +281,27 @@
     <string name="export_contracena">Password</string>
     <string name="export_iniciar_secion">Log in</string>
     <string name="crear_cuenta">Create Account</string>
+
+    //SCREEN AI ANALYSIS
+    <string name="ai_analysis_title">AI Business Analysis</string>
+    <string name="ai_analysis_subtitle">Get intelligent insights about your stores powered by AI</string>
+    <string name="ai_analysis_period_notice">Results are based on data from the last 30 days only</string>
+    <string name="ai_analysis_loading">Analyzing your business data…</string>
+    <string name="ai_analysis_overview_title">General overview</string>
+    <string name="ai_analysis_overview_desc">Executive summary of sales, profit and overall business performance</string>
+    <string name="ai_analysis_stores_title">Store comparison</string>
+    <string name="ai_analysis_stores_desc">Compare which stores perform best and which need attention</string>
+    <string name="ai_analysis_products_title">Top products</string>
+    <string name="ai_analysis_products_desc">Best sellers and slow-moving products with action suggestions</string>
+    <string name="ai_analysis_profitability_title">Profitability</string>
+    <string name="ai_analysis_profitability_desc">Margin analysis and where your business earns the most</string>
+    <string name="ai_analysis_inventory_title">Inventory status</string>
+    <string name="ai_analysis_inventory_desc">Low stock alerts, tied-up investment and stockout risks</string>
+    <string name="ai_analysis_cash_title">Cash flow</string>
+    <string name="ai_analysis_cash_desc">Sales, deposits and withdrawals to assess financial health</string>
+    <string name="ai_analysis_purchases_title">Purchases vs sales</string>
+    <string name="ai_analysis_purchases_desc">Evaluate if you are buying too much or too little vs what you sell</string>
+    <string name="ai_analysis_recommendations_title">Strategic recommendations</string>
+    <string name="ai_analysis_recommendations_desc">Prioritized actions to improve sales, profit and inventory</string>
 
 </resources>

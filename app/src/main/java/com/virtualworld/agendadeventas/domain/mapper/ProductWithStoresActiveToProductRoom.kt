@@ -24,5 +24,6 @@ fun ProductWithStoresActive.toProductRoom(): ProductRoom {
         inventario3 = invMap[3] ?: 0,
         inventario4 = invMap[4] ?: 0,
         inventario5 = invMap[5] ?: 0,
+        imagePath = imagePath,
     )
 }

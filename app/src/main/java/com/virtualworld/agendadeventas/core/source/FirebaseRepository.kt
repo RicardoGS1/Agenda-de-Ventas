@@ -122,6 +122,7 @@ class FirebaseRepository @Inject constructor(
                         "inventario3" to productRoom.inventario3,
                         "inventario4" to productRoom.inventario4,
                         "inventario5" to productRoom.inventario5,
+                        "imagePath" to productRoom.imagePath,
                     )
                     val documentRefForSoldRoom =
                         documentRef.collection("productRoomList")
@@ -174,6 +175,7 @@ class FirebaseRepository @Inject constructor(
                         inventario3 = document.getLong("inventario3")?.toInt() ?: 0,
                         inventario4 = document.getLong("inventario4")?.toInt() ?: 0,
                         inventario5 = document.getLong("inventario5")?.toInt() ?: 0,
+                        imagePath = document.getString("imagePath"),
                     )
                 }
 

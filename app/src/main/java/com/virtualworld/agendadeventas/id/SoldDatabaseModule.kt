@@ -2,6 +2,8 @@ package com.virtualworld.agendadeventas.id
 
 import android.content.Context
 import androidx.room.Room
+import com.virtualworld.agendadeventas.core.Dao.CashTransactionDao
+import com.virtualworld.agendadeventas.core.Dao.PurchaseDao
 import com.virtualword3d.salesregister.Data.Dao.SoldDao
 import com.virtualworld.agendadeventas.core.DataBases.VendidoDataBase
 import dagger.Module
@@ -23,6 +25,9 @@ object SoldDatabaseModule {
             appContext,
             VendidoDataBase::class.java,
             "vendido.db"
+        ).addMigrations(
+            VendidoDataBase.MIGRATION_1_2,
+            VendidoDataBase.MIGRATION_2_3,
         ).build()
     }
 
@@ -30,5 +35,17 @@ object SoldDatabaseModule {
     fun provideVendidoDao(database: VendidoDataBase): SoldDao
     {
         return database.VendidoDao()
+    }
+
+    @Provides
+    fun provideCashTransactionDao(database: VendidoDataBase): CashTransactionDao
+    {
+        return database.cashTransactionDao()
+    }
+
+    @Provides
+    fun providePurchaseDao(database: VendidoDataBase): PurchaseDao
+    {
+        return database.purchaseDao()
     }
 }

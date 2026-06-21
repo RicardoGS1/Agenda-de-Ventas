@@ -83,6 +83,10 @@ class AddViewModel @Inject constructor(
         _productUiState.update { it.copy(productCost = checkDecimalNumber(cost)) }
     }
 
+    fun updateProductImagePath(path: String?) {
+        _productUiState.update { it.copy(imagePath = path) }
+    }
+
     fun updateTieneInventario(value: Boolean) {
         _productUiState.update { it.copy(tieneInventario = value) }
     }

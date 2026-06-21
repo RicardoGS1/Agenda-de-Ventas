@@ -8,4 +8,5 @@ data class SoldForStoreCore(
     val valor: Float = 0f,
     val unidades: Int = 0,
     val fecha: Long = 0,
+    val imagePath: String? = null,
 )

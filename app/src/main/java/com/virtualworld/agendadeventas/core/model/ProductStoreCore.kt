@@ -7,4 +7,5 @@ data class ProductStoreCore(
     val venta: Float,
     val tieneInventario: Boolean = false,
     val inventario: Int = 0,
+    val imagePath: String? = null,
 )

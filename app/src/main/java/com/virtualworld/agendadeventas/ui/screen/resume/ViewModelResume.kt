@@ -3,10 +3,12 @@ package com.virtualworld.agendadeventas.ui.screen.resume
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
+import com.virtualworld.agendadeventas.common.NetworkResponseState
+import com.virtualworld.agendadeventas.core.model.StoreCashSummaryCore
+import com.virtualworld.agendadeventas.domain.usecase.GetProductAllUseCase
 import com.virtualworld.agendadeventas.domain.usecase.GetResumeInventoryUseCase
 import com.virtualworld.agendadeventas.domain.usecase.GetResumeStoresUseCase
-import com.virtualworld.agendadeventas.common.NetworkResponseState
-import com.virtualworld.agendadeventas.domain.usecase.GetProductAllUseCase
+import com.virtualworld.agendadeventas.domain.usecase.GetStoreCashSummariesUseCase
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +22,7 @@ class ViewModelResume @Inject constructor(
     private val getResumeStoresUseCase: GetResumeStoresUseCase,
     private val getResumeInventoryUseCase: GetResumeInventoryUseCase,
     private val getProductAllUseCase: GetProductAllUseCase,
+    private val getStoreCashSummariesUseCase: GetStoreCashSummariesUseCase,
 ) : ViewModel() {
 
     private val _screenUiState = MutableStateFlow(ScreenUiState.LOADING)
@@ -40,10 +43,24 @@ class ViewModelResume @Inject constructor(
     private val _hasProducts = MutableStateFlow(false)
     val hasProducts: StateFlow<Boolean> = _hasProducts
 
+    private val _cashSummaries = MutableStateFlow<List<StoreCashSummaryCore>>(emptyList())
+    val cashSummaries: StateFlow<List<StoreCashSummaryCore>> = _cashSummaries
+
     init {
         getResumeSoldStoreActive()
         getResumeInventoryStoreActive()
         observeHasProducts()
+        observeCashSummaries()
+    }
+
+    private fun observeCashSummaries() {
+        viewModelScope.launch {
+            getStoreCashSummariesUseCase().collect { state ->
+                if (state is NetworkResponseState.Success) {
+                    _cashSummaries.update { state.result }
+                }
+            }
+        }
     }
 
     private fun observeHasProducts() {

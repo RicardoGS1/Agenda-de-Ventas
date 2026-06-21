@@ -90,6 +90,8 @@ fun ProductInfoFormCard(
     productCost: String,
     onNameChange: (String) -> Unit,
     onCostChange: (String) -> Unit,
+    imagePath: String? = null,
+    onImagePathChange: ((String?) -> Unit)? = null,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -104,6 +106,15 @@ fun ProductInfoFormCard(
                 icon = Icons.Outlined.ShoppingBag,
                 title = stringResource(id = R.string.add_section_product)
             )
+
+            if (onImagePathChange != null) {
+                ProductPhotoPicker(
+                    productName = productName,
+                    imagePath = imagePath,
+                    onImagePathChange = onImagePathChange,
+                    modifier = Modifier.padding(bottom = 4.dp),
+                )
+            }
 
             OutlinedTextField(
                 value = productName,

@@ -7,6 +7,7 @@ data class ProductWithStoresActive(
     val productCost: String = "",
     val storesValues: List<StoresValues> = listOf(StoresValues()),
     val tieneInventario: Boolean = false,
+    val imagePath: String? = null,
 )
 
 data class StoresValues(

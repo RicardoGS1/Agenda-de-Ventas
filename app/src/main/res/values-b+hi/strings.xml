@@ -1,0 +1,241 @@
+<resources>
+    <string name="app_name">बिक्री एजेंडा</string>
+
+    <string name="titulo_agregar">नया उत्पाद जोड़ें</string>
+    <string name="add_subtitle">उत्पाद विवरण और बिक्री मूल्य दर्ज करें</string>
+    <string name="add_info_description">नाम और लागत भरें, फिर प्रत्येक सक्रिय स्टोर के लिए बिक्री मूल्य निर्धारित करें।</string>
+    <string name="add_section_product">उत्पाद जानकारी</string>
+    <string name="add_section_prices">बिक्री मूल्य</string>
+    <string name="add_store_price_label">%1$s में मूल्य</string>
+    <string name="boton_guardar_agregar">जोड़ें</string>
+    <string name="label_nombre_producto">उत्पाद का नाम</string>
+    <string name="label_precio_compra">उत्पाद की लागत</string>
+    <string name="product_photo_take">फ़ोटो लें</string>
+    <string name="product_photo_remove">फ़ोटो हटाएँ</string>
+    <string name="label_precio_venta">बिक्री मूल्य:</string>
+    <string name="boton_mensaje_confirmar">पुष्टि करें</string>
+    <string name="titulo_mensaje_error">त्रुटि</string>
+    <string name="text_mensaje_error">उत्पाद जोड़ने के लिए सभी फ़ील्ड भरें</string>
+    <string name="titulo_mensaje_agregado">जोड़ा गया</string>
+    <string name="text_mensaje_agregado">उत्पाद सफलतापूर्वक जोड़ा गया</string>
+    <string name="boton_mensaje_seguir">और जोड़ें</string>
+    <string name="boton_mensaje_terminar">समाप्त</string>
+
+    <string name="ventana_borrar">क्या आप इस उत्पाद को हटाना चाहते हैं?</string>
+    <string name="boton_confirmar_borrar">हाँ</string>
+    <string name="boton_confirmar_no_borrar">नहीं</string>
+    <string name="boton_cancelar">रद्द करें</string>
+    <string name="boton_guardar_editar">सहेजें</string>
+    <string name="edit_subtitle">उत्पाद विवरण और मूल्य अपडेट करें</string>
+    <string name="edit_info_description">नाम, लागत या प्रत्येक स्टोर का बिक्री मूल्य बदलें।</string>
+    <string name="titulo_ventana_editar">संपादित करें</string>
+    <string name="titulo_ventana_detalles">विवरण</string>
+    <string name="nombre_producto_detalles">विवरण</string>
+    <string name="precio_compra_detalles">खरीद मूल्य</string>
+    <string name="precio_venta_detalles">बिक्री मूल्य:</string>
+    <string name="editar_costo">लागत:</string>
+    <string name="edit_list_hint">संपादित करने के लिए उत्पाद पर टैप करें। हटाने के लिए बाएँ स्वाइप करें।</string>
+    <string name="edit_empty_title">कोई उत्पाद नहीं</string>
+    <string name="edit_empty_subtitle">यहाँ प्रबंधित करने के लिए जोड़ें स्क्रीन से उत्पाद जोड़ें।</string>
+    <string name="edit_swipe_delete">हटाएँ</string>
+    <plurals name="edit_products_count">
+        <item quantity="one">%d उत्पाद</item>
+        <item quantity="other">%d उत्पाद</item>
+    </plurals>
+
+    <string name="sell_label_tienda">स्टोर</string>
+    <string name="sell_no_stores">कोई सक्रिय स्टोर नहीं। स्टोर अनुभाग में एक स्टोर सक्षम करें।</string>
+    <string name="label_spiner_vender">स्टोर चुनें</string>
+    <string name="boton_guardar_vender">बिक्री जोड़ें</string>
+    <string name="mensaje_vendido_vender">बिक्री सफल रही</string>
+    <string name="sell_item_detall_cost">लागत:&#160;</string>
+    <string name="sell_item_detall_price">मूल्य:&#160;</string>
+    <string name="sell_item_no_inventory">नहीं है</string>
+    <string name="sell_empty_title">इस स्टोर में कोई उत्पाद नहीं</string>
+    <string name="sell_empty_subtitle">जोड़ें या संपादित करें स्क्रीन से इस स्टोर के लिए उत्पाद और मूल्य जोड़ें।</string>
+    <string name="sell_line_subtotal">%1$d × उप-योग %2$s</string>
+    <string name="sell_total_sale">कुल बिक्री: %1$s</string>
+    <string name="sell_decrease_quantity">मात्रा घटाएँ</string>
+    <string name="sell_increase_quantity">मात्रा बढ़ाएँ</string>
+    <plurals name="sell_selected_count">
+        <item quantity="one">%d चयनित</item>
+        <item quantity="other">%d चयनित</item>
+    </plurals>
+
+    <string name="record_unidades">इकाइयाँ:</string>
+    <string name="record_precio">मूल्य:</string>
+    <string name="record_costo">लागत:</string>
+    <string name="record_fecha">तारीख:</string>
+    <string name="record_empty_title">कोई बिक्री दर्ज नहीं</string>
+    <string name="record_empty_subtitle">इस स्टोर की बिक्री यहाँ तारीख के अनुसार समूहित दिखेगी।</string>
+    <string name="record_date_today">आज</string>
+    <string name="record_date_yesterday">कल</string>
+    <string name="record_line_total">%1$d × %2$s = %3$s</string>
+    <plurals name="record_day_sales_count">
+        <item quantity="one">%d बिक्री</item>
+        <item quantity="other">%d बिक्री</item>
+    </plurals>
+    <plurals name="record_sales_count">
+        <item quantity="one">%d बिक्री</item>
+        <item quantity="other">%d बिक्री</item>
+    </plurals>
+    <plurals name="record_days_count">
+        <item quantity="one">%d दिन</item>
+        <item quantity="other">%d दिन</item>
+    </plurals>
+
+    <string name="menu_registro_compras">खरीद रजिस्टर</string>
+    <string name="purchase_record_store_label">खरीद के लिए स्टोर</string>
+    <string name="purchase_record_pick_store">खरीद इतिहास देखने के लिए स्टोर चुनें।</string>
+    <string name="purchase_record_empty_title">कोई खरीद दर्ज नहीं</string>
+    <string name="purchase_record_empty_subtitle">इस स्टोर की खरीद यहाँ तारीख के अनुसार समूहित दिखेगी।</string>
+    <string name="purchase_record_cash_deducted">कैश से काटा गया</string>
+    <string name="purchase_record_cash_not_deducted">कैश से नहीं काटा गया</string>
+    <plurals name="purchase_record_day_count">
+        <item quantity="one">%d खरीद</item>
+        <item quantity="other">%d खरीद</item>
+    </plurals>
+    <plurals name="purchase_record_count">
+        <item quantity="one">%d खरीद</item>
+        <item quantity="other">%d खरीद</item>
+    </plurals>
+
+    <string name="titulo_Tiendas">स्टोर सेटिंग</string>
+    <string name="stores_info_description">प्रत्येक स्टोर का नाम अनुकूलित करें। एक से अधिक प्रबंधित करते हैं तो सक्रिय/निष्क्रिय कर सकते हैं; केवल सक्रिय स्टोर बिक्री और सारांश में दिखेंगे।</string>
+    <string name="stores_item_title">स्टोर %1$d</string>
+    <string name="stores_active_label">सक्रिय</string>
+    <string name="info_colunas_nombre">स्टोर के नाम</string>
+    <string name="info_colunas_activas">सक्रिय स्टोर</string>
+    <string name="label_nombre_de_tiendas">स्टोर का नाम</string>
+    <string name="boton_guardar_Tiendas">सहेजें</string>
+    <string name="mensaje_titulo_error_tiendas">त्रुटि</string>
+    <string name="mensaje_error_tiendas">स्टोर का नाम खाली नहीं हो सकता</string>
+    <string name="mensaje_confirmar_tiendas">पुष्टि करें</string>
+    <string name="mensaje_guardado_tiendas">परिवर्तन सफलतापूर्वक सहेजे गए</string>
+
+    <string name="inventory_section_title">इन्वेंटरी</string>
+    <string name="inventory_toggle_label">इस उत्पाद में इन्वेंटरी नियंत्रण है</string>
+    <string name="inventory_quantity_label">प्रारंभिक स्टॉक</string>
+    <string name="inventory_store_quantity_label">%1$s में स्टॉक</string>
+    <string name="inventory_stock_label">स्टॉक:&#160;</string>
+
+    <string name="menu_compras">खरीद</string>
+    <string name="menu_dinero">नकद</string>
+    <string name="menu_analisis_ia">AI विश्लेषण</string>
+    <string name="purchases_title">खरीद</string>
+    <string name="purchases_subtitle">स्टोर चुनें और प्रति उत्पाद स्टॉक जोड़ें</string>
+    <string name="purchases_store_label">खरीद के लिए स्टोर</string>
+    <string name="purchases_pick_store">इन्वेंटरी देखने और खरीद दर्ज करने के लिए स्टोर चुनें।</string>
+    <string name="purchases_confirm_button">खरीद की पुष्टि करें</string>
+    <string name="purchases_empty_title">इन्वेंटरी वाला कोई उत्पाद नहीं</string>
+    <string name="purchases_empty_subtitle">यहाँ स्टॉक प्रबंधित करने के लिए जोड़ें या संपादित करें में इन्वेंटरी नियंत्रण सक्षम करें।</string>
+    <string name="purchases_current_stock">स्टॉक: %1$d</string>
+    <string name="purchases_adding_amount">+%1$d</string>
+    <string name="purchases_total">कुल खरीद: %1$s</string>
+    <string name="purchases_success">स्टॉक सफलतापूर्वक अपडेट हुआ</string>
+    <string name="purchases_cash_balance">कैश शेष: %1$s</string>
+    <string name="purchases_remaining_balance">शेष राशि: %1$s</string>
+    <string name="purchases_deduct_from_cash">कैश से जोड़ें</string>
+    <string name="purchases_deduct_from_cash_hint">पुष्टि पर, कुल राशि स्टोर के कैश शेष से घटाई जाएगी।</string>
+    <string name="purchases_insufficient_cash">इस खरीद के लिए कैश शेष अपर्याप्त है।</string>
+    <string name="purchases_cash_withdraw_note">इन्वेंटरी खरीद</string>
+
+    <string name="menu_inventario">इन्वेंटरी</string>
+    <string name="inventory_store_label">इन्वेंटरी के लिए स्टोर</string>
+    <string name="inventory_pick_store">उत्पाद इन्वेंटरी देखने के लिए स्टोर चुनें।</string>
+    <string name="inventory_view_history">खरीद इतिहास</string>
+    <string name="inventory_history_title">खरीद इतिहास: %1$s</string>
+    <string name="inventory_history_empty">इस उत्पाद के लिए अभी तक कोई खरीद दर्ज नहीं है।</string>
+    <string name="inventory_history_close">बंद करें</string>
+    <string name="inventory_history_cash_deducted">कैश से काटा गया</string>
+    <string name="inventory_history_cash_not_deducted">कैश से नहीं काटा गया</string>
+
+    <string name="menu_banel">बिक्री रिकॉर्ड और सेवा</string>
+    <string name="menu_resumen">सारांश</string>
+    <string name="menu_agregar">जोड़ें</string>
+    <string name="menu_editar">उत्पाद/संपादित करें</string>
+    <string name="menu_vender">बेचें</string>
+    <string name="menu_registro">बिक्री रजिस्टर</string>
+    <string name="menu_tiendas">स्टोर</string>
+    <string name="menu_exportar">निर्यात</string>
+    <string name="menu_configuracion">सेटिंग</string>
+
+    <string name="settings_title">सेटिंग</string>
+    <string name="settings_change_language">भाषा बदलें</string>
+    <string name="settings_language_title">भाषा</string>
+    <string name="settings_rate_app">ऐप को रेट करें</string>
+    <string name="settings_share_app">ऐप साझा करें</string>
+    <string name="settings_share_message">बिक्री एजेंडा देखें: %1$s</string>
+    <string name="settings_back">वापस</string>
+
+    <string name="inicio_priodo">अवधि</string>
+    <string name="inicio_fecha_inicio">प्रारंभ तिथि</string>
+    <string name="inicio_fecha_final">समाप्ति तिथि</string>
+    <string name="inicio_desde">शुरू</string>
+    <string name="inicio_hasta">आज</string>
+    <string name="inicio_unidades_vendidas">बेची गई इकाइयाँ</string>
+    <string name="inicio_ganancia">लाभ</string>
+    <string name="inicio_info_tiendas">स्टोर</string>
+    <string name="inicio_info_unidades">इकाइयाँ</string>
+    <string name="inicio_info_ganancia">लाभ</string>
+    <string name="inicio_inversion_recuperada">वापस मिला निवेश</string>
+    <string name="inicio_importe_total_venta">कुल बिक्री राशि</string>
+    <string name="inicio_info_inversion">निवेश</string>
+    <string name="inicio_info_importe">राशि</string>
+    <string name="inicio_desc_unidades">चयनित अवधि में प्रत्येक स्टोर की बेची गई इकाइयाँ दिखाता है।</string>
+    <string name="inicio_desc_ganancia">चयनित अवधि में प्रत्येक स्टोर का लाभ (बिक्री माइनस खरीद लागत) दिखाता है।</string>
+    <string name="inicio_desc_inversion">प्रत्येक स्टोर में बेचे गए उत्पादों की कुल खरीद लागत दिखाता है — बिक्री से वापस मिला निवेश।</string>
+    <string name="inicio_desc_importe">चयनित अवधि में प्रत्येक स्टोर की कुल बिक्री राशि दिखाता है।</string>
+    <string name="inicio_info_cerrar">समझ गया</string>
+    <string name="inicio_info_icon">अधिक जानकारी</string>
+    <string name="inicio_empty_message">स्टोर कॉन्फ़िगर करने और पहला उत्पाद जोड़ने के लिए बटन दबाएँ।</string>
+    <string name="inicio_empty_button">स्टोर कॉन्फ़िगर करें</string>
+    <string name="inicio_resume_no_stores">इस मेट्रिक के लिए कोई स्टोर डेटा नहीं।</string>
+    <string name="inicio_resume_total">कुल</string>
+    <string name="inicio_tab_ventas">बिक्री</string>
+    <string name="inicio_tab_inventario">इन्वेंटरी</string>
+    <string name="inicio_inventario_unidades_total">कुल इकाइयाँ</string>
+    <string name="inicio_inventario_inversion_total">कुल निवेश राशि</string>
+    <string name="inicio_inventario_ganancia_total">कुल इन्वेंटरी लाभ</string>
+    <string name="inicio_desc_inventario_unidades">इन्वेंटरी नियंत्रण वाले उत्पादों का प्रति स्टोर कुल स्टॉक दिखाता है।</string>
+    <string name="inicio_desc_inventario_inversion">प्रति स्टोर वर्तमान स्टॉक की कुल खरीद लागत (खरीद मूल्य × इकाइयाँ)।</string>
+    <string name="inicio_desc_inventario_ganancia">प्रति स्टोर वर्तमान स्टॉक का संभावित लाभ ((बिक्री मूल्य − खरीद मूल्य) × इकाइयाँ)।</string>
+
+    <string name="export_empresa">कंपनी:</string>
+    <string name="cerrar_sacion">सत्र बंद करें</string>
+    <string name="card_exportar_ventas">बिक्री निर्यात करें</string>
+    <string name="card_importar_ventas">बिक्री आयात करें</string>
+    <string name="card_exportar_ventas_text">यह विकल्प डेटाबेस क्लाउड में सहेजता है ताकि आप बाद में दूसरे डिवाइस से डाउनलोड कर सकें।</string>
+    <string name="card_importar_ventas_text">यह विकल्प क्लाउड से डेटाबेस डाउनलोड करेगा और वर्तमान ऐप डेटा को दूरस्थ डेटा से बदलेगा।</string>
+    <string name="card_exportar_ventas_boton">निर्यात</string>
+    <string name="card_importar_ventas_boton">आयात</string>
+    <string name="nota_exportar_ventas_boton">इस विकल्प के लिए पंजीकरण आवश्यक है</string>
+    <string name="mensaje_error">क्षमा करें, एक त्रुटि हुई</string>
+    <string name="mensaje_exitoso_export">कार्रवाई सफलतापूर्वक पूर्ण हुई</string>
+    <string name="export_registrarse">पंजीकरण</string>
+    <string name="export_correo">ईमेल</string>
+    <string name="export_contracena">पासवर्ड</string>
+    <string name="export_iniciar_secion">लॉग इन</string>
+    <string name="crear_cuenta">खाता बनाएँ</string>
+
+    <string name="ai_analysis_title">AI व्यवसाय विश्लेषण</string>
+    <string name="ai_analysis_subtitle">AI से अपने स्टोर के बारे में स्मार्ट जानकारी पाएँ</string>
+    <string name="ai_analysis_period_notice">परिणाम केवल पिछले 30 दिनों के डेटा पर आधारित हैं</string>
+    <string name="ai_analysis_loading">आपके व्यवसाय डेटा का विश्लेषण हो रहा है…</string>
+    <string name="ai_analysis_overview_title">सामान्य अवलोकन</string>
+    <string name="ai_analysis_overview_desc">बिक्री, लाभ और समग्र प्रदर्शन का कार्यकारी सारांश</string>
+    <string name="ai_analysis_stores_title">स्टोर तुलना</string>
+    <string name="ai_analysis_stores_desc">कौन सा स्टोर बेहतर है और किस पर ध्यान देना है</string>
+    <string name="ai_analysis_products_title">शीर्ष उत्पाद</string>
+    <string name="ai_analysis_products_desc">सबसे ज़्यादा बिकने वाले और धीमी गति वाले उत्पाद</string>
+    <string name="ai_analysis_profitability_title">लाभप्रदता</string>
+    <string name="ai_analysis_profitability_desc">मार्जिन विश्लेषण और सबसे अधिक लाभ कहाँ है</string>
+    <string name="ai_analysis_inventory_title">इन्वेंटरी स्थिति</string>
+    <string name="ai_analysis_inventory_desc">कम स्टॉक चेतावनी और स्टॉक खत्म होने का जोखिम</string>
+    <string name="ai_analysis_cash_title">नकद प्रवाह</string>
+    <string name="ai_analysis_cash_desc">बिक्री, जमा और निकासी से वित्तीय स्वास्थ्य का आकलन</string>
+    <string name="ai_analysis_purchases_title">खरीद बनाम बिक्री</string>
+    <string name="ai_analysis_purchases_desc">क्या आप ज़्यादा या कम खरीद रहे हैं?</string>
+    <string name="ai_analysis_recommendations_title">रणनीतिक सिफारिशें</string>
+    <string name="ai_analysis_recommendations_desc">बिक्री और लाभ बढ़ाने के लिए प्राथमिकता वाली कार्रवाइयाँ</string>
+</resources>

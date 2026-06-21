@@ -61,6 +61,7 @@ class GetProductForStore @Inject constructor(
                             productCost = product.compra.toString(),
                             storesValues = lismap,
                             tieneInventario = product.tieneInventario,
+                            imagePath = product.imagePath,
                         )
 
 

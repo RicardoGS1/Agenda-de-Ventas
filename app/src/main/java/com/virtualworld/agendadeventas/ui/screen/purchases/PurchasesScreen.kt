@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.outlined.AccountBalanceWallet
 import androidx.compose.material.icons.outlined.AttachMoney
 import androidx.compose.material.icons.outlined.Inventory2
 import androidx.compose.material.icons.outlined.ShoppingCart
@@ -35,6 +36,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import java.text.DecimalFormat
 import com.virtualworld.agendadeventas.R
+import com.virtualworld.agendadeventas.ui.screen.common.ProductAvatar
 import com.virtualworld.agendadeventas.ui.screen.common.ManagerScreenStateView
 import com.virtualworld.agendadeventas.ui.screen.common.ScreenUiState
 import com.virtualworld.agendadeventas.ui.screen.common.StoreSelectView
@@ -64,17 +67,29 @@ fun PurchasesScreen(viewModel: PurchasesViewModel = hiltViewModel()) {
     val storesActiveState by viewModel.storesActiveState.collectAsState()
     val purchaseRows by viewModel.purchaseRows.collectAsState()
     val addAmounts by viewModel.addAmounts.collectAsState()
+    val storeCashBalance by viewModel.storeCashBalance.collectAsState()
+    val purchaseTotal by viewModel.purchaseTotal.collectAsState()
+    val remainingBalance by viewModel.remainingBalance.collectAsState()
+    val deductFromCash by viewModel.deductFromCash.collectAsState()
+    val insufficientCashError by viewModel.insufficientCashError.collectAsState()
+    val purchaseWithdrawNote = stringResource(R.string.purchases_cash_withdraw_note)
 
     PurchasesContent(
         screenUiState = screenUiState,
         storesActiveState = storesActiveState,
         purchaseRows = purchaseRows,
         addAmounts = addAmounts,
+        storeCashBalance = storeCashBalance,
+        purchaseTotal = purchaseTotal,
+        remainingBalance = remainingBalance,
+        deductFromCash = deductFromCash,
+        insufficientCashError = insufficientCashError,
         onIncrement = viewModel::incrementAmount,
         onDecrement = viewModel::decrementAmount,
-        onConfirm = viewModel::confirmPurchases,
+        onConfirm = { viewModel.confirmPurchases(purchaseWithdrawNote) },
         onChangerUiState = viewModel::changerUiState,
         onStoreSelected = viewModel::selectStore,
+        onDeductFromCashChange = viewModel::setDeductFromCash,
     )
 }
 
@@ -84,11 +99,17 @@ private fun PurchasesContent(
     storesActiveState: List<Pair<Int, String>>,
     purchaseRows: List<PurchaseProductRow>,
     addAmounts: Map<Long, Int>,
+    storeCashBalance: Float,
+    purchaseTotal: Float,
+    remainingBalance: Float,
+    deductFromCash: Boolean,
+    insufficientCashError: Boolean,
     onIncrement: (Long) -> Unit,
     onDecrement: (Long) -> Unit,
     onConfirm: () -> Unit,
     onChangerUiState: (ScreenUiState) -> Unit,
     onStoreSelected: (Int?) -> Unit,
+    onDeductFromCashChange: (Boolean) -> Unit,
 ) {
     var selectedStoreIndex by remember { mutableIntStateOf(-1) }
 
@@ -107,12 +128,8 @@ private fun PurchasesContent(
         }
     }
 
-    val purchaseTotalAmount = remember(purchaseRows, addAmounts) {
-        purchaseRows.sumOf { row ->
-            val qty = addAmounts[row.id] ?: 0
-            (row.compra * qty).toDouble()
-        }.toFloat()
-    }
+    val hasInsufficientCash = deductFromCash &&
+        (insufficientCashError || (purchaseTotal > 0f && purchaseTotal > storeCashBalance))
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -136,14 +153,18 @@ private fun PurchasesContent(
             }
 
             AnimatedVisibility(
-                visible = screenUiState != ScreenUiState.LOADING &&
-                    purchaseRows.isNotEmpty() &&
-                    purchaseTotalAmount > 0f,
+                visible = selectedStoreIndex != -1,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically(),
             ) {
-                PurchasesTotalBanner(
-                    amountFormatted = purchasesTotalPriceFormat.format(purchaseTotalAmount),
+                PurchasesCashBanner(
+                    balanceFormatted = purchasesTotalPriceFormat.format(storeCashBalance),
+                    purchaseTotalFormatted = purchasesTotalPriceFormat.format(purchaseTotal),
+                    remainingFormatted = purchasesTotalPriceFormat.format(remainingBalance),
+                    showPurchaseTotal = purchaseTotal > 0f,
+                    deductFromCash = deductFromCash,
+                    hasInsufficientCash = hasInsufficientCash,
+                    onDeductFromCashChange = onDeductFromCashChange,
                 )
             }
 
@@ -235,9 +256,10 @@ private fun PurchasesContent(
             purchaseRows.isNotEmpty()
         ) {
             val hasAnyAmount = addAmounts.values.any { it > 0 }
+            val canConfirm = hasAnyAmount && !hasInsufficientCash
             Button(
                 onClick = onConfirm,
-                enabled = hasAnyAmount,
+                enabled = canConfirm,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
@@ -272,34 +294,162 @@ private fun PurchasesContent(
 private val purchasesTotalPriceFormat = DecimalFormat("#.##")
 
 @Composable
-private fun PurchasesTotalBanner(amountFormatted: String) {
+private fun PurchasesCashBanner(
+    balanceFormatted: String,
+    purchaseTotalFormatted: String,
+    remainingFormatted: String,
+    showPurchaseTotal: Boolean,
+    deductFromCash: Boolean,
+    hasInsufficientCash: Boolean,
+    onDeductFromCashChange: (Boolean) -> Unit,
+) {
+    val containerColor = if (hasInsufficientCash) {
+        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.85f)
+    } else {
+        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.85f)
+    }
+    val contentColor = if (hasInsufficientCash) {
+        MaterialTheme.colorScheme.onErrorContainer
+    } else {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    }
+    val accentColor = if (hasInsufficientCash) {
+        MaterialTheme.colorScheme.error
+    } else {
+        MaterialTheme.colorScheme.primary
+    }
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 10.dp),
         shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.85f),
+        color = containerColor,
         tonalElevation = 1.dp,
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Icon(
-                imageVector = Icons.Outlined.AttachMoney,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(26.dp),
-            )
-            Text(
-                text = stringResource(id = R.string.purchases_total, amountFormatted),
-                modifier = Modifier.padding(start = 10.dp),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.AccountBalanceWallet,
+                    contentDescription = null,
+                    tint = accentColor,
+                    modifier = Modifier.size(26.dp),
+                )
+                Text(
+                    text = stringResource(id = R.string.purchases_cash_balance, balanceFormatted),
+                    modifier = Modifier.padding(start = 10.dp),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = contentColor,
+                )
+            }
+
+            AnimatedVisibility(
+                visible = showPurchaseTotal && deductFromCash,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically(),
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.AttachMoney,
+                            contentDescription = null,
+                            tint = accentColor,
+                            modifier = Modifier.size(22.dp),
+                        )
+                        Text(
+                            text = stringResource(id = R.string.purchases_total, purchaseTotalFormatted),
+                            modifier = Modifier.padding(start = 10.dp),
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = contentColor,
+                        )
+                    }
+                    Text(
+                        text = stringResource(id = R.string.purchases_remaining_balance, remainingFormatted),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Medium,
+                        color = if (hasInsufficientCash) {
+                            MaterialTheme.colorScheme.error
+                        } else {
+                            contentColor
+                        },
+                        modifier = Modifier.padding(start = 32.dp),
+                    )
+                }
+            }
+
+            AnimatedVisibility(
+                visible = showPurchaseTotal && !deductFromCash,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically(),
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.AttachMoney,
+                        contentDescription = null,
+                        tint = accentColor,
+                        modifier = Modifier.size(22.dp),
+                    )
+                    Text(
+                        text = stringResource(id = R.string.purchases_total, purchaseTotalFormatted),
+                        modifier = Modifier.padding(start = 10.dp),
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = contentColor,
+                    )
+                }
+            }
+
+            AnimatedVisibility(
+                visible = hasInsufficientCash,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically(),
+            ) {
+                Text(
+                    text = stringResource(R.string.purchases_insufficient_cash),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.purchases_deduct_from_cash),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Medium,
+                        color = contentColor,
+                    )
+                    Text(
+                        text = stringResource(R.string.purchases_deduct_from_cash_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = contentColor.copy(alpha = 0.75f),
+                    )
+                }
+                Switch(
+                    checked = deductFromCash,
+                    onCheckedChange = onDeductFromCashChange,
+                )
+            }
         }
     }
 }
@@ -322,20 +472,11 @@ private fun PurchaseProductItem(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primaryContainer),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = row.nombre.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-            }
+            ProductAvatar(
+                name = row.nombre,
+                imagePath = row.imagePath,
+                size = 48.dp,
+            )
 
             Column(
                 modifier = Modifier

@@ -55,6 +55,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.core.model.ProductStoreCore
+import com.virtualworld.agendadeventas.ui.screen.common.ProductAvatar
 import com.virtualworld.agendadeventas.ui.theme.AgendaDeVentasTheme
 import java.text.DecimalFormat
 
@@ -212,7 +213,11 @@ private fun SellProductListItem(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                SellProductAvatar(name = product.nombre)
+                ProductAvatar(
+                    name = product.nombre,
+                    imagePath = product.imagePath,
+                    size = 48.dp,
+                )
 
                 Column(
                     modifier = Modifier
@@ -232,22 +237,13 @@ private fun SellProductListItem(
                             modifier = Modifier.padding(top = 8.dp),
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
+                            if (product.tieneInventario) {
+                                SellInventoryChip(inventario = product.inventario)
+                            }
                             SellPriceChip(
-                                label = stringResource(id = R.string.sell_item_detall_cost),
-                                value = formatSellPrice(product.compra),
-                            )
-                            SellPriceChip(
-                                label = stringResource(id = R.string.sell_item_detall_price),
                                 value = formatSellPrice(product.venta),
                                 highlighted = true,
                             )
-                            if (product.tieneInventario) {
-                                SellPriceChip(
-                                    label = stringResource(id = R.string.inventory_stock_label),
-                                    value = product.inventario.toString(),
-                                    highlighted = product.inventario == 0,
-                                )
-                            }
                         }
                 }
 
@@ -379,8 +375,51 @@ private fun SellQuantityStepper(
 }
 
 @Composable
+private fun SellInventoryChip(
+    inventario: Int,
+) {
+    val highlighted = inventario == 0
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        color = if (highlighted) {
+            MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.65f)
+        } else {
+            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.55f)
+        },
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Inventory2,
+                contentDescription = null,
+                tint = if (highlighted) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+                modifier = Modifier.size(14.dp),
+            )
+            Text(
+                text = inventario.toString(),
+                modifier = Modifier.padding(start = 4.dp),
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = if (highlighted) FontWeight.SemiBold else FontWeight.Medium,
+                color = if (highlighted) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
+}
+
+@Composable
 private fun SellPriceChip(
-    label: String,
     value: String,
     highlighted: Boolean = false,
 ) {
@@ -405,7 +444,8 @@ private fun SellPriceChip(
                 )
             }
             Text(
-                text = label + value,
+                text = value,
+                modifier = if (highlighted) Modifier.padding(start = 4.dp) else Modifier,
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = if (highlighted) FontWeight.SemiBold else FontWeight.Medium,
                 color = if (highlighted) {
@@ -417,26 +457,6 @@ private fun SellPriceChip(
                 overflow = TextOverflow.Ellipsis,
             )
         }
-    }
-}
-
-@Composable
-private fun SellProductAvatar(name: String) {
-    val initial = name.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
-
-    Box(
-        modifier = Modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.primaryContainer),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = initial,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-        )
     }
 }
 
@@ -532,14 +552,47 @@ private fun SellPriceChipPreview() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             SellPriceChip(
-                label = "Cost: ",
                 value = "10.00",
                 highlighted = false
             )
             SellPriceChip(
-                label = "Price: ",
                 value = "15.00",
                 highlighted = true
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, name = "Sell Product List Item - With Inventory")
+@Composable
+private fun SellProductListItemWithInventoryPreview() {
+    AgendaDeVentasTheme {
+        Box(modifier = Modifier.padding(16.dp)) {
+            SellProductListItem(
+                product = ProductStoreCore(
+                    idProduct = 3,
+                    nombre = "Camiseta",
+                    compra = 5.0f,
+                    venta = 12.0f,
+                    tieneInventario = true,
+                    inventario = 24,
+                ),
+                quantity = 0,
+                onQuantityChange = {},
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, name = "Sell Product List Item - No Inventory Control")
+@Composable
+private fun SellProductListItemNoInventoryPreview() {
+    AgendaDeVentasTheme {
+        Box(modifier = Modifier.padding(16.dp)) {
+            SellProductListItem(
+                product = ProductStoreCore(4, "Servicio de consultoría", 0f, 50.0f),
+                quantity = 0,
+                onQuantityChange = {},
             )
         }
     }

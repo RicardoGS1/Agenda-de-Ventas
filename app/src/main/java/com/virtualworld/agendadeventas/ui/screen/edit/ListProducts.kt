@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import com.virtualworld.agendadeventas.R
 import com.virtualworld.agendadeventas.domain.models.ProductWithStoresActive
 import com.virtualworld.agendadeventas.domain.models.StoresValues
+import com.virtualworld.agendadeventas.ui.screen.common.ProductAvatar
 import com.virtualworld.agendadeventas.ui.screen.common.ProductFormInfoBanner
 
 @Composable
@@ -201,7 +202,11 @@ private fun ProductEditListItem(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ProductAvatar(name = product.productName)
+            ProductAvatar(
+                name = product.productName,
+                imagePath = product.imagePath,
+                size = 52.dp,
+            )
 
             Column(
                 modifier = Modifier
@@ -263,26 +268,6 @@ private fun ProductEditListItem(
                 modifier = Modifier.size(24.dp)
             )
         }
-    }
-}
-
-@Composable
-private fun ProductAvatar(name: String) {
-    val initial = name.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
-
-    Box(
-        modifier = Modifier
-            .size(52.dp)
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.primaryContainer),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = initial,
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
-        )
     }
 }
 
