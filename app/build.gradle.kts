@@ -24,8 +24,8 @@ android {
         applicationId = "com.virtualworld.agendadeventas"
         minSdk = 27
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 100100200
+        versionName = "1.1.2"
 
         buildConfigField(
             "String",
