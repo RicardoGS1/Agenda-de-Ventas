@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">销售日程</string>
+    <string name="app_name">销售与库存控制</string>
 
     <string name="titulo_agregar">添加新产品</string>
     <string name="add_subtitle">输入产品信息和销售价格</string>

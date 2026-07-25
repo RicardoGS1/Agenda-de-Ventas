@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">बिक्री एजेंडा</string>
+    <string name="app_name">बिक्री और इन्वेंट्री नियंत्रण</string>
 
     <string name="titulo_agregar">नया उत्पाद जोड़ें</string>
     <string name="add_subtitle">उत्पाद विवरण और बिक्री मूल्य दर्ज करें</string>

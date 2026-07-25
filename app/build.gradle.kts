@@ -18,14 +18,14 @@ val localProperties = Properties().apply {
 
 android {
     namespace = "com.virtualworld.agendadeventas"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.virtualworld.agendadeventas"
-        minSdk = 27
-        targetSdk = 34
-        versionCode = 100100200
-        versionName = "1.1.2"
+        minSdk = 25
+        targetSdk = 36
+        versionCode = 100100300
+        versionName = "1.1.3"
 
         buildConfigField(
             "String",

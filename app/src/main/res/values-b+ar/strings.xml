@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">جدول المبيعات</string>
+    <string name="app_name">التحكم في المبيعات والمخزون</string>
 
     <string name="titulo_agregar">إضافة منتج جديد</string>
     <string name="add_subtitle">أدخل تفاصيل المنتج وأسعار البيع</string>

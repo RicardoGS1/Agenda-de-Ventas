@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Agenda de Ventas</string>
+    <string name="app_name">Sales &amp; Inventory Control</string>
 
     //SCREEN ADD
     <string name="titulo_agregar">Add new product</string>
